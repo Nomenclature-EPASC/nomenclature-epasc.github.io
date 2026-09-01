@@ -241,24 +241,13 @@ async function updateLoginStatus() {
 
     editMode = loggedIn;
 
-document.querySelectorAll(".marker").forEach(function(marker) {
+    document.querySelectorAll(".marker").forEach(function(marker) {
 
     marker.style.background =
         editMode ? "#ffff00" : "white";
 
     marker.style.cursor =
         editMode ? "move" : "default";
-
-
-    marker.onmousedown = function(event) {
-
-        if (!editMode) {
-            return;
-        }
-
-        event.stopPropagation();
-
-    };
 
 });
 
