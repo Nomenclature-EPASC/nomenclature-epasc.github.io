@@ -239,6 +239,7 @@ async function updateLoginStatus() {
     const loggedIn =
         !!data.user;
 
+    editMode = loggedIn;
 
     document.getElementById(
         "loginButton"
@@ -269,6 +270,8 @@ updateLoginStatus();
    VARIABLES
 ===================================================== */
 
+let editMode = false;
+    
 let scale = 1;
 
 let offsetX = 0;
