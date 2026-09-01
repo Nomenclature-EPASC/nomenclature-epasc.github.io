@@ -250,7 +250,7 @@ document.querySelectorAll(".marker").forEach(function(marker) {
         editMode ? "move" : "default";
 
 
-marker.onmousedown = function(event) {
+marker.onpointerdown = function(event) {
 
     if (!editMode) {
         return;
@@ -258,6 +258,50 @@ marker.onmousedown = function(event) {
 
     event.preventDefault();
     event.stopPropagation();
+
+    marker.setPointerCapture(event.pointerId);
+
+    const startX = event.clientX;
+    const startY = event.clientY;
+
+    const startLeft =
+        parseFloat(marker.style.left);
+
+    const startTop =
+        parseFloat(marker.style.top);
+
+
+    function move(e) {
+
+        const dx =
+            (e.clientX - startX) / scale;
+
+        const dy =
+            (e.clientY - startY) / scale;
+
+
+        marker.style.left =
+            (startLeft + dx) + "px";
+
+        marker.style.top =
+            (startTop + dy) + "px";
+
+    }
+
+
+    function stop() {
+
+        marker.releasePointerCapture(event.pointerId);
+
+        marker.onpointermove = null;
+        marker.onpointerup = null;
+
+    }
+
+
+    marker.onpointermove = move;
+
+    marker.onpointerup = stop;
 
 };
 
