@@ -763,11 +763,20 @@ marker.addEventListener("click", function(event) {
     event.stopPropagation();
 
 
-    document.getElementById("plantFrench").textContent =
-        item["Nom français"];
+if (item["Nom latin"] === "/") {
+
+    document.getElementById("plantLatin").style.display = "none";
+
+} else {
+
+    document.getElementById("plantLatin").style.display = "block";
 
     document.getElementById("plantLatin").textContent =
         item["Nom latin"];
+}
+
+document.getElementById("plantFrench").textContent =
+    item["Nom français"];
 
     const info = document.getElementById("plantInfo");
 
