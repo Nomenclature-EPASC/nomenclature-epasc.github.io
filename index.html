@@ -762,8 +762,6 @@ marker.addEventListener("click", function(event) {
 
     event.stopPropagation();
 
-    document.getElementById("plantNumber").textContent =
-        "N° " + item.numero;
 
     document.getElementById("plantFrench").textContent =
         item["Nom français"];
@@ -860,20 +858,15 @@ position: fixed;
     z-index: 1000;
 ">
 
-    <div id="plantNumber" style="
-        font-weight: bold;
-        font-size: 20px;
-    "></div>
+<div id="plantLatin" style="
+    font-style: italic;
+    font-size: 18px;
+"></div>
 
-    <div id="plantFrench" style="
-        margin-top: 10px;
-        font-size: 18px;
-    "></div>
-
-    <div id="plantLatin" style="
-        margin-top: 5px;
-        font-style: italic;
-    "></div>
+<div id="plantFrench" style="
+    margin-top: 8px;
+    font-size: 16px;
+"></div>
 </div>
 </body>
 </html>
