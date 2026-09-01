@@ -250,15 +250,16 @@ document.querySelectorAll(".marker").forEach(function(marker) {
         editMode ? "move" : "default";
 
 
-    marker.onmousedown = function(event) {
+marker.onmousedown = function(event) {
 
-        if (!editMode) {
-            return;
-        }
+    if (!editMode) {
+        return;
+    }
 
-        event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-    };
+};
 
 });
 
