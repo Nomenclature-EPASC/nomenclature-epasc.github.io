@@ -241,7 +241,15 @@ async function updateLoginStatus() {
 
     editMode = loggedIn;
 
-    loadNumbers();
+    document.querySelectorAll(".marker").forEach(function(marker) {
+
+    marker.style.background =
+        editMode ? "#ffff00" : "white";
+
+    marker.style.cursor =
+        editMode ? "move" : "default";
+
+});
 
     document.getElementById(
         "loginButton"
