@@ -765,9 +765,7 @@ marker.addEventListener("click", function(event) {
     alert(
         "N° " + item.numero +
         "\n\n" +
-        item["Nom français"] +
-        "\n" +
-        item["Nom latin"]
+        JSON.stringify(item, null, 2)
     );
 
 });
