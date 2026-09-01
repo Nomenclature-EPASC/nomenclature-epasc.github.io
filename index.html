@@ -725,6 +725,10 @@ function displayNumbers(data) {
 
 
     data.forEach(function(item) {
+        
+        if (item.x === null || item.y === null) {
+    return;
+}
 
         const marker =
             document.createElement("div");
