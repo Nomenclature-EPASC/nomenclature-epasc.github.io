@@ -777,27 +777,19 @@ marker.addEventListener("click", function(event) {
     document.getElementById("plantFrench").textContent =
         item["Nom français"];
 
-    const info =
-        document.getElementById("plantInfo");
+    const info = document.getElementById("plantInfo");
 
     info.style.display = "block";
 
-    const rect =
-        marker.getBoundingClientRect();
+    const rect = marker.getBoundingClientRect();
 
     info.style.position = "fixed";
 
     info.style.left =
         (rect.right + 10) + "px";
 
-    // On attend que la fiche soit affichée
-    // avant de calculer sa hauteur
-    requestAnimationFrame(function() {
-
-        info.style.top =
-            (rect.top + rect.height / 2 - info.offsetHeight / 2) + "px";
-
-    });
+    info.style.top =
+        (rect.top - 20) + "px";
 
 });
 
