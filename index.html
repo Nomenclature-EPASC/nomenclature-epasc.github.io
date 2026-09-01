@@ -603,15 +603,64 @@ marker.style.cursor =
     editMode ? "move" : "default";
 
 if (editMode) {
+
     marker.style.background = "#ffff00";
 
-    marker.addEventListener("mousedown", function(event) {
+    marker.onmousedown = function(event) {
 
+        event.preventDefault();
         event.stopPropagation();
 
-        marker.dataset.dragging = "true";
+        const startX = event.clientX;
+        const startY = event.clientY;
 
-    });
+        const startLeft =
+            parseFloat(marker.style.left);
+
+        const startTop =
+            parseFloat(marker.style.top);
+
+
+        function move(e) {
+
+            marker.style.left =
+                (startLeft +
+                (e.clientX - startX) / scale) + "px";
+
+            marker.style.top =
+                (startTop +
+                (e.clientY - startY) / scale) + "px";
+
+        }
+
+
+        function stop() {
+
+            window.removeEventListener(
+                "mousemove",
+                move
+            );
+
+            window.removeEventListener(
+                "mouseup",
+                stop
+            );
+
+        }
+
+
+        window.addEventListener(
+            "mousemove",
+            move
+        );
+
+        window.addEventListener(
+            "mouseup",
+            stop
+        );
+
+    };
+
 }
 
         marker.textContent =
