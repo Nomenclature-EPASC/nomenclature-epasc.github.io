@@ -250,17 +250,72 @@ document.querySelectorAll(".marker").forEach(function(marker) {
         editMode ? "move" : "default";
 
 
-    marker.onmousedown = function(event) {
+marker.onmousedown = function(event) {
 
-        if (!editMode) {
-            return;
-        }
+    if (!editMode) {
+        return;
+    }
 
-        event.stopPropagation();
+    event.stopPropagation();
 
-    };
+    const startMouseX =
+        event.clientX;
 
-});
+    const startMouseY =
+        event.clientY;
+
+
+    const startMarkerX =
+        parseFloat(marker.style.left);
+
+    const startMarkerY =
+        parseFloat(marker.style.top);
+
+
+    function moveMarker(e) {
+
+        const dx =
+            (e.clientX - startMouseX) / scale;
+
+        const dy =
+            (e.clientY - startMouseY) / scale;
+
+
+        marker.style.left =
+            (startMarkerX + dx) + "px";
+
+        marker.style.top =
+            (startMarkerY + dy) + "px";
+
+    }
+
+
+    function stopMarker() {
+
+        window.removeEventListener(
+            "mousemove",
+            moveMarker
+        );
+
+        window.removeEventListener(
+            "mouseup",
+            stopMarker
+        );
+
+    }
+
+
+    window.addEventListener(
+        "mousemove",
+        moveMarker
+    );
+
+    window.addEventListener(
+        "mouseup",
+        stopMarker
+    );
+
+};
 
     document.getElementById(
         "loginButton"
