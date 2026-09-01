@@ -775,11 +775,15 @@ marker.addEventListener("click", function(event) {
 
     info.style.display = "block";
 
+const rect = marker.getBoundingClientRect();
+
+info.style.position = "fixed";
+
 info.style.left =
-    (marker.offsetLeft + 35) + "px";
+    (rect.right + 10) + "px";
 
 info.style.top =
-    (marker.offsetTop - 20) + "px";
+    (rect.top - 20) + "px";
 
 });
 
