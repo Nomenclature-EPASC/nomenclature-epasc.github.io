@@ -772,18 +772,6 @@ marker.addEventListener("click", function(event) {
 
 });
 
-marker.addEventListener("click", function(event) {
-
-    event.stopPropagation();
-
-    alert(
-        "N° " + item.numero +
-        "\n\n" +
-        JSON.stringify(item, null, 2)
-    );
-
-});
-
 
         marker.style.left =
             item.x + "px";
