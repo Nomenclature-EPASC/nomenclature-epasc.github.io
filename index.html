@@ -300,14 +300,22 @@ async function stop() {
     const newX =
         parseFloat(marker.style.left);
 
-    const newY =
-        parseFloat(marker.style.top);
+const newY =
+    parseFloat(marker.style.top);
 
 
-    try {
+console.log(
+    "Sauvegarde :",
+    marker.dataset.id,
+    newX,
+    newY
+);
 
-        const response =
-            await fetch(
+
+try {
+
+    const response =
+        await fetch(
                 SUPABASE_URL +
                 "/rest/v1/numeros?id=eq." +
                 marker.dataset.id,
