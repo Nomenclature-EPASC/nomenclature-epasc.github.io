@@ -831,6 +831,22 @@ window.addEventListener(
 
 loadNumbers();
 
+
+document.addEventListener("click", function(event) {
+
+    const info = document.getElementById("plantInfo");
+
+    if (
+        info.style.display === "block" &&
+        !info.contains(event.target) &&
+        !event.target.classList.contains("marker")
+    ) {
+        info.style.display = "none";
+    }
+
+});
+
+
 </script>
 <div id="plantInfo" style="
     display: none;
@@ -843,13 +859,6 @@ position: fixed;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     z-index: 1000;
 ">
-    <button id="closePlantInfo" style="
-        float: right;
-        border: none;
-        background: none;
-        font-size: 20px;
-        cursor: pointer;
-    ">✕</button>
 
     <div id="plantNumber" style="
         font-weight: bold;
