@@ -762,13 +762,24 @@ marker.addEventListener("click", function(event) {
 
     event.stopPropagation();
 
-    alert(
-        "N° " + item.numero +
-        "\n\n" +
-        item["Nom français"] +
-        "\n" +
-        item["Nom latin"]
-    );
+    document.getElementById("plantNumber").textContent =
+        "N° " + item.numero;
+
+    document.getElementById("plantFrench").textContent =
+        item["Nom français"];
+
+    document.getElementById("plantLatin").textContent =
+        item["Nom latin"];
+
+    const info = document.getElementById("plantInfo");
+
+    info.style.display = "block";
+
+    info.style.left =
+        (item.x + 35) + "px";
+
+    info.style.top =
+        item.y + "px";
 
 });
 
