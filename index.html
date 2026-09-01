@@ -427,11 +427,81 @@ window.addEventListener(
 
 
 /* ==========================================
+   ADAPTER AUTOMATIQUEMENT LE PLAN
+========================================== */
+
+function fitPlanToWindow() {
+
+    const planWidth = plan.naturalWidth;
+    const planHeight = plan.naturalHeight;
+
+    const windowWidth = container.clientWidth;
+    const windowHeight = container.clientHeight;
+
+
+    const scaleX =
+        windowWidth / planWidth;
+
+    const scaleY =
+        windowHeight / planHeight;
+
+
+    /* On prend le plus petit pour que
+       tout le plan soit visible */
+
+    scale =
+        Math.min(scaleX, scaleY);
+
+
+    /* Petite marge autour du plan */
+
+    scale *= 0.95;
+
+
+    /* Centrer le plan */
+
+    offsetX =
+        (windowWidth -
+        planWidth * scale) / 2;
+
+
+    offsetY =
+        (windowHeight -
+        planHeight * scale) / 2;
+
+
+    updateMap();
+
+}
+
+
+/* ==========================================
    INITIALISATION
 ========================================== */
 
 
-updateMap();
+if (plan.complete) {
+
+    fitPlanToWindow();
+
+} else {
+
+    plan.addEventListener(
+        "load",
+        fitPlanToWindow
+    );
+
+}
+
+
+/* ==========================================
+   ADAPTER SI LA FENÊTRE CHANGE DE TAILLE
+========================================== */
+
+window.addEventListener(
+    "resize",
+    fitPlanToWindow
+);
 
 
 </script>
