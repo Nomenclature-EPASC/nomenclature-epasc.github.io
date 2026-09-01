@@ -170,7 +170,7 @@
 */
 
 const SUPABASE_URL =
-    "https://wcdhghogvargjwsvljzy.supabase.co/";
+    "https://wcdhghogvargjwsvljzy.supabase.co/rest/v1/";
 
 const SUPABASE_KEY =
     "sb_publishable_HEkxwYdy0DEcfRK7YOz-IA_q4iG31-J";
@@ -512,7 +512,7 @@ async function loadNumbers() {
 
     const url =
         SUPABASE_URL +
-        "/rest/v1/numeros?select=*";
+        "/numeros?select=*";
 
 
     try {
@@ -576,185 +576,27 @@ function displayNumbers(data) {
 
     markers.innerHTML = "";
 
+
     data.forEach(function(item) {
 
         const marker =
             document.createElement("div");
 
+
         marker.className =
             "marker";
+
 
         marker.textContent =
             item.numero;
 
+
         marker.style.left =
             item.x + "px";
 
+
         marker.style.top =
             item.y + "px";
-
-
-        /*
-         * MODE ÉDITION
-         *
-         * Le numéro ne peut être déplacé
-         * que si l'utilisateur est connecté.
-         */
-
-        marker.addEventListener(
-            "mousedown",
-            async function(event) {
-
-                const { data: authData } =
-                    await supabaseClient.auth.getUser();
-
-                if (!authData.user) {
-                    return;
-                }
-
-                event.stopPropagation();
-
-                let moving = true;
-
-
-                function moveMarker(e) {
-
-                    if (!moving)
-                        return;
-
-
-                    const rect =
-                        markers.getBoundingClientRect();
-
-
-                    /*
-                     * Conversion de la position de la souris
-                     * en coordonnées dans l'image originale.
-                     */
-
-                    const x =
-                        (e.clientX -
-                        rect.left) / scale;
-
-                    const y =
-                        (e.clientY -
-                        rect.top) / scale;
-
-
-                    marker.style.left =
-                        x + "px";
-
-                    marker.style.top =
-                        y + "px";
-
-
-                    marker.dataset.x =
-                        x;
-
-                    marker.dataset.y =
-                        y;
-
-                }
-
-
-                async function stopMoving() {
-
-                    if (!moving)
-                        return;
-
-                    moving = false;
-
-
-                    window.removeEventListener(
-                        "mousemove",
-                        moveMarker
-                    );
-
-                    window.removeEventListener(
-                        "mouseup",
-                        stopMoving
-                    );
-
-
-                    const x =
-                        parseFloat(
-                            marker.dataset.x
-                        );
-
-                    const y =
-                        parseFloat(
-                            marker.dataset.y
-                        );
-
-
-                    /*
-                     * Sauvegarde dans Supabase
-                     */
-
-                    const response =
-                        await fetch(
-                            SUPABASE_URL +
-                            "/rest/v1/numeros?id=eq." +
-                            item.id,
-                            {
-                                method: "PATCH",
-
-                                headers: {
-                                    "apikey":
-                                        SUPABASE_KEY,
-
-                                    "Authorization":
-                                        "Bearer " +
-                                        SUPABASE_KEY,
-
-                                    "Content-Type":
-                                        "application/json",
-
-                                    "Prefer":
-                                        "return=minimal"
-                                },
-
-                                body:
-                                    JSON.stringify({
-                                        x: x,
-                                        y: y
-                                    })
-                            }
-                        );
-
-
-                    if (!response.ok) {
-
-                        console.error(
-                            "Erreur lors de la sauvegarde :",
-                            response.status
-                        );
-
-                    } else {
-
-                        console.log(
-                            "Position sauvegardée",
-                            x,
-                            y
-                        );
-
-                    }
-
-                }
-
-
-                window.addEventListener(
-                    "mousemove",
-                    moveMarker
-                );
-
-                window.addEventListener(
-                    "mouseup",
-                    stopMoving
-                );
-
-            }
-        );
 
 
         markers.appendChild(
@@ -762,8 +604,6 @@ function displayNumbers(data) {
         );
 
     });
-
-});
 
 }
 
