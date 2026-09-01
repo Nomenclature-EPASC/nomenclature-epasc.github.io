@@ -6,6 +6,8 @@
 
     <title>Carte interactive</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         * {
             box-sizing: border-box;
@@ -115,6 +117,18 @@
 
 <div id="toolbar">
 
+    <button id="loginButton" onclick="login()">
+    🔐 Connexion
+</button>
+
+<button id="logoutButton"
+        onclick="logout()"
+        style="display:none;">
+    🚪 Déconnexion
+</button>
+
+    <span id="adminStatus"></span>
+
     <button onclick="zoomIn()">＋</button>
 
     <button onclick="zoomOut()">−</button>
@@ -160,6 +174,95 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_HEkxwYdy0DEcfRK7YOz-IA_q4iG31-J";
+
+    const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+async function login() {
+
+    const email =
+        prompt("Adresse e-mail administrateur :");
+
+    if (!email)
+        return;
+
+
+    const password =
+        prompt("Mot de passe :");
+
+    if (!password)
+        return;
+
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+
+    if (error) {
+
+        alert(
+            "Erreur de connexion : " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    updateLoginStatus();
+
+}
+
+
+async function logout() {
+
+    await supabaseClient.auth.signOut();
+
+    updateLoginStatus();
+
+}
+
+
+async function updateLoginStatus() {
+
+    const { data } =
+        await supabaseClient.auth.getUser();
+
+
+    const loggedIn =
+        !!data.user;
+
+
+    document.getElementById(
+        "loginButton"
+    ).style.display =
+        loggedIn ? "none" : "inline-block";
+
+
+    document.getElementById(
+        "logoutButton"
+    ).style.display =
+        loggedIn ? "inline-block" : "none";
+
+
+    document.getElementById(
+        "adminStatus"
+    ).textContent =
+        loggedIn
+            ? "✏️ MODE ÉDITION"
+            : "";
+
+}
+
+
+updateLoginStatus();
 
 
 /* =====================================================
