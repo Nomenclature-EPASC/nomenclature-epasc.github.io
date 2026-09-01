@@ -670,14 +670,6 @@ marker.style.cursor =
 
 if (editMode) {
     marker.style.background = "#ffff00";
-
-    marker.addEventListener("mousedown", function(event) {
-
-        event.stopPropagation();
-
-        marker.dataset.dragging = "true";
-
-    });
 }
 
         marker.textContent =
