@@ -755,8 +755,22 @@ if (editMode) {
     });
 }
 
-        marker.textContent =
-            item.numero;
+marker.textContent =
+    item.numero;
+
+marker.addEventListener("click", function(event) {
+
+    event.stopPropagation();
+
+    alert(
+        "N° " + item.numero +
+        "\n\n" +
+        item["Nom français"] +
+        "\n" +
+        item["Nom latin"]
+    );
+
+});
 
 
         marker.style.left =
