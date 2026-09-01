@@ -338,20 +338,24 @@ async function stop() {
             );
 
 
-        if (!response.ok) {
+if (!response.ok) {
 
-            console.error(
-                "Erreur sauvegarde position :",
-                response.status
-            );
+    console.error(
+        "Erreur sauvegarde position :",
+        response.status
+    );
 
-        } else {
+} else {
 
-            console.log(
-                "Position du numéro sauvegardée."
-            );
+    const result =
+        await response.json();
 
-        }
+    console.log(
+        "Réponse Supabase après sauvegarde :",
+        result
+    );
+
+}
 
     } catch (error) {
 
