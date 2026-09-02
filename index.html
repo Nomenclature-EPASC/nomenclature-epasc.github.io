@@ -655,6 +655,7 @@ window.addEventListener(
    CHARGER LES NUMÉROS DEPUIS SUPABASE
 ===================================================== */
 
+ let allPlants = [];   
 async function loadNumbers() {
 
     const url =
@@ -692,6 +693,8 @@ async function loadNumbers() {
 
         const data =
             await response.json();
+
+        allPlants = data;
 
 
         console.log(
