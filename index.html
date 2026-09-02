@@ -857,54 +857,7 @@ document.addEventListener("click", function(event) {
 
 });
 
-document.getElementById("searchInput").addEventListener("input", function() {
 
-    const search =
-        this.value.toLowerCase().trim();
-
-    const resultsBox =
-        document.getElementById("searchResults");
-
-    resultsBox.innerHTML = "";
-
-    if (search === "") {
-        return;
-    }
-
-    const results =
-        allPlants.filter(function(plant) {
-
-            return (
-                String(plant["Nom français"]).toLowerCase().includes(search) ||
-                String(plant["Nom latin"]).toLowerCase().includes(search)
-            );
-
-        });
-
-    results.forEach(function(plant) {
-
-        const result =
-            document.createElement("div");
-
-        result.textContent =
-            plant["Nom français"] +
-            " — " +
-            plant["Nom latin"];
-
-        result.style.padding =
-            "8px";
-
-        result.style.cursor =
-            "pointer";
-
-        result.style.borderBottom =
-            "1px solid #ddd";
-
-        resultsBox.appendChild(result);
-
-    });
-
-});
 
 
 </script>
@@ -964,5 +917,57 @@ position: fixed;
     text-align: left;
 "></div>
 </div>
+    <script>
+
+document.getElementById("searchInput").addEventListener("input", function() {
+
+    const search =
+        this.value.toLowerCase().trim();
+
+    const resultsBox =
+        document.getElementById("searchResults");
+
+    resultsBox.innerHTML = "";
+
+    if (search === "") {
+        return;
+    }
+
+    const results =
+        allPlants.filter(function(plant) {
+
+            return (
+                String(plant["Nom français"]).toLowerCase().includes(search) ||
+                String(plant["Nom latin"]).toLowerCase().includes(search)
+            );
+
+        });
+
+    results.forEach(function(plant) {
+
+        const result =
+            document.createElement("div");
+
+        result.textContent =
+            plant["Nom français"] +
+            " — " +
+            plant["Nom latin"];
+
+        result.style.padding =
+            "8px";
+
+        result.style.cursor =
+            "pointer";
+
+        result.style.borderBottom =
+            "1px solid #ddd";
+
+        resultsBox.appendChild(result);
+
+    });
+
+});
+
+</script>
 </body>
 </html>
