@@ -962,14 +962,27 @@ results.forEach(function(plant) {
     result.style.borderBottom =
         "1px solid #ddd";
 
-    result.addEventListener("click", function() {
+result.addEventListener("click", function() {
 
-        console.log(
-            "Plante sélectionnée :",
-            plant
+    const marker =
+        document.querySelector(
+            '.marker[data-id="' + plant.id + '"]'
         );
 
-    });
+    if (!marker) {
+        console.log(
+            "Cette plante n'est pas encore placée sur la carte :",
+            plant
+        );
+        return;
+    }
+
+    console.log(
+        "Marqueur trouvé :",
+        marker
+    );
+
+});
 
     resultsBox.appendChild(result);
 
