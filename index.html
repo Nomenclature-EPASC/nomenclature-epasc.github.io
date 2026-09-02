@@ -779,18 +779,6 @@ function displayNumbers(data) {
 marker.style.cursor =
     editMode ? "move" : "default";
 
-if (editMode) {
-    marker.style.background = "#ffff00";
-
-    marker.addEventListener("mousedown", function(event) {
-
-        event.stopPropagation();
-
-        marker.dataset.dragging = "true";
-
-    });
-}
-
 marker.textContent =
     item.numero;
 
