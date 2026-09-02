@@ -655,7 +655,8 @@ window.addEventListener(
    CHARGER LES NUMÉROS DEPUIS SUPABASE
 ===================================================== */
 
- let allPlants = [];   
+ let allPlants = [];
+    
 async function loadNumbers() {
 
     const url =
@@ -853,6 +854,32 @@ document.addEventListener("click", function(event) {
     ) {
         info.style.display = "none";
     }
+
+});
+
+    document.getElementById("searchInput").addEventListener("input", function() {
+
+    const search =
+        this.value.toLowerCase().trim();
+
+    if (search === "") {
+        return;
+    }
+
+    const results =
+        allPlants.filter(function(plant) {
+
+            return (
+                String(plant["Nom français"]).toLowerCase().includes(search) ||
+                String(plant["Nom latin"]).toLowerCase().includes(search)
+            );
+
+        });
+
+    console.log(
+        "Résultats recherche :",
+        results
+    );
 
 });
 
