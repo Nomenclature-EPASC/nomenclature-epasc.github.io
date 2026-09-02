@@ -977,10 +977,37 @@ result.addEventListener("click", function() {
         return;
     }
 
-    console.log(
-        "Marqueur trouvé :",
-        marker
-    );
+const markerRect =
+    marker.getBoundingClientRect();
+
+const containerRect =
+    container.getBoundingClientRect();
+
+const markerCenterX =
+    markerRect.left +
+    markerRect.width / 2;
+
+const markerCenterY =
+    markerRect.top +
+    markerRect.height / 2;
+
+const containerCenterX =
+    containerRect.left +
+    containerRect.width / 2;
+
+const containerCenterY =
+    containerRect.top +
+    containerRect.height / 2;
+
+offsetX +=
+    containerCenterX -
+    markerCenterX;
+
+offsetY +=
+    containerCenterY -
+    markerCenterY;
+
+updateMap();
 
 });
 
