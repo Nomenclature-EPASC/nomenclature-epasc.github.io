@@ -1001,7 +1001,12 @@ offsetY +=
     markerCenterY;
 
 updateMap();
+
+setTimeout(function() {
+
     showPlantInfo(plant, marker);
+
+}, 100);
 if (plant["Nom latin"] === "/") {
 
     document.getElementById("plantLatin").style.display = "none";
