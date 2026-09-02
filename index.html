@@ -857,14 +857,10 @@ document.addEventListener("click", function(event) {
 
 });
 
-    document.getElementById("searchInput").addEventListener("input", function() {
+document.getElementById("searchInput").addEventListener("input", function() {
 
     const search =
         this.value.toLowerCase().trim();
-
-    if (search === "") {
-        return;
-    }
 
     const results =
         allPlants.filter(function(plant) {
