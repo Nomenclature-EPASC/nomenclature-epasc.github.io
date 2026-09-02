@@ -1008,8 +1008,36 @@ offsetY +=
     markerCenterY;
 
 updateMap();
+if (plant["Nom latin"] === "/") {
 
-    marker.click();
+    document.getElementById("plantLatin").style.display = "none";
+
+} else {
+
+    document.getElementById("plantLatin").style.display = "block";
+
+    document.getElementById("plantLatin").textContent =
+        plant["Nom latin"];
+}
+
+document.getElementById("plantFrench").textContent =
+    plant["Nom français"];
+
+const info =
+    document.getElementById("plantInfo");
+
+info.style.display = "block";
+
+const rect =
+    marker.getBoundingClientRect();
+
+info.style.position = "fixed";
+
+info.style.left =
+    (rect.right + 10) + "px";
+
+info.style.top =
+    (rect.top - 20) + "px";
 
 });
 
