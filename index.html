@@ -943,28 +943,37 @@ document.getElementById("searchInput").addEventListener("input", function() {
 
         });
 
-    results.forEach(function(plant) {
+results.forEach(function(plant) {
 
-        const result =
-            document.createElement("div");
+    const result =
+        document.createElement("div");
 
-        result.textContent =
-            plant["Nom français"] +
-            " — " +
-            plant["Nom latin"];
+    result.textContent =
+        plant["Nom français"] +
+        " — " +
+        plant["Nom latin"];
 
-        result.style.padding =
-            "8px";
+    result.style.padding =
+        "8px";
 
-        result.style.cursor =
-            "pointer";
+    result.style.cursor =
+        "pointer";
 
-        result.style.borderBottom =
-            "1px solid #ddd";
+    result.style.borderBottom =
+        "1px solid #ddd";
 
-        resultsBox.appendChild(result);
+    result.addEventListener("click", function() {
+
+        console.log(
+            "Plante sélectionnée :",
+            plant
+        );
 
     });
+
+    resultsBox.appendChild(result);
+
+});
 
 });
 
