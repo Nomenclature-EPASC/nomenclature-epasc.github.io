@@ -722,7 +722,39 @@ async function loadNumbers() {
 /* =====================================================
    AFFICHER LES NUMÉROS
 ===================================================== */
+function showPlantInfo(plant, marker) {
 
+    if (plant["Nom latin"] === "/") {
+
+        document.getElementById("plantLatin").style.display = "none";
+
+    } else {
+
+        document.getElementById("plantLatin").style.display = "block";
+
+        document.getElementById("plantLatin").textContent =
+            plant["Nom latin"];
+    }
+
+    document.getElementById("plantFrench").textContent =
+        plant["Nom français"];
+
+    const info =
+        document.getElementById("plantInfo");
+
+    info.style.display = "block";
+
+    const rect =
+        marker.getBoundingClientRect();
+
+    info.style.position = "fixed";
+
+    info.style.left =
+        (rect.right + 10) + "px";
+
+    info.style.top =
+        (rect.top - 20) + "px";
+}
 function displayNumbers(data) {
 
     markers.innerHTML = "";
@@ -766,35 +798,7 @@ marker.addEventListener("click", function(event) {
 
     event.stopPropagation();
 
-
-if (item["Nom latin"] === "/") {
-
-    document.getElementById("plantLatin").style.display = "none";
-
-} else {
-
-    document.getElementById("plantLatin").style.display = "block";
-
-    document.getElementById("plantLatin").textContent =
-        item["Nom latin"];
-}
-
-document.getElementById("plantFrench").textContent =
-    item["Nom français"];
-
-    const info = document.getElementById("plantInfo");
-
-    info.style.display = "block";
-
-const rect = marker.getBoundingClientRect();
-
-info.style.position = "fixed";
-
-info.style.left =
-    (rect.right + 10) + "px";
-
-info.style.top =
-    (rect.top - 20) + "px";
+    showPlantInfo(item, marker);
 
 });
 
