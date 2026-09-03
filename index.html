@@ -970,37 +970,39 @@ result.addEventListener("click", function() {
         return;
     }
 
-const markerRect =
+scale = 1.5;
+
+updateMap();
+
+const zoomedMarkerRect =
     marker.getBoundingClientRect();
 
-const containerRect =
+const zoomedContainerRect =
     container.getBoundingClientRect();
 
-const markerCenterX =
-    markerRect.left +
-    markerRect.width / 2;
+const zoomedMarkerCenterX =
+    zoomedMarkerRect.left +
+    zoomedMarkerRect.width / 2;
 
-const markerCenterY =
-    markerRect.top +
-    markerRect.height / 2;
+const zoomedMarkerCenterY =
+    zoomedMarkerRect.top +
+    zoomedMarkerRect.height / 2;
 
-const containerCenterX =
-    containerRect.left +
-    containerRect.width / 2;
+const zoomedContainerCenterX =
+    zoomedContainerRect.left +
+    zoomedContainerRect.width / 2;
 
-const containerCenterY =
-    containerRect.top +
-    containerRect.height / 2;
-
-scale = 1.5
+const zoomedContainerCenterY =
+    zoomedContainerRect.top +
+    zoomedContainerRect.height / 2;
 
 offsetX +=
-    containerCenterX -
-    markerCenterX;
+    zoomedContainerCenterX -
+    zoomedMarkerCenterX;
 
 offsetY +=
-    containerCenterY -
-    markerCenterY;
+    zoomedContainerCenterY -
+    zoomedMarkerCenterY;
 
 updateMap();
 
