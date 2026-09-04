@@ -965,10 +965,8 @@ results.forEach(function(plant) {
     result.style.borderBottom =
         "1px solid #ddd";
 
-result.addEventListener("touchend", function(event) {
+result.addEventListener("click", function() {
 
-    event.preventDefault();
-    event.stopPropagation();
 
     const marker =
         document.querySelector(
@@ -983,51 +981,77 @@ result.addEventListener("touchend", function(event) {
         return;
     }
 
-    scale = 1.5;
+scale = 1.5;
 
-    updateMap();
+updateMap();
 
-    requestAnimationFrame(function() {
+const zoomedMarkerRect =
+    marker.getBoundingClientRect();
 
-        const zoomedMarkerRect =
-            marker.getBoundingClientRect();
+const zoomedContainerRect =
+    container.getBoundingClientRect();
 
-        const zoomedContainerRect =
-            container.getBoundingClientRect();
+const zoomedMarkerCenterX =
+    zoomedMarkerRect.left +
+    zoomedMarkerRect.width / 2;
 
-        const zoomedMarkerCenterX =
-            zoomedMarkerRect.left +
-            zoomedMarkerRect.width / 2;
+const zoomedMarkerCenterY =
+    zoomedMarkerRect.top +
+    zoomedMarkerRect.height / 2;
 
-        const zoomedMarkerCenterY =
-            zoomedMarkerRect.top +
-            zoomedMarkerRect.height / 2;
+const zoomedContainerCenterX =
+    zoomedContainerRect.left +
+    zoomedContainerRect.width / 2;
 
-        const zoomedContainerCenterX =
-            zoomedContainerRect.left +
-            zoomedContainerRect.width / 2;
+const zoomedContainerCenterY =
+    zoomedContainerRect.top +
+    zoomedContainerRect.height / 2;
 
-        const zoomedContainerCenterY =
-            zoomedContainerRect.top +
-            zoomedContainerRect.height / 2;
+offsetX +=
+    zoomedContainerCenterX -
+    zoomedMarkerCenterX;
 
-        offsetX +=
-            zoomedContainerCenterX -
-            zoomedMarkerCenterX;
+offsetY +=
+    zoomedContainerCenterY -
+    zoomedMarkerCenterY;
 
-        offsetY +=
-            zoomedContainerCenterY -
-            zoomedMarkerCenterY;
+updateMap();
 
-        updateMap();
+setTimeout(function() {
 
-        setTimeout(function() {
+    showPlantInfo(plant, marker);
 
-            showPlantInfo(plant, marker);
+}, 100);
+if (plant["Nom latin"] === "/") {
 
-        }, 100);
+    document.getElementById("plantLatin").style.display = "none";
 
-    });
+} else {
+
+    document.getElementById("plantLatin").style.display = "block";
+
+    document.getElementById("plantLatin").textContent =
+        plant["Nom latin"];
+}
+
+document.getElementById("plantFrench").textContent =
+    plant["Nom français"];
+
+const info =
+    document.getElementById("plantInfo");
+
+info.style.display = "block";
+
+const rect =
+    marker.getBoundingClientRect();
+
+info.style.position = "fixed";
+
+info.style.left =
+    (rect.right + 10) + "px";
+
+info.style.top =
+    (rect.top - 20) + "px";
 
 });
 
