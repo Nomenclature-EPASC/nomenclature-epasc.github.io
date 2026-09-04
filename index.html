@@ -983,45 +983,43 @@ result.addEventListener("click", function() {
 
 scale = 1.5;
 
-updateMap();
+requestAnimationFrame(function() {
 
-const zoomedMarkerRect =
-    marker.getBoundingClientRect();
+    updateMap();
 
-const zoomedContainerRect =
-    container.getBoundingClientRect();
+    const zoomedMarkerRect =
+        marker.getBoundingClientRect();
 
-const zoomedMarkerCenterX =
-    zoomedMarkerRect.left +
-    zoomedMarkerRect.width / 2;
+    const zoomedContainerRect =
+        container.getBoundingClientRect();
 
-const zoomedMarkerCenterY =
-    zoomedMarkerRect.top +
-    zoomedMarkerRect.height / 2;
+    const zoomedMarkerCenterX =
+        zoomedMarkerRect.left +
+        zoomedMarkerRect.width / 2;
 
-const zoomedContainerCenterX =
-    zoomedContainerRect.left +
-    zoomedContainerRect.width / 2;
+    const zoomedMarkerCenterY =
+        zoomedMarkerRect.top +
+        zoomedMarkerRect.height / 2;
 
-const zoomedContainerCenterY =
-    zoomedContainerRect.top +
-    zoomedContainerRect.height / 2;
+    const zoomedContainerCenterX =
+        zoomedContainerRect.left +
+        zoomedContainerRect.width / 2;
 
-offsetX +=
-    zoomedContainerCenterX -
-    zoomedMarkerCenterX;
+    const zoomedContainerCenterY =
+        zoomedContainerRect.top +
+        zoomedContainerRect.height / 2;
 
-offsetY +=
-    zoomedContainerCenterY -
-    zoomedMarkerCenterY;
+    offsetX +=
+        zoomedContainerCenterX -
+        zoomedMarkerCenterX;
 
-updateMap();
+    offsetY +=
+        zoomedContainerCenterY -
+        zoomedMarkerCenterY;
 
-setTimeout(function() {
+    updateMap();
 
-    showPlantInfo(plant, marker);
-
-}, 100);
+});
 if (plant["Nom latin"] === "/") {
 
     document.getElementById("plantLatin").style.display = "none";
