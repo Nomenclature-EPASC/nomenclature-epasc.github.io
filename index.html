@@ -845,7 +845,10 @@ window.addEventListener(
 
 loadNumbers();
 
-
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js");
+}
+    
 document.addEventListener("click", function(event) {
 
     const info = document.getElementById("plantInfo");
