@@ -112,32 +112,17 @@
 
             pointer-events: auto;
         }
-/* RESPONSIVE - TÉLÉPHONE */
+/* RESPONSIVE - RECHERCHE SUR TÉLÉPHONE */
 
 @media (max-width: 600px) {
 
-    #toolbar {
-        height: 95px;
-        padding: 6px 8px;
-        gap: 5px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    button {
-        padding: 6px 10px;
-        font-size: 13px;
-    }
-
-    #map-container {
-        top: 95px;
-    }
-
     #plantSearch {
-        position: absolute;
-        top: 52px;
-        left: 50%;
-        transform: translateX(-50%);
+        top: 58px !important;
+        width: 90%;
+    }
+
+    #searchInput {
+        width: 100% !important;
     }
 
 }
