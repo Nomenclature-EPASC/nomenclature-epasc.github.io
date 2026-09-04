@@ -847,6 +847,9 @@ loadNumbers();
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js?v=3");
+    navigator.serviceWorker.ready.then(function(registration) {
+    registration.update();
+});
 }
     
 document.addEventListener("click", function(event) {
