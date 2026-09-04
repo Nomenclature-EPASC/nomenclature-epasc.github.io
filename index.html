@@ -847,10 +847,32 @@ window.addEventListener(
 loadNumbers();
 
 if ("serviceWorker" in navigator) {
+
+    let refreshing = false;
+
+    navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        function() {
+
+            if (!refreshing) {
+
+                refreshing = true;
+
+                window.location.reload();
+
+            }
+
+        }
+    );
+
     navigator.serviceWorker.register("./sw.js?v=3");
+
     navigator.serviceWorker.ready.then(function(registration) {
-    registration.update();
-});
+
+        registration.update();
+
+    });
+
 }
     
 document.addEventListener("click", function(event) {
