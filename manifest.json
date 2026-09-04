@@ -1,7 +1,7 @@
 {
   "name": "Nomenclature EPASC",
   "short_name": "Nomenclature",
-"start_url": "./?v=2",
+"start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
