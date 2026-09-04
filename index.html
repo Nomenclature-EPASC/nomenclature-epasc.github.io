@@ -965,8 +965,10 @@ results.forEach(function(plant) {
     result.style.borderBottom =
         "1px solid #ddd";
 
-result.addEventListener("click", function() {
+result.addEventListener("touchend", function(event) {
 
+    event.preventDefault();
+    event.stopPropagation();
 
     const marker =
         document.querySelector(
