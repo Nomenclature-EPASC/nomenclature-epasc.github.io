@@ -112,14 +112,16 @@
 
             pointer-events: auto;
         }
-        /* RESPONSIVE - TÉLÉPHONE */
+/* RESPONSIVE - TÉLÉPHONE */
 
 @media (max-width: 600px) {
 
     #toolbar {
-        height: 50px;
+        height: 95px;
         padding: 6px 8px;
         gap: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     button {
@@ -128,12 +130,14 @@
     }
 
     #map-container {
-        top: 50px;
+        top: 95px;
     }
 
     #plantSearch {
-        top: 58px;
+        position: absolute;
+        top: 52px;
         left: 50%;
+        transform: translateX(-50%);
     }
 
 }
