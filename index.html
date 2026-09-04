@@ -965,8 +965,12 @@ results.forEach(function(plant) {
     result.style.borderBottom =
         "1px solid #ddd";
 
-result.addEventListener("click", function() {
+result.addEventListener("pointerup", function(event) {
 
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log("CLIC RECHERCHE", plant["Nom français"]);
 
     const marker =
         document.querySelector(
