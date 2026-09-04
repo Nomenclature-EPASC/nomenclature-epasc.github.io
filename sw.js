@@ -37,6 +37,15 @@ self.addEventListener("activate", function(event) {
 
 self.addEventListener("fetch", function(event) {
 
+    if (event.request.mode === "navigate") {
+
+        event.respondWith(
+            fetch(event.request)
+        );
+
+        return;
+    }
+
     event.respondWith(
 
         fetch(event.request)
