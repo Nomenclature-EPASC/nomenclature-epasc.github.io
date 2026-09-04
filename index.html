@@ -965,7 +965,7 @@ results.forEach(function(plant) {
     result.style.borderBottom =
         "1px solid #ddd";
 
-result.addEventListener("pointerup", function(event) {
+result.addEventListener("click", function(event) {
 
     event.preventDefault();
     event.stopPropagation();
@@ -985,77 +985,50 @@ result.addEventListener("pointerup", function(event) {
 
 scale = 1.5;
 
-updateMap();
+requestAnimationFrame(function() {
 
-const zoomedMarkerRect =
-    marker.getBoundingClientRect();
+    updateMap();
 
-const zoomedContainerRect =
-    container.getBoundingClientRect();
+    const zoomedMarkerRect =
+        marker.getBoundingClientRect();
 
-const zoomedMarkerCenterX =
-    zoomedMarkerRect.left +
-    zoomedMarkerRect.width / 2;
+    const zoomedContainerRect =
+        container.getBoundingClientRect();
 
-const zoomedMarkerCenterY =
-    zoomedMarkerRect.top +
-    zoomedMarkerRect.height / 2;
+    const zoomedMarkerCenterX =
+        zoomedMarkerRect.left +
+        zoomedMarkerRect.width / 2;
 
-const zoomedContainerCenterX =
-    zoomedContainerRect.left +
-    zoomedContainerRect.width / 2;
+    const zoomedMarkerCenterY =
+        zoomedMarkerRect.top +
+        zoomedMarkerRect.height / 2;
 
-const zoomedContainerCenterY =
-    zoomedContainerRect.top +
-    zoomedContainerRect.height / 2;
+    const zoomedContainerCenterX =
+        zoomedContainerRect.left +
+        zoomedContainerRect.width / 2;
 
-offsetX +=
-    zoomedContainerCenterX -
-    zoomedMarkerCenterX;
+    const zoomedContainerCenterY =
+        zoomedContainerRect.top +
+        zoomedContainerRect.height / 2;
 
-offsetY +=
-    zoomedContainerCenterY -
-    zoomedMarkerCenterY;
+    offsetX +=
+        zoomedContainerCenterX -
+        zoomedMarkerCenterX;
 
-updateMap();
+    offsetY +=
+        zoomedContainerCenterY -
+        zoomedMarkerCenterY;
 
-setTimeout(function() {
+    updateMap();
 
-    showPlantInfo(plant, marker);
+    setTimeout(function() {
 
-}, 100);
-if (plant["Nom latin"] === "/") {
+        showPlantInfo(plant, marker);
 
-    document.getElementById("plantLatin").style.display = "none";
-
-} else {
-
-    document.getElementById("plantLatin").style.display = "block";
-
-    document.getElementById("plantLatin").textContent =
-        plant["Nom latin"];
-}
-
-document.getElementById("plantFrench").textContent =
-    plant["Nom français"];
-
-const info =
-    document.getElementById("plantInfo");
-
-info.style.display = "block";
-
-const rect =
-    marker.getBoundingClientRect();
-
-info.style.position = "fixed";
-
-info.style.left =
-    (rect.right + 10) + "px";
-
-info.style.top =
-    (rect.top - 20) + "px";
+    }, 100);
 
 });
+
 
     resultsBox.appendChild(result);
 
