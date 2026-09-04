@@ -965,7 +965,10 @@ results.forEach(function(plant) {
     result.style.borderBottom =
         "1px solid #ddd";
 
-result.addEventListener("click", function() {
+result.addEventListener("click", function(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
 
 
     const marker =
