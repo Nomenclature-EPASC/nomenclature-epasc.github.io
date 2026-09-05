@@ -146,7 +146,7 @@
     <button onclick="zoomOut()">−</button>
 
     <button onclick="resetView()">
-        Test dernier 25
+        Test dernier 30
     </button>
 
 </div>
@@ -865,11 +865,15 @@ if ("serviceWorker" in navigator) {
         }
     );
 
-    navigator.serviceWorker.register("./sw.js");
-
-    navigator.serviceWorker.ready.then(function(registration) {
+navigator.serviceWorker.register("./sw.js")
+    .then(function(registration) {
 
         registration.update();
+
+    })
+    .catch(function(error) {
+
+        console.error("Erreur service worker :", error);
 
     });
 
