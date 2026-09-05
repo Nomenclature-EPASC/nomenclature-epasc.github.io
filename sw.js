@@ -1,5 +1,4 @@
-const VERSION = "v3";
-const CACHE_NAME = "nomenclature-" + VERSION;
+
 
 self.addEventListener("install", function(event) {
 
