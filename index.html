@@ -852,12 +852,7 @@ container.addEventListener(
             const distance =
                 Math.hypot(dx, dy);
 
-            console.log(
-    "TOUCHMOVE 2 DOIGTS",
-    "distance:", distance,
-    "pinchStartDistance:", pinchStartDistance,
-    "scale:", scale
-);
+
 
 
 if (
@@ -873,12 +868,6 @@ const factor =
     distance /
     pinchStartDistance;
 
-            console.log(
-    "FACTOR:",
-    factor,
-    "nouvelle échelle:",
-    pinchStartScale * factor
-);
 
 
             /* Centre du pinch */
