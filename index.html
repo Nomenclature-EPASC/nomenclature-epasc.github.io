@@ -45,18 +45,20 @@
             cursor: pointer;
         }
 
-        #map-container {
-            position: absolute;
-            top: 55px;
-            left: 0;
-            right: 0;
-            bottom: 0;
+#map-container {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-            overflow: hidden;
-            background: #dddddd;
+    overflow: hidden;
+    background: #dddddd;
 
-            cursor: grab;
-        }
+    cursor: grab;
+
+    touch-action: none;
+}
 
         #map-container:active {
             cursor: grabbing;
