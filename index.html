@@ -865,9 +865,9 @@ if ("serviceWorker" in navigator) {
         }
     );
 
-navigator.serviceWorker.register("./sw.js", {
-    updateViaCache: "none"
-})
+    navigator.serviceWorker.register("./sw.js", {
+        updateViaCache: "none"
+    })
     .then(function(registration) {
 
         registration.update();
@@ -879,23 +879,23 @@ navigator.serviceWorker.register("./sw.js", {
 
     });
 
+
+    // Vérifier le Service Worker lorsque la PWA redevient visible
+    document.addEventListener("visibilitychange", function() {
+
+        if (document.visibilityState === "visible") {
+
+            navigator.serviceWorker.ready.then(function(registration) {
+
+                registration.update();
+
+            });
+
+        }
+
+    });
+
 }
-    
-document.addEventListener("click", function(event) {
-
-    const info = document.getElementById("plantInfo");
-
-    if (
-        info.style.display === "block" &&
-        !info.contains(event.target) &&
-        !event.target.classList.contains("marker")
-    ) {
-        info.style.display = "none";
-    }
-
-});
-
-
 
 
 </script>
