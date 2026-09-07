@@ -664,7 +664,214 @@ window.addEventListener(
     }
 );
 
+/* =====================================================
+   TACTILE
+===================================================== */
 
+let touchStartX = 0;
+let touchStartY = 0;
+
+let touchStartOffsetX = 0;
+let touchStartOffsetY = 0;
+
+let pinchStartDistance = 0;
+let pinchStartScale = 1;
+
+let pinchCenterX = 0;
+let pinchCenterY = 0;
+
+
+container.addEventListener(
+    "touchstart",
+    function(event) {
+
+        if (event.touches.length === 1) {
+
+            const touch = event.touches[0];
+
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+
+            touchStartOffsetX = offsetX;
+            touchStartOffsetY = offsetY;
+
+        }
+
+
+        if (event.touches.length === 2) {
+
+            const touch1 = event.touches[0];
+            const touch2 = event.touches[1];
+
+            const dx =
+                touch2.clientX -
+                touch1.clientX;
+
+            const dy =
+                touch2.clientY -
+                touch1.clientY;
+
+            pinchStartDistance =
+                Math.hypot(dx, dy);
+
+            pinchStartScale =
+                scale;
+
+        }
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+container.addEventListener(
+    "touchmove",
+    function(event) {
+
+        event.preventDefault();
+
+
+        /* ==========================================
+           UN DOIGT → DÉPLACEMENT
+        ========================================== */
+
+        if (event.touches.length === 1) {
+
+            const touch =
+                event.touches[0];
+
+            offsetX =
+                touchStartOffsetX +
+                touch.clientX -
+                touchStartX;
+
+            offsetY =
+                touchStartOffsetY +
+                touch.clientY -
+                touchStartY;
+
+            updateMap();
+
+        }
+
+
+        /* ==========================================
+           DEUX DOIGTS → PINCH ZOOM
+        ========================================== */
+
+        if (event.touches.length === 2) {
+
+            const touch1 =
+                event.touches[0];
+
+            const touch2 =
+                event.touches[1];
+
+
+            const dx =
+                touch2.clientX -
+                touch1.clientX;
+
+            const dy =
+                touch2.clientY -
+                touch1.clientY;
+
+
+            const distance =
+                Math.hypot(dx, dy);
+
+
+            if (pinchStartDistance === 0)
+                return;
+
+
+            const factor =
+                distance /
+                pinchStartDistance;
+
+
+            const newScale =
+                Math.max(
+                    0.1,
+                    Math.min(
+                        pinchStartScale * factor,
+                        10
+                    )
+                );
+
+
+            const rect =
+                container.getBoundingClientRect();
+
+
+            pinchCenterX =
+                (
+                    touch1.clientX +
+                    touch2.clientX
+                ) / 2 -
+                rect.left;
+
+
+            pinchCenterY =
+                (
+                    touch1.clientY +
+                    touch2.clientY
+                ) / 2 -
+                rect.top;
+
+
+            const realFactor =
+                newScale / scale;
+
+
+            offsetX =
+                pinchCenterX -
+                (
+                    pinchCenterX -
+                    offsetX
+                ) * realFactor;
+
+
+            offsetY =
+                pinchCenterY -
+                (
+                    pinchCenterY -
+                    offsetY
+                ) * realFactor;
+
+
+            scale =
+                newScale;
+
+
+            updateMap();
+
+        }
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+container.addEventListener(
+    "touchend",
+    function(event) {
+
+        if (event.touches.length === 0) {
+
+            pinchStartDistance = 0;
+
+        }
+
+    },
+    {
+        passive: false
+    }
+);
 /* =====================================================
    CHARGER LES NUMÉROS DEPUIS SUPABASE
 ===================================================== */
