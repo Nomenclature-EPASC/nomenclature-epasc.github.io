@@ -697,7 +697,9 @@ container.addEventListener(
         event.preventDefault();
 
 
-        /* UN DOIGT */
+        /* ==========================================
+           UN DOIGT
+        ========================================== */
 
         if (event.touches.length === 1) {
 
@@ -721,7 +723,9 @@ container.addEventListener(
         }
 
 
-        /* DEUX DOIGTS */
+        /* ==========================================
+           DEUX DOIGTS
+        ========================================== */
 
         if (event.touches.length === 2) {
 
@@ -765,13 +769,15 @@ container.addEventListener(
                 rect.top;
 
 
+            /* IMPORTANT :
+               on mémorise exactement
+               l'état actuel de la carte */
+
             pinchStartScale =
                 scale;
 
-
             pinchStartOffsetX =
                 offsetX;
-
 
             pinchStartOffsetY =
                 offsetY;
@@ -799,7 +805,9 @@ container.addEventListener(
         event.preventDefault();
 
 
-        /* UN DOIGT → DÉPLACEMENT */
+        /* ==========================================
+           UN DOIGT → DÉPLACEMENT
+        ========================================== */
 
         if (
             event.touches.length === 1 &&
@@ -812,14 +820,18 @@ container.addEventListener(
 
             offsetX =
                 touchStartOffsetX +
-                touch.clientX -
-                touchStartX;
+                (
+                    touch.clientX -
+                    touchStartX
+                );
 
 
             offsetY =
                 touchStartOffsetY +
-                touch.clientY -
-                touchStartY;
+                (
+                    touch.clientY -
+                    touchStartY
+                );
 
 
             updateMap();
@@ -827,7 +839,9 @@ container.addEventListener(
         }
 
 
-        /* DEUX DOIGTS → ZOOM */
+        /* ==========================================
+           DEUX DOIGTS → PINCH
+        ========================================== */
 
         if (
             event.touches.length === 2 &&
@@ -840,6 +854,8 @@ container.addEventListener(
             const touch2 =
                 event.touches[1];
 
+
+            /* Distance actuelle */
 
             const dx =
                 touch2.clientX -
@@ -861,6 +877,10 @@ container.addEventListener(
             }
 
 
+            /* ======================================
+               NOUVEAU SCALE
+            ====================================== */
+
             const factor =
                 distance /
                 pinchStartDistance;
@@ -880,6 +900,10 @@ container.addEventListener(
                     )
                 );
 
+
+            /* ======================================
+               CENTRE ACTUEL ENTRE LES DOIGTS
+            ====================================== */
 
             const rect =
                 container.getBoundingClientRect();
@@ -901,7 +925,11 @@ container.addEventListener(
                 rect.top;
 
 
-            const realFactor =
+            /* ======================================
+               CALCUL DU DÉPLACEMENT
+            ====================================== */
+
+            const scaleRatio =
                 newScale /
                 pinchStartScale;
 
@@ -911,7 +939,7 @@ container.addEventListener(
                 (
                     pinchStartCenterX -
                     pinchStartOffsetX
-                ) * realFactor;
+                ) * scaleRatio;
 
 
             offsetY =
@@ -919,8 +947,12 @@ container.addEventListener(
                 (
                     pinchStartCenterY -
                     pinchStartOffsetY
-                ) * realFactor;
+                ) * scaleRatio;
 
+
+            /* ======================================
+               APPLICATION
+            ====================================== */
 
             scale =
                 newScale;
@@ -945,9 +977,14 @@ container.addEventListener(
     "touchend",
     function(event) {
 
-        /* PLUS AUCUN DOIGT */
 
-        if (event.touches.length === 0) {
+        /* ==========================================
+           PLUS AUCUN DOIGT
+        ========================================== */
+
+        if (
+            event.touches.length === 0
+        ) {
 
             touchMode = null;
 
@@ -956,9 +993,13 @@ container.addEventListener(
         }
 
 
-        /* RETOUR À UN DOIGT */
+        /* ==========================================
+           UN DOIGT RESTANT
+        ========================================== */
 
-        if (event.touches.length === 1) {
+        if (
+            event.touches.length === 1
+        ) {
 
             const touch =
                 event.touches[0];
