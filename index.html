@@ -677,6 +677,7 @@ let touchStartOffsetX = 0;
 let touchStartOffsetY = 0;
 
 let pinchStartDistance = 0;
+let pinchJustStarted = false;
 
 
 /* =====================================================
@@ -716,31 +717,13 @@ container.addEventListener(
 
         /* DEUX DOIGTS */
 
-        if (event.touches.length === 2) {
+if (event.touches.length === 2) {
 
-            const touch1 =
-                event.touches[0];
+    touchMode = "pinch";
 
-            const touch2 =
-                event.touches[1];
+    pinchJustStarted = true;
 
-
-            const dx =
-                touch2.clientX -
-                touch1.clientX;
-
-            const dy =
-                touch2.clientY -
-                touch1.clientY;
-
-
-            pinchStartDistance =
-                Math.hypot(dx, dy);
-
-
-            touchMode = "pinch";
-
-        }
+}
 
     },
     {
@@ -821,20 +804,29 @@ container.addEventListener(
                 Math.hypot(dx, dy);
 
 
-            if (
-                pinchStartDistance <= 0
-            ) {
+if (pinchJustStarted) {
 
-                return;
+    pinchStartDistance = distance;
 
-            }
+    pinchJustStarted = false;
+
+    return;
+
+}
 
 
-            /* Facteur de zoom */
+if (
+    pinchStartDistance <= 0
+) {
 
-            const factor =
-                distance /
-                pinchStartDistance;
+    return;
+
+}
+
+
+const factor =
+    distance /
+    pinchStartDistance;
 
 
             /* Centre du pinch */
@@ -944,15 +936,17 @@ container.addEventListener(
 
         /* PLUS DE DOIGTS */
 
-        if (
-            event.touches.length === 0
-        ) {
+if (
+    event.touches.length === 0
+) {
 
-            touchMode = null;
+    touchMode = null;
 
-            pinchStartDistance = 0;
+    pinchStartDistance = 0;
 
-        }
+    pinchJustStarted = false;
+
+}
 
 
         /* UN DOIGT RESTANT */
