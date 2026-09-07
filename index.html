@@ -676,8 +676,18 @@ let touchStartY = 0;
 let touchStartOffsetX = 0;
 let touchStartOffsetY = 0;
 
+
 let pinchStartDistance = 0;
-let pinchJustStarted = false;
+
+let pinchStartScale = 1;
+
+let pinchStartOffsetX = 0;
+let pinchStartOffsetY = 0;
+
+let pinchStartCenterX = 0;
+let pinchStartCenterY = 0;
+
+
 
 
 /* =====================================================
@@ -719,9 +729,57 @@ container.addEventListener(
 
 if (event.touches.length === 2) {
 
-    touchMode = "pinch";
+    const touch1 =
+        event.touches[0];
 
-    pinchJustStarted = true;
+    const touch2 =
+        event.touches[1];
+
+    const rect =
+        container.getBoundingClientRect();
+
+
+    const dx =
+        touch2.clientX -
+        touch1.clientX;
+
+    const dy =
+        touch2.clientY -
+        touch1.clientY;
+
+
+    pinchStartDistance =
+        Math.hypot(dx, dy);
+
+
+    pinchStartCenterX =
+        (
+            touch1.clientX +
+            touch2.clientX
+        ) / 2 -
+        rect.left;
+
+
+    pinchStartCenterY =
+        (
+            touch1.clientY +
+            touch2.clientY
+        ) / 2 -
+        rect.top;
+
+
+    pinchStartScale =
+        scale;
+
+
+    pinchStartOffsetX =
+        offsetX;
+
+    pinchStartOffsetY =
+        offsetY;
+
+
+    touchMode = "pinch";
 
 }
 
@@ -804,17 +862,6 @@ container.addEventListener(
                 Math.hypot(dx, dy);
 
 
-if (pinchJustStarted) {
-
-    pinchStartDistance = distance;
-
-    pinchJustStarted = false;
-
-    return;
-
-}
-
-
 if (
     pinchStartDistance <= 0
 ) {
@@ -856,12 +903,9 @@ const factor =
                à partir du SCALE ACTUEL.
             */
 
-            const oldScale =
-                scale;
-
-
-            let newScale =
-                scale * factor;
+let newScale =
+    pinchStartScale *
+    factor;
 
 
             newScale =
@@ -874,32 +918,43 @@ const factor =
                 );
 
 
-            const realFactor =
-                newScale /
-                oldScale;
+const realFactor =
+    newScale /
+    pinchStartScale;
 
 
             /*
                Même principe que zoomAt()
             */
 
-            offsetX =
-                centerX -
-                (
-                    centerX -
-                    offsetX
-                ) *
-                realFactor;
+offsetX =
+    pinchStartOffsetX +
+    (
+        centerX -
+        pinchStartCenterX
+    ) -
+    (
+        pinchStartCenterX -
+        pinchStartOffsetX
+    ) *
+    (
+        realFactor - 1
+    );
 
 
-            offsetY =
-                centerY -
-                (
-                    centerY -
-                    offsetY
-                ) *
-                realFactor;
-
+offsetY =
+    pinchStartOffsetY +
+    (
+        centerY -
+        pinchStartCenterY
+    ) -
+    (
+        pinchStartCenterY -
+        pinchStartOffsetY
+    ) *
+    (
+        realFactor - 1
+    );
 
             scale =
                 newScale;
@@ -911,8 +966,7 @@ const factor =
                à la distance actuelle.
             */
 
-            pinchStartDistance =
-                distance;
+
 
 
             updateMap();
@@ -944,7 +998,7 @@ if (
 
     pinchStartDistance = 0;
 
-    pinchJustStarted = false;
+
 
 }
 
