@@ -676,7 +676,11 @@ let touchStartY = 0;
 let touchStartOffsetX = 0;
 let touchStartOffsetY = 0;
 
+
+/* Position initiale des deux doigts */
+
 let pinchStartDistance = 0;
+
 let pinchStartScale = 1;
 
 let pinchStartCenterX = 0;
@@ -684,6 +688,55 @@ let pinchStartCenterY = 0;
 
 let pinchStartOffsetX = 0;
 let pinchStartOffsetY = 0;
+
+
+/* =====================================================
+   FONCTION : DISTANCE ENTRE DEUX DOIGTS
+===================================================== */
+
+function getTouchDistance(touch1, touch2) {
+
+    const dx =
+        touch2.clientX -
+        touch1.clientX;
+
+    const dy =
+        touch2.clientY -
+        touch1.clientY;
+
+    return Math.hypot(dx, dy);
+
+}
+
+
+/* =====================================================
+   FONCTION : CENTRE ENTRE DEUX DOIGTS
+===================================================== */
+
+function getTouchCenter(touch1, touch2) {
+
+    const rect =
+        container.getBoundingClientRect();
+
+    return {
+
+        x:
+            (
+                touch1.clientX +
+                touch2.clientX
+            ) / 2 -
+            rect.left,
+
+        y:
+            (
+                touch1.clientY +
+                touch2.clientY
+            ) / 2 -
+            rect.top
+
+    };
+
+}
 
 
 /* =====================================================
@@ -736,45 +789,33 @@ container.addEventListener(
                 event.touches[1];
 
 
-            const dx =
-                touch2.clientX -
-                touch1.clientX;
-
-            const dy =
-                touch2.clientY -
-                touch1.clientY;
-
+            /* On capture EXACTEMENT
+               l'état actuel */
 
             pinchStartDistance =
-                Math.hypot(dx, dy);
+                getTouchDistance(
+                    touch1,
+                    touch2
+                );
 
 
-            const rect =
-                container.getBoundingClientRect();
+            const center =
+                getTouchCenter(
+                    touch1,
+                    touch2
+                );
 
 
             pinchStartCenterX =
-                (
-                    touch1.clientX +
-                    touch2.clientX
-                ) / 2 -
-                rect.left;
-
+                center.x;
 
             pinchStartCenterY =
-                (
-                    touch1.clientY +
-                    touch2.clientY
-                ) / 2 -
-                rect.top;
+                center.y;
 
-
-            /* IMPORTANT :
-               on mémorise exactement
-               l'état actuel de la carte */
 
             pinchStartScale =
                 scale;
+
 
             pinchStartOffsetX =
                 offsetX;
@@ -840,7 +881,7 @@ container.addEventListener(
 
 
         /* ==========================================
-           DEUX DOIGTS → PINCH
+           DEUX DOIGTS → ZOOM
         ========================================== */
 
         if (
@@ -855,22 +896,16 @@ container.addEventListener(
                 event.touches[1];
 
 
-            /* Distance actuelle */
-
-            const dx =
-                touch2.clientX -
-                touch1.clientX;
-
-            const dy =
-                touch2.clientY -
-                touch1.clientY;
+            const currentDistance =
+                getTouchDistance(
+                    touch1,
+                    touch2
+                );
 
 
-            const distance =
-                Math.hypot(dx, dy);
-
-
-            if (pinchStartDistance <= 0) {
+            if (
+                pinchStartDistance <= 0
+            ) {
 
                 return;
 
@@ -878,17 +913,17 @@ container.addEventListener(
 
 
             /* ======================================
-               NOUVEAU SCALE
+               CALCUL DU ZOOM
             ====================================== */
 
-            const factor =
-                distance /
+            const zoomRatio =
+                currentDistance /
                 pinchStartDistance;
 
 
             let newScale =
                 pinchStartScale *
-                factor;
+                zoomRatio;
 
 
             newScale =
@@ -902,31 +937,18 @@ container.addEventListener(
 
 
             /* ======================================
-               CENTRE ACTUEL ENTRE LES DOIGTS
+               CENTRE ACTUEL
             ====================================== */
 
-            const rect =
-                container.getBoundingClientRect();
-
-
-            const centerX =
-                (
-                    touch1.clientX +
-                    touch2.clientX
-                ) / 2 -
-                rect.left;
-
-
-            const centerY =
-                (
-                    touch1.clientY +
-                    touch2.clientY
-                ) / 2 -
-                rect.top;
+            const currentCenter =
+                getTouchCenter(
+                    touch1,
+                    touch2
+                );
 
 
             /* ======================================
-               CALCUL DU DÉPLACEMENT
+               POSITION DU PLAN
             ====================================== */
 
             const scaleRatio =
@@ -935,24 +957,22 @@ container.addEventListener(
 
 
             offsetX =
-                centerX -
+                currentCenter.x -
                 (
                     pinchStartCenterX -
                     pinchStartOffsetX
-                ) * scaleRatio;
+                ) *
+                scaleRatio;
 
 
             offsetY =
-                centerY -
+                currentCenter.y -
                 (
                     pinchStartCenterY -
                     pinchStartOffsetY
-                ) * scaleRatio;
+                ) *
+                scaleRatio;
 
-
-            /* ======================================
-               APPLICATION
-            ====================================== */
 
             scale =
                 newScale;
@@ -994,7 +1014,7 @@ container.addEventListener(
 
 
         /* ==========================================
-           UN DOIGT RESTANT
+           IL RESTE UN DOIGT
         ========================================== */
 
         if (
