@@ -676,67 +676,7 @@ let touchStartY = 0;
 let touchStartOffsetX = 0;
 let touchStartOffsetY = 0;
 
-
-/* Position initiale des deux doigts */
-
 let pinchStartDistance = 0;
-
-let pinchStartScale = 1;
-
-let pinchStartCenterX = 0;
-let pinchStartCenterY = 0;
-
-let pinchStartOffsetX = 0;
-let pinchStartOffsetY = 0;
-
-
-/* =====================================================
-   FONCTION : DISTANCE ENTRE DEUX DOIGTS
-===================================================== */
-
-function getTouchDistance(touch1, touch2) {
-
-    const dx =
-        touch2.clientX -
-        touch1.clientX;
-
-    const dy =
-        touch2.clientY -
-        touch1.clientY;
-
-    return Math.hypot(dx, dy);
-
-}
-
-
-/* =====================================================
-   FONCTION : CENTRE ENTRE DEUX DOIGTS
-===================================================== */
-
-function getTouchCenter(touch1, touch2) {
-
-    const rect =
-        container.getBoundingClientRect();
-
-    return {
-
-        x:
-            (
-                touch1.clientX +
-                touch2.clientX
-            ) / 2 -
-            rect.left,
-
-        y:
-            (
-                touch1.clientY +
-                touch2.clientY
-            ) / 2 -
-            rect.top
-
-    };
-
-}
 
 
 /* =====================================================
@@ -750,9 +690,7 @@ container.addEventListener(
         event.preventDefault();
 
 
-        /* ==========================================
-           UN DOIGT
-        ========================================== */
+        /* UN DOIGT */
 
         if (event.touches.length === 1) {
 
@@ -776,9 +714,7 @@ container.addEventListener(
         }
 
 
-        /* ==========================================
-           DEUX DOIGTS
-        ========================================== */
+        /* DEUX DOIGTS */
 
         if (event.touches.length === 2) {
 
@@ -789,39 +725,17 @@ container.addEventListener(
                 event.touches[1];
 
 
-            /* On capture EXACTEMENT
-               l'état actuel */
+            const dx =
+                touch2.clientX -
+                touch1.clientX;
+
+            const dy =
+                touch2.clientY -
+                touch1.clientY;
+
 
             pinchStartDistance =
-                getTouchDistance(
-                    touch1,
-                    touch2
-                );
-
-
-            const center =
-                getTouchCenter(
-                    touch1,
-                    touch2
-                );
-
-
-            pinchStartCenterX =
-                center.x;
-
-            pinchStartCenterY =
-                center.y;
-
-
-            pinchStartScale =
-                scale;
-
-
-            pinchStartOffsetX =
-                offsetX;
-
-            pinchStartOffsetY =
-                offsetY;
+                Math.hypot(dx, dy);
 
 
             touchMode = "pinch";
@@ -847,7 +761,7 @@ container.addEventListener(
 
 
         /* ==========================================
-           UN DOIGT → DÉPLACEMENT
+           UN DOIGT → DÉPLACER LA CARTE
         ========================================== */
 
         if (
@@ -861,18 +775,14 @@ container.addEventListener(
 
             offsetX =
                 touchStartOffsetX +
-                (
-                    touch.clientX -
-                    touchStartX
-                );
+                touch.clientX -
+                touchStartX;
 
 
             offsetY =
                 touchStartOffsetY +
-                (
-                    touch.clientY -
-                    touchStartY
-                );
+                touch.clientY -
+                touchStartY;
 
 
             updateMap();
@@ -881,7 +791,7 @@ container.addEventListener(
 
 
         /* ==========================================
-           DEUX DOIGTS → ZOOM
+           DEUX DOIGTS → PINCH
         ========================================== */
 
         if (
@@ -896,11 +806,19 @@ container.addEventListener(
                 event.touches[1];
 
 
-            const currentDistance =
-                getTouchDistance(
-                    touch1,
-                    touch2
-                );
+            /* Distance actuelle */
+
+            const dx =
+                touch2.clientX -
+                touch1.clientX;
+
+            const dy =
+                touch2.clientY -
+                touch1.clientY;
+
+
+            const distance =
+                Math.hypot(dx, dy);
 
 
             if (
@@ -912,18 +830,46 @@ container.addEventListener(
             }
 
 
-            /* ======================================
-               CALCUL DU ZOOM
-            ====================================== */
+            /* Facteur de zoom */
 
-            const zoomRatio =
-                currentDistance /
+            const factor =
+                distance /
                 pinchStartDistance;
 
 
+            /* Centre du pinch */
+
+            const rect =
+                container.getBoundingClientRect();
+
+
+            const centerX =
+                (
+                    touch1.clientX +
+                    touch2.clientX
+                ) / 2 -
+                rect.left;
+
+
+            const centerY =
+                (
+                    touch1.clientY +
+                    touch2.clientY
+                ) / 2 -
+                rect.top;
+
+
+            /*
+               On applique le zoom progressivement
+               à partir du SCALE ACTUEL.
+            */
+
+            const oldScale =
+                scale;
+
+
             let newScale =
-                pinchStartScale *
-                zoomRatio;
+                scale * factor;
 
 
             newScale =
@@ -936,46 +882,45 @@ container.addEventListener(
                 );
 
 
-            /* ======================================
-               CENTRE ACTUEL
-            ====================================== */
-
-            const currentCenter =
-                getTouchCenter(
-                    touch1,
-                    touch2
-                );
-
-
-            /* ======================================
-               POSITION DU PLAN
-            ====================================== */
-
-            const scaleRatio =
+            const realFactor =
                 newScale /
-                pinchStartScale;
+                oldScale;
 
+
+            /*
+               Même principe que zoomAt()
+            */
 
             offsetX =
-                currentCenter.x -
+                centerX -
                 (
-                    pinchStartCenterX -
-                    pinchStartOffsetX
+                    centerX -
+                    offsetX
                 ) *
-                scaleRatio;
+                realFactor;
 
 
             offsetY =
-                currentCenter.y -
+                centerY -
                 (
-                    pinchStartCenterY -
-                    pinchStartOffsetY
+                    centerY -
+                    offsetY
                 ) *
-                scaleRatio;
+                realFactor;
 
 
             scale =
                 newScale;
+
+
+            /*
+               IMPORTANT :
+               on remet la distance de référence
+               à la distance actuelle.
+            */
+
+            pinchStartDistance =
+                distance;
 
 
             updateMap();
@@ -997,10 +942,7 @@ container.addEventListener(
     "touchend",
     function(event) {
 
-
-        /* ==========================================
-           PLUS AUCUN DOIGT
-        ========================================== */
+        /* PLUS DE DOIGTS */
 
         if (
             event.touches.length === 0
@@ -1013,9 +955,7 @@ container.addEventListener(
         }
 
 
-        /* ==========================================
-           IL RESTE UN DOIGT
-        ========================================== */
+        /* UN DOIGT RESTANT */
 
         if (
             event.touches.length === 1
