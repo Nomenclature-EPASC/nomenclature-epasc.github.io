@@ -557,21 +557,12 @@ function fitPlanToWindow() {
         windowHeight / planHeight;
 
 
-    scale =
-        Math.min(scaleX, scaleY) * 0.95;
+scale = Math.min(scaleX, scaleY);
 
+offsetX = (windowWidth - planWidth * scale) / 2;
+offsetY = (windowHeight - planHeight * scale) / 2;
 
-    offsetX =
-        (windowWidth -
-        planWidth * scale) / 2;
-
-
-    offsetY =
-        (windowHeight -
-        planHeight * scale) / 2;
-
-
-    updateMap();
+updateMap();
 
 }
 
