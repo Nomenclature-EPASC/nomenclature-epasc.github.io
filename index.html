@@ -681,6 +681,8 @@ let pinchStartOffsetY = 0;
 let pinchStartCenterX = 0;
 let pinchStartCenterY = 0;
 
+let pinchNeedsInit = false;
+
 
 
 
@@ -718,60 +720,11 @@ container.addEventListener(
 
 
         /* DEUX DOIGTS */
-
 if (event.touches.length === 2) {
 
-    const touch1 =
-        event.touches[0];
-
-    const touch2 =
-        event.touches[1];
-
-    const rect =
-        container.getBoundingClientRect();
-
-
-    const dx =
-        touch2.clientX -
-        touch1.clientX;
-
-    const dy =
-        touch2.clientY -
-        touch1.clientY;
-
-
-    pinchStartDistance =
-        Math.hypot(dx, dy);
-
-
-    pinchStartCenterX =
-        (
-            touch1.clientX +
-            touch2.clientX
-        ) / 2 -
-        rect.left;
-
-
-    pinchStartCenterY =
-        (
-            touch1.clientY +
-            touch2.clientY
-        ) / 2 -
-        rect.top;
-
-
-    pinchStartScale =
-        scale;
-
-
-    pinchStartOffsetX =
-        offsetX;
-
-    pinchStartOffsetY =
-        offsetY;
-
-
     touchMode = "pinch";
+
+    pinchNeedsInit = true;
 
 }
 
@@ -856,6 +809,43 @@ container.addEventListener(
 
 
 
+const rect =
+    container.getBoundingClientRect();
+
+const centerX =
+    (
+        touch1.clientX +
+        touch2.clientX
+    ) / 2 -
+    rect.left;
+
+const centerY =
+    (
+        touch1.clientY +
+        touch2.clientY
+    ) / 2 -
+    rect.top;
+
+
+if (pinchNeedsInit) {
+
+    pinchStartDistance = distance;
+
+    pinchStartCenterX = centerX;
+    pinchStartCenterY = centerY;
+
+    pinchStartScale = scale;
+
+    pinchStartOffsetX = offsetX;
+    pinchStartOffsetY = offsetY;
+
+    pinchNeedsInit = false;
+
+    return;
+
+}
+
+
 if (
     pinchStartDistance <= 0
 ) {
@@ -871,26 +861,7 @@ const factor =
 
 
 
-            /* Centre du pinch */
-
-            const rect =
-                container.getBoundingClientRect();
-
-
-            const centerX =
-                (
-                    touch1.clientX +
-                    touch2.clientX
-                ) / 2 -
-                rect.left;
-
-
-            const centerY =
-                (
-                    touch1.clientY +
-                    touch2.clientY
-                ) / 2 -
-                rect.top;
+            
 
 
             /*
