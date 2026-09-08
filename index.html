@@ -2035,14 +2035,19 @@ document.getElementById(
 
         if (!response.ok) {
 
-            console.error(
-                "Erreur envoi proposition :",
-                response.status
-            );
+const erreur =
+    await response.text();
 
-            alert(
-                "Erreur lors de l'envoi."
-            );
+console.error(
+    "Erreur envoi proposition :",
+    response.status,
+    erreur
+);
+
+alert(
+    "Erreur lors de l'envoi : " +
+    response.status
+);
 
             return;
         }
