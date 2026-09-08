@@ -2270,14 +2270,20 @@ const proposalId =
         "terrainAdminForm"
     ).dataset.proposalId;
 
-const { error } =
+const { data, error } =
     await supabaseClient
         .from("propositions_terrain")
         .update({
             nom_francais: french,
             nom_latin: latin
         })
-        .eq("id", proposalId);
+        .eq("id", proposalId)
+        .select();
+
+console.log(
+    "Résultat modification Supabase :",
+    data
+);
 
 if (error) {
     console.error(
