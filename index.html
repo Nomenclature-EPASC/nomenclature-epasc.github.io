@@ -490,7 +490,12 @@ const markers =
 
 function hidePlantInfo() {
 
-    document.getElementById("plantInfo").style.display = "none";
+    const info =
+        document.getElementById("plantInfo");
+
+    if (info) {
+        info.style.display = "none";
+    }
 
 }
 
