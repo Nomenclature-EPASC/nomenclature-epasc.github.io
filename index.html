@@ -2318,7 +2318,96 @@ loadTerrainProposals();
     }
 );
 
-/* CODE DU BOUTON DÉPLACER À AJOUTER ICI */
+document.getElementById(
+    "adminMoveButton"
+).addEventListener(
+    "click",
+    function() {
+
+        const proposalId =
+            document.getElementById(
+                "terrainAdminForm"
+            ).dataset.proposalId;
+
+        const marker =
+            document.querySelector(
+                '.terrain-marker-new[data-proposal-id="' +
+                proposalId +
+                '"]'
+            );
+
+        if (!marker) {
+            alert(
+                "Erreur : proposition introuvable."
+            );
+            return;
+        }
+
+        document.getElementById(
+            "terrainAdminForm"
+        ).style.display = "none";
+
+        marker.style.cursor = "move";
+
+        marker.onpointerdown =
+            function(event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                marker.setPointerCapture(
+                    event.pointerId
+                );
+
+                const startX =
+                    event.clientX;
+
+                const startY =
+                    event.clientY;
+
+                const startLeft =
+                    parseFloat(
+                        marker.style.left
+                    );
+
+                const startTop =
+                    parseFloat(
+                        marker.style.top
+                    );
+
+                marker.onpointermove =
+                    function(e) {
+
+                        const dx =
+                            (e.clientX - startX) /
+                            scale;
+
+                        const dy =
+                            (e.clientY - startY) /
+                            scale;
+
+                        marker.style.left =
+                            (startLeft + dx) + "px";
+
+                        marker.style.top =
+                            (startTop + dy) + "px";
+                    };
+
+                marker.onpointerup =
+                    function() {
+
+                        marker.onpointermove = null;
+                        marker.onpointerup = null;
+
+                        console.log(
+                            "Nouvelle position :",
+                            marker.style.left,
+                            marker.style.top
+                        );
+                    };
+            };
+    }
+);
 
 </script>
 </body>
