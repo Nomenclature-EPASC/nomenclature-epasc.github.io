@@ -133,6 +133,20 @@ top: 0;
         #addTerrainButton {
     margin-right: 10px;
 }
+        .terrain-marker-new {
+    position: absolute;
+
+    transform: translate(-50%, -50%);
+
+    width: 24px;
+    height: 24px;
+
+    background: red;
+    border: 2px solid black;
+    border-radius: 50%;
+
+    pointer-events: none;
+}
 /* TEST */
 
     </style>
@@ -444,6 +458,50 @@ function startAddingTerrainPlant() {
     console.log("Mode ajout activé");
 
     container.style.cursor = "crosshair";
+
+    function placePoint(event) {
+
+        const rect =
+            container.getBoundingClientRect();
+
+        const x =
+            (event.clientX - rect.left - offsetX) / scale;
+
+        const y =
+            (event.clientY - rect.top - offsetY) / scale;
+
+        const point =
+            document.createElement("div");
+
+        point.className =
+            "terrain-marker-new";
+
+        point.style.left =
+            x + "px";
+
+        point.style.top =
+            y + "px";
+
+        markers.appendChild(point);
+
+        container.style.cursor = "grab";
+
+        container.removeEventListener(
+            "click",
+            placePoint
+        );
+
+        console.log(
+            "Point créé :",
+            x,
+            y
+        );
+    }
+
+    container.addEventListener(
+        "click",
+        placePoint
+    );
 
 }
 
