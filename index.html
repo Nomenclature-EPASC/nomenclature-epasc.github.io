@@ -1430,6 +1430,22 @@ function displayTerrainPlants(data) {
             " — " +
             item.nom_latin;
 
+        marker.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        alert(
+            "Proposition :\n\n" +
+            item.nom_francais +
+            "\n" +
+            item.nom_latin
+        );
+
+    }
+);
+
         markers.appendChild(marker);
 
     });
