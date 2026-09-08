@@ -1222,8 +1222,18 @@ if (plan.complete) {
 
 
 window.addEventListener(
-   "resize",
-   fitPlanToWindow
+    "resize",
+    function() {
+
+        // Sur GSM, ne pas refaire le zoom automatique
+        // lors de l'ouverture/fermeture du clavier.
+        if (window.innerWidth <= 600) {
+            return;
+        }
+
+        fitPlanToWindow();
+
+    }
 );
 
 
