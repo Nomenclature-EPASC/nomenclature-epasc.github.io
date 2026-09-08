@@ -441,6 +441,11 @@ if (!response.ok) {
         loggedIn
             ? "✏️ MODE ÉDITION"
             : "";
+    if (loggedIn) {
+
+    loadTerrainProposals();
+
+}
 
 }
 
@@ -1261,7 +1266,40 @@ async function loadNumbers() {
 /* =====================================================
    CHARGER LES PLANTES DE TERRAIN
 ===================================================== */
+/* =====================================================
+   CHARGER LES PROPOSITIONS TERRAIN
+===================================================== */
 
+async function loadTerrainProposals() {
+
+    if (!editMode) {
+        return;
+    }
+
+    const { data, error } =
+        await supabaseClient
+            .from("propositions_terrain")
+            .select("*")
+            .eq("statut", "en_attente");
+
+    if (error) {
+
+        console.error(
+            "Impossible de charger les propositions :",
+            error
+        );
+
+        return;
+    }
+
+    console.log(
+        "Propositions terrain chargées :",
+        data
+    );
+
+    displayTerrainProposals(data);
+
+}
 async function loadTerrainPlants() {
 
     const url =
@@ -1355,6 +1393,42 @@ function displayTerrainPlants(data) {
 
             }
         );
+
+        markers.appendChild(marker);
+
+    });
+
+}
+    function displayTerrainProposals(data) {
+
+    data.forEach(function(item) {
+
+        if (
+            item.x === null ||
+            item.y === null
+        ) {
+            return;
+        }
+
+        const marker =
+            document.createElement("div");
+
+        marker.className =
+            "terrain-marker-new";
+
+        marker.dataset.proposalId =
+            item.id;
+
+        marker.style.left =
+            item.x + "px";
+
+        marker.style.top =
+            item.y + "px";
+
+        marker.title =
+            item.nom_francais +
+            " — " +
+            item.nom_latin;
 
         markers.appendChild(marker);
 
