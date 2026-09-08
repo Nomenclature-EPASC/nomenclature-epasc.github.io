@@ -484,10 +484,6 @@ const markers =
    AFFICHAGE
 ===================================================== */
 
-/* =====================================================
-   AFFICHAGE
-===================================================== */
-
 function hidePlantInfo() {
 
     const info =
@@ -520,6 +516,19 @@ function updateMap() {
     }
 
 }
+
+    container.addEventListener(
+    "click",
+    function(event) {
+
+        if (!event.target.closest(".marker")) {
+
+            hidePlantInfo();
+
+        }
+
+    }
+);
 
 
 /* =====================================================
