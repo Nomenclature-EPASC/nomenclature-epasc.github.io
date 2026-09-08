@@ -1700,6 +1700,78 @@ position: fixed;
     text-align: center;
 "></div>
 </div>
+    <div id="terrainForm" style="
+    display: none;
+    position: fixed;
+    background: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 15px;
+    width: 280px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 3000;
+">
+
+    <div style="
+        font-weight: bold;
+        margin-bottom: 12px;
+        text-align: center;
+    ">
+        Ajouter une plante
+    </div>
+
+    <input
+        id="terrainFrenchInput"
+        type="text"
+        placeholder="Nom français"
+        style="
+            width: 100%;
+            padding: 9px;
+            margin-bottom: 8px;
+            font-size: 16px;
+        "
+    >
+
+    <input
+        id="terrainLatinInput"
+        type="text"
+        placeholder="Nom latin"
+        style="
+            width: 100%;
+            padding: 9px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        "
+    >
+
+    <div style="
+        display: flex;
+        justify-content: space-between;
+    ">
+
+        <button
+            id="terrainCancelButton"
+            style="
+                font-size: 16px;
+                padding: 6px 12px;
+            "
+        >
+            Annuler
+        </button>
+
+        <button
+            id="terrainSendButton"
+            style="
+                font-size: 16px;
+                padding: 6px 12px;
+            "
+        >
+            Envoyer
+        </button>
+
+    </div>
+
+</div>
     <script>
 
 document.getElementById("searchInput").addEventListener("input", function() {
