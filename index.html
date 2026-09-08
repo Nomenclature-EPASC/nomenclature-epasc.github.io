@@ -1436,12 +1436,30 @@ function displayTerrainPlants(data) {
 
         event.stopPropagation();
 
-        alert(
-            "Proposition :\n\n" +
-            item.nom_francais +
-            "\n" +
-            item.nom_latin
-        );
+const form =
+    document.getElementById("terrainAdminForm");
+
+document.getElementById(
+    "adminFrenchInput"
+).value =
+    item.nom_francais;
+
+document.getElementById(
+    "adminLatinInput"
+).value =
+    item.nom_latin;
+
+form.style.display =
+    "block";
+
+form.style.left =
+    "50%";
+
+form.style.top =
+    "50%";
+
+form.style.transform =
+    "translate(-50%, -50%)";
 
     }
 );
@@ -1862,6 +1880,86 @@ position: fixed;
         </button>
 
     </div>
+
+</div>
+    <div id="terrainAdminForm" style="
+    display: none;
+    position: fixed;
+    background: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 3000;
+">
+
+    <div style="
+        font-weight: bold;
+        margin-bottom: 12px;
+        text-align: center;
+    ">
+        Proposition terrain
+    </div>
+
+    <input
+        id="adminFrenchInput"
+        type="text"
+        placeholder="Nom français"
+        style="
+            width: 100%;
+            padding: 9px;
+            margin-bottom: 8px;
+            font-size: 16px;
+        "
+    >
+
+    <input
+        id="adminLatinInput"
+        type="text"
+        placeholder="Nom latin"
+        style="
+            width: 100%;
+            padding: 9px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        "
+    >
+
+    <div style="
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    ">
+
+        <button id="adminEditButton">
+            ✏️ Modifier
+        </button>
+
+        <button id="adminMoveButton">
+            ↔️ Déplacer
+        </button>
+
+        <button id="adminAcceptButton">
+            ✅ Accepter
+        </button>
+
+        <button id="adminRejectButton">
+            ❌ Refuser
+        </button>
+
+    </div>
+
+    <button
+        id="adminCloseButton"
+        style="
+            display: block;
+            margin: 12px auto 0;
+            font-size: 16px;
+        "
+    >
+        Fermer
+    </button>
 
 </div>
     <script>
