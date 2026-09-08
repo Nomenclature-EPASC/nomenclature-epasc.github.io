@@ -2286,11 +2286,17 @@ if (error) {
     );
 
     alert(
-        "Erreur lors de la modification."
+        "Erreur lors de la modification : " +
+        error.message
     );
 
     return;
 }
+
+console.log(
+    "Modification Supabase réussie pour l'ID :",
+    proposalId
+);
 
 alert(
     "Modification enregistrée."
