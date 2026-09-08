@@ -130,6 +130,9 @@ top: 0;
     pointer-events: auto;
     cursor: pointer;
 }
+        #addTerrainButton {
+    margin-right: 10px;
+}
 /* TEST */
 
     </style>
@@ -138,6 +141,9 @@ top: 0;
 <body>
 
 <div id="toolbar">
+    <button id="addTerrainButton" onclick="startAddingTerrainPlant()">
+    ➕
+</button>
 
     <button id="loginButton" onclick="login()">
     🔐
@@ -432,7 +438,13 @@ updateLoginStatus();
 ===================================================== */
 
 let editMode = false;
-    
+
+function startAddingTerrainPlant() {
+
+    console.log("Ajout d'une plante de terrain");
+
+}
+
 let scale = 1;
 
 let offsetX = 0;
