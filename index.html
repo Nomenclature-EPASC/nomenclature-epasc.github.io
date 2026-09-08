@@ -484,7 +484,20 @@ const markers =
    AFFICHAGE
 ===================================================== */
 
+/* =====================================================
+   AFFICHAGE
+===================================================== */
+
+function hidePlantInfo() {
+
+    document.getElementById("plantInfo").style.display = "none";
+
+}
+
+
 function updateMap() {
+
+    hidePlantInfo();
 
     map.style.transform =
         `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
