@@ -1415,7 +1415,10 @@ results.forEach(function(plant) {
     result.style.borderBottom =
         "1px solid #ddd";
 
-result.addEventListener("pointerup", function(event) {
+result.addEventListener("pointerdown", function(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
 
 
     const marker =
