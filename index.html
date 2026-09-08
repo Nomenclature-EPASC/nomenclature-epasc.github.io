@@ -24,33 +24,25 @@
             font-family: Arial, sans-serif;
         }
 
-        #toolbar {
-            height: 55px;
-            background: #eeeeee;
-            border-bottom: 1px solid #cccccc;
+#toolbar {
+    position: fixed;
+    top: 8px;
+    right: 10px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-
-            padding: 8px 12px;
-
-            position: relative;
-            z-index: 100;
-        }
+    z-index: 2000;
+}
 
 button {
-    height: 36px;
-    width: 45px;
-    padding: 5px;
-    font-size: 20px;
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 22px;
     cursor: pointer;
 }
 
 #map-container {
     position: absolute;
-    top: 55px;
+top: 0;
     left: 0;
     right: 0;
     bottom: 0;
