@@ -1410,6 +1410,9 @@ result.addEventListener("pointerdown", function(event) {
     event.preventDefault();
     event.stopPropagation();
 
+        document.getElementById("searchInput").value = "";
+    document.getElementById("searchResults").innerHTML = "";
+
     const marker =
         document.querySelector(
             '.marker[data-id="' + plant.id + '"]'
@@ -1423,11 +1426,7 @@ result.addEventListener("pointerdown", function(event) {
         return;
     }
 
-    document.getElementById("searchInput").value = "";
-    document.getElementById("searchResults").innerHTML = "";
-
-
-    scale = 1.5;
+scale = 1.5;
 
 updateMap();
 
