@@ -482,6 +482,8 @@ function updateMap() {
 
 function zoomAt(x, y, factor) {
 
+    console.log("zoomAt appelé, scale AVANT :", scale, offsetX, offsetY);
+
     const oldScale = scale;
 
     scale *= factor;
@@ -566,6 +568,14 @@ offsetX = (windowWidth - planWidth * scale) / 2;
 offsetY = (windowHeight - planHeight * scale) / 2;
 
 updateMap();
+
+    console.log("fitPlanToWindow →", {
+    scale, offsetX, offsetY,
+    naturalWidth: plan.naturalWidth,
+    naturalHeight: plan.naturalHeight,
+    clientWidth: container.clientWidth,
+    clientHeight: container.clientHeight
+});
 
 }
 
