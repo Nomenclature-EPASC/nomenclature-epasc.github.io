@@ -60,17 +60,20 @@
     touch-action: none;
 }
 
-        #map-container:active {
-            cursor: grabbing;
-        }
+#map-container:active {
+    cursor: grabbing;
+}
 
-        #map {
-            position: absolute;
-            left: 0;
-            top: 0;
 
-            transform-origin: 0 0;
-        }
+#map {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    transform-origin: 0 0;
+
+    transition: none !important;
+}
 
         #plan {
             display: block;
