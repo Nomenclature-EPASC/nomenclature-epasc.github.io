@@ -1409,11 +1409,13 @@ results.forEach(function(plant) {
 
     result.style.cursor =
         "pointer";
+    result.style.touchAction =
+    "manipulation";
 
     result.style.borderBottom =
         "1px solid #ddd";
 
-result.addEventListener("click", function() {
+result.addEventListener("pointerup", function(event) {
 
 
     const marker =
