@@ -1946,6 +1946,123 @@ document.getElementById(
 
     }
 );
+        document.getElementById(
+    "terrainSendButton"
+).addEventListener(
+    "click",
+    async function() {
+
+        const nomFrancais =
+            document.getElementById(
+                "terrainFrenchInput"
+            ).value.trim();
+
+        const nomLatin =
+            document.getElementById(
+                "terrainLatinInput"
+            ).value.trim();
+
+        if (!nomFrancais || !nomLatin) {
+
+            alert(
+                "Merci de compléter les deux noms."
+            );
+
+            return;
+        }
+
+        const point =
+            document.querySelector(
+                ".terrain-marker-new"
+            );
+
+        if (!point) {
+
+            alert(
+                "Erreur : point introuvable."
+            );
+
+            return;
+        }
+
+        const x =
+            parseFloat(point.style.left);
+
+        const y =
+            parseFloat(point.style.top);
+
+        console.log(
+            "Envoi proposition :",
+            x,
+            y,
+            nomFrancais,
+            nomLatin
+        );
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/rest/v1/propositions_terrain",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " +
+                            SUPABASE_KEY,
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Prefer":
+                            "return=representation"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            x: x,
+                            y: y,
+                            nom_francais:
+                                nomFrancais,
+                            nom_latin:
+                                nomLatin
+                        })
+                }
+            );
+
+        if (!response.ok) {
+
+            console.error(
+                "Erreur envoi proposition :",
+                response.status
+            );
+
+            alert(
+                "Erreur lors de l'envoi."
+            );
+
+            return;
+        }
+
+        console.log(
+            "Proposition envoyée avec succès."
+        );
+
+        alert(
+            "Modification soumise."
+        );
+
+        point.remove();
+
+        document.getElementById(
+            "terrainForm"
+        ).style.display = "none";
+
+    }
+);
 </script>
 </body>
 </html>
