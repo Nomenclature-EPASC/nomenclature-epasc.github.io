@@ -1135,11 +1135,11 @@ function showPlantInfo(plant, marker) {
 
     info.style.position = "fixed";
 
-    info.style.left =
-        (rect.right + 10) + "px";
+info.style.left =
+    (rect.left + rect.width / 2 - info.offsetWidth / 2) + "px";
 
-    info.style.top =
-        (rect.top - 20) + "px";
+info.style.top =
+    (rect.bottom + 10) + "px";
 }
 function displayNumbers(data) {
 
