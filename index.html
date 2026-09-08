@@ -1390,10 +1390,14 @@ result.addEventListener("pointerdown", function(event) {
     event.preventDefault();
     event.stopPropagation();
 
-        document.getElementById("searchInput").value = "";
-    document.getElementById("searchResults").innerHTML = "";
+document.getElementById("searchInput").value = "";
+document.getElementById("searchResults").innerHTML = "";
 
-    const marker =
+setTimeout(function() {
+    document.getElementById("searchInput").blur();
+}, 300);
+
+const marker =
         document.querySelector(
             '.marker[data-id="' + plant.id + '"]'
         );
