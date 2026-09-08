@@ -503,17 +503,7 @@ function updateMap() {
     map.style.transform =
         `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
 
-    const debugEl =
-        document.getElementById("debugInfo");
-
-    if (debugEl) {
-        debugEl.textContent =
-            "scale: " + scale +
-            "\noffsetX: " + offsetX +
-            "\noffsetY: " + offsetY +
-            "\nnaturalW: " + plan.naturalWidth +
-            "\nnaturalH: " + plan.naturalHeight;
-    }
+   
 
 }
 
