@@ -1925,7 +1925,27 @@ info.style.top =
 });
 
 });
+document.getElementById(
+    "terrainCancelButton"
+).addEventListener(
+    "click",
+    function() {
 
+        document.getElementById(
+            "terrainForm"
+        ).style.display = "none";
+
+        const point =
+            document.querySelector(
+                ".terrain-marker-new"
+            );
+
+        if (point) {
+            point.remove();
+        }
+
+    }
+);
 </script>
 </body>
 </html>
