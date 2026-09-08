@@ -2262,11 +2262,42 @@ if (error) {
             return;
         }
 
-        console.log(
-            "Modification :",
-            french,
-            latin
-        );
+const proposalId =
+    document.querySelector(
+        ".terrain-marker-new"
+    ).dataset.proposalId;
+
+const { error } =
+    await supabaseClient
+        .from("propositions_terrain")
+        .update({
+            nom_francais: french,
+            nom_latin: latin
+        })
+        .eq("id", proposalId);
+
+if (error) {
+    console.error(
+        "Erreur modification proposition :",
+        error
+    );
+
+    alert(
+        "Erreur lors de la modification."
+    );
+
+    return;
+}
+
+alert(
+    "Modification enregistrée."
+);
+
+document.getElementById(
+    "terrainAdminForm"
+).style.display = "none";
+
+loadTerrainProposals();
 
     }
 );
