@@ -1449,6 +1449,9 @@ document.getElementById(
 ).value =
     item.nom_latin;
 
+form.dataset.proposalId =
+    item.id;
+
 form.style.display =
     "block";
 
@@ -2263,8 +2266,8 @@ if (error) {
         }
 
 const proposalId =
-    document.querySelector(
-        ".terrain-marker-new"
+    document.getElementById(
+        "terrainAdminForm"
     ).dataset.proposalId;
 
 const { error } =
