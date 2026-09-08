@@ -73,6 +73,8 @@
     transform-origin: 0 0;
 
     transition: none !important;
+
+    opacity: 0;
 }
 
         #plan {
@@ -1173,24 +1175,33 @@ marker.addEventListener("click", function(event) {
    INITIALISATION
 ===================================================== */
 
-if (plan.complete) {
+function fitPlanToWindowAndReveal() {
 
     fitPlanToWindow();
+
+    map.style.opacity = "1";
+
+}
+
+
+if (plan.complete) {
+
+    fitPlanToWindowAndReveal();
 
 } else {
 
     plan.addEventListener(
         "load",
-        fitPlanToWindow
+        fitPlanToWindowAndReveal
     );
 
 }
 
 
-//window.addEventListener(
- //   "resize",
-//    fitPlanToWindow
-//);
+window.addEventListener(
+   "resize",
+   fitPlanToWindow
+);
 
 
 loadNumbers();
