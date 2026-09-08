@@ -158,6 +158,20 @@
 
 </div>
 
+    <div id="debugInfo" style="
+    position: fixed;
+    top: 60px;
+    left: 5px;
+    z-index: 9999;
+    background: rgba(0,0,0,0.8);
+    color: #0f0;
+    font-size: 12px;
+    font-family: monospace;
+    padding: 6px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    white-space: pre;
+"></div>
 
 <div id="map-container">
 
@@ -474,6 +488,18 @@ function updateMap() {
 
     map.style.transform =
         `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+
+    const debugEl =
+        document.getElementById("debugInfo");
+
+    if (debugEl) {
+        debugEl.textContent =
+            "scale: " + scale +
+            "\noffsetX: " + offsetX +
+            "\noffsetY: " + offsetY +
+            "\nnaturalW: " + plan.naturalWidth +
+            "\nnaturalH: " + plan.naturalHeight;
+    }
 
 }
 
