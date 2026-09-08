@@ -2239,6 +2239,37 @@ if (error) {
 
     }
 );
+        document.getElementById(
+    "adminEditButton"
+).addEventListener(
+    "click",
+    async function() {
+
+        const french =
+            document.getElementById(
+                "adminFrenchInput"
+            ).value.trim();
+
+        const latin =
+            document.getElementById(
+                "adminLatinInput"
+            ).value.trim();
+
+        if (!french || !latin) {
+            alert(
+                "Veuillez remplir les deux noms."
+            );
+            return;
+        }
+
+        console.log(
+            "Modification :",
+            french,
+            latin
+        );
+
+    }
+);
 </script>
 </body>
 </html>
