@@ -115,6 +115,21 @@ top: 0;
 
             pointer-events: auto;
         }
+        .terrain-marker {
+    position: absolute;
+
+    transform: translate(-50%, -50%);
+
+    width: 24px;
+    height: 24px;
+
+    background: white;
+    border: 2px solid black;
+    border-radius: 50%;
+
+    pointer-events: auto;
+    cursor: pointer;
+}
 /* TEST */
 
     </style>
@@ -1090,6 +1105,149 @@ async function loadNumbers() {
         );
 
     }
+}
+
+
+/* =====================================================
+   CHARGER LES PLANTES DE TERRAIN
+===================================================== */
+
+async function loadTerrainPlants() {
+
+    const url =
+        SUPABASE_URL +
+        "/rest/v1/plantes_terrain?select=*";
+
+    try {
+
+        const response =
+            await fetch(
+                url,
+                {
+                    headers: {
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " +
+                            SUPABASE_KEY
+                    }
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Erreur Supabase plantes terrain : " +
+                response.status
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Plantes de terrain chargées :",
+            data
+        );
+
+        displayTerrainPlants(data);
+
+    } catch (error) {
+
+        console.error(
+            "Impossible de charger les plantes de terrain :",
+            error
+        );
+
+    }
+
+}
+
+
+function displayTerrainPlants(data) {
+
+    data.forEach(function(item) {
+
+        if (
+            item.x === null ||
+            item.y === null
+        ) {
+            return;
+        }
+
+        const marker =
+            document.createElement("div");
+
+        marker.className =
+            "terrain-marker";
+
+        marker.dataset.id =
+            item.id;
+
+        marker.style.left =
+            item.x + "px";
+
+        marker.style.top =
+            item.y + "px";
+
+        marker.addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+                showTerrainPlantInfo(
+                    item,
+                    marker
+                );
+
+            }
+        );
+
+        markers.appendChild(marker);
+
+    });
+
+}
+
+
+function showTerrainPlantInfo(plant, marker) {
+
+    document.getElementById("plantLatin").style.display =
+        "block";
+
+    document.getElementById("plantLatin").textContent =
+        plant.nom_latin;
+
+    document.getElementById("plantFrench").textContent =
+        plant.nom_francais;
+
+    const info =
+        document.getElementById("plantInfo");
+
+    info.style.display =
+        "block";
+
+    const rect =
+        marker.getBoundingClientRect();
+
+    info.style.position =
+        "fixed";
+
+    info.style.left =
+        (
+            rect.left +
+            rect.width / 2 -
+            info.offsetWidth / 2
+        ) + "px";
+
+    info.style.top =
+        (
+            rect.bottom +
+            10
+        ) + "px";
 
 }
 
@@ -1283,6 +1441,7 @@ window.addEventListener(
 
 
 loadNumbers();
+loadTerrainPlants();
 
 if ("serviceWorker" in navigator) {
 
