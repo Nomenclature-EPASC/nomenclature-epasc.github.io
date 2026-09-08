@@ -482,9 +482,61 @@ function startAddingTerrainPlant() {
         point.style.top =
             y + "px";
 
-        markers.appendChild(point);
+markers.appendChild(point);
 
-        container.style.cursor = "grab";
+let pointDragging = false;
+let pointStartX = 0;
+let pointStartY = 0;
+let pointStartLeft = x;
+let pointStartTop = y;
+
+point.addEventListener("pointerdown", function(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    pointDragging = true;
+
+    pointStartX = event.clientX;
+    pointStartY = event.clientY;
+
+    pointStartLeft =
+        parseFloat(point.style.left);
+
+    pointStartTop =
+        parseFloat(point.style.top);
+
+    point.setPointerCapture(event.pointerId);
+});
+
+point.addEventListener("pointermove", function(event) {
+
+    if (!pointDragging) {
+        return;
+    }
+
+    const dx =
+        (event.clientX - pointStartX) / scale;
+
+    const dy =
+        (event.clientY - pointStartY) / scale;
+
+    point.style.left =
+        (pointStartLeft + dx) + "px";
+
+    point.style.top =
+        (pointStartTop + dy) + "px";
+});
+
+point.addEventListener("pointerup", function(event) {
+
+    pointDragging = false;
+
+    point.releasePointerCapture(event.pointerId);
+
+});
+
+container.style.cursor = "grab";
 
         container.removeEventListener(
             "click",
