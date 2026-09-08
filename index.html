@@ -2393,17 +2393,57 @@ document.getElementById(
                             (startTop + dy) + "px";
                     };
 
-                marker.onpointerup =
-                    function() {
+marker.onpointerup =
+    async function() {
 
                         marker.onpointermove = null;
                         marker.onpointerup = null;
 
-                        console.log(
-                            "Nouvelle position :",
-                            marker.style.left,
-                            marker.style.top
-                        );
+const newX =
+    parseFloat(
+        marker.style.left
+    );
+
+const newY =
+    parseFloat(
+        marker.style.top
+    );
+
+console.log(
+    "Nouvelle position :",
+    newX,
+    newY
+);
+
+const { data, error } =
+    await supabaseClient
+        .from("propositions_terrain")
+        .update({
+            x: newX,
+            y: newY
+        })
+        .eq("id", proposalId)
+        .select();
+
+if (error) {
+
+    console.error(
+        "Erreur sauvegarde position :",
+        error
+    );
+
+    alert(
+        "Erreur lors de la sauvegarde : " +
+        error.message
+    );
+
+    return;
+}
+
+console.log(
+    "Position sauvegardée :",
+    data
+);
                     };
             };
     }
