@@ -1168,11 +1168,67 @@ marker.style.cursor =
 marker.textContent =
     item.numero;
 
+let lastMarkerClick = 0;
+
 marker.addEventListener("click", function(event) {
 
     event.stopPropagation();
 
-    showPlantInfo(item, marker);
+    const now = Date.now();
+
+    // Double-clic
+    if (now - lastMarkerClick < 400) {
+
+        scale = 1.5;
+
+        updateMap();
+
+        const zoomedMarkerRect =
+            marker.getBoundingClientRect();
+
+        const zoomedContainerRect =
+            container.getBoundingClientRect();
+
+        const zoomedMarkerCenterX =
+            zoomedMarkerRect.left +
+            zoomedMarkerRect.width / 2;
+
+        const zoomedMarkerCenterY =
+            zoomedMarkerRect.top +
+            zoomedMarkerRect.height / 2;
+
+        const zoomedContainerCenterX =
+            zoomedContainerRect.left +
+            zoomedContainerRect.width / 2;
+
+        const zoomedContainerCenterY =
+            zoomedContainerRect.top +
+            zoomedContainerRect.height / 2;
+
+        offsetX +=
+            zoomedContainerCenterX -
+            zoomedMarkerCenterX;
+
+        offsetY +=
+            zoomedContainerCenterY -
+            zoomedMarkerCenterY;
+
+        updateMap();
+
+        setTimeout(function() {
+
+            showPlantInfo(item, marker);
+
+        }, 100);
+
+    } else {
+
+        // Simple clic
+        showPlantInfo(item, marker);
+
+    }
+
+    lastMarkerClick = now;
 
 });
 
