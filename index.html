@@ -1999,54 +1999,30 @@ document.getElementById(
             nomLatin
         );
 
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                "/rest/v1/propositions_terrain",
-                {
-                    method: "POST",
+const { data, error } =
+    await supabaseClient
+        .from("propositions_terrain")
+        .insert({
+            x: x,
+            y: y,
+            nom_francais: nomFrancais,
+            nom_latin: nomLatin
+        })
+        .select();
+if (error) {
 
-headers: {
-    "apikey":
-        SUPABASE_KEY,
+    console.error(
+        "Erreur envoi proposition :",
+        error
+    );
 
-    "Content-Type":
-        "application/json",
+    alert(
+        "Erreur lors de l'envoi : " +
+        error.message
+    );
 
-    "Prefer":
-        "return=representation"
-},
-
-                    body:
-                        JSON.stringify({
-                            x: x,
-                            y: y,
-                            nom_francais:
-                                nomFrancais,
-                            nom_latin:
-                                nomLatin
-                        })
-                }
-            );
-
-        if (!response.ok) {
-
-const erreur =
-    await response.text();
-
-console.error(
-    "Erreur envoi proposition :",
-    response.status,
-    erreur
-);
-
-alert(
-    "Erreur lors de l'envoi : " +
-    response.status
-);
-
-            return;
-        }
+    return;
+}
 
         console.log(
             "Proposition envoyée avec succès."
