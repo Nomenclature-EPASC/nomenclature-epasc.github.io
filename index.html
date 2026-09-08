@@ -1999,7 +1999,7 @@ document.getElementById(
             nomLatin
         );
 
-const { data, error } =
+const { error } =
     await supabaseClient
         .from("propositions_terrain")
         .insert({
@@ -2007,8 +2007,7 @@ const { data, error } =
             y: y,
             nom_francais: nomFrancais,
             nom_latin: nomLatin
-        })
-        .select();
+        });
 if (error) {
 
     console.error(
