@@ -549,6 +549,29 @@ container.style.cursor = "grab";
             x,
             y
         );
+        setTimeout(function() {
+
+    const nomFrancais =
+        prompt("Nom français de la plante :");
+
+    if (!nomFrancais) {
+        return;
+    }
+
+    const nomLatin =
+        prompt("Nom latin de la plante :");
+
+    if (!nomLatin) {
+        return;
+    }
+
+    console.log(
+        "Plante proposée :",
+        nomFrancais,
+        nomLatin
+    );
+
+}, 100);
     }
 
     container.addEventListener(
