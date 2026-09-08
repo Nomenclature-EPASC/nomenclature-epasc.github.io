@@ -549,27 +549,29 @@ container.style.cursor = "grab";
             x,
             y
         );
-        setTimeout(function() {
+setTimeout(function() {
 
-    const nomFrancais =
-        prompt("Nom français de la plante :");
+    const form =
+        document.getElementById("terrainForm");
 
-    if (!nomFrancais) {
-        return;
-    }
+    form.style.display = "block";
 
-    const nomLatin =
-        prompt("Nom latin de la plante :");
+    form.style.left =
+        "50%";
 
-    if (!nomLatin) {
-        return;
-    }
+    form.style.top =
+        "50%";
 
-    console.log(
-        "Plante proposée :",
-        nomFrancais,
-        nomLatin
-    );
+    form.style.transform =
+        "translate(-50%, -50%)";
+
+    document.getElementById(
+        "terrainFrenchInput"
+    ).value = "";
+
+    document.getElementById(
+        "terrainLatinInput"
+    ).value = "";
 
 }, 100);
     }
