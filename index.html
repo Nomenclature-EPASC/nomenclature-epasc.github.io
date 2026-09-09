@@ -1552,8 +1552,11 @@ info.style.top =
 }
 function displayNumbers(data) {
 
-    markers.innerHTML = "";
-
+    markers.querySelectorAll(".marker").forEach(
+        function(marker) {
+            marker.remove();
+        }
+    );
 
     data.forEach(function(item) {
         
