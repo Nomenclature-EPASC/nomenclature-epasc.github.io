@@ -2520,6 +2520,31 @@ console.log(
 alert(
     "Plante ajoutée aux plantes permanentes."
 );
+    const { error: deleteError } =
+    await supabaseClient
+        .from("propositions_terrain")
+        .delete()
+        .eq("id", proposalId);
+
+if (deleteError) {
+
+    console.error(
+        "Erreur suppression proposition :",
+        deleteError
+    );
+
+    alert(
+        "La plante a été créée, mais la proposition n'a pas pu être supprimée : " +
+        deleteError.message
+    );
+
+    return;
+}
+
+console.log(
+    "Proposition supprimée :",
+    proposalId
+);
 
     }
 );
