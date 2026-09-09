@@ -2206,6 +2206,7 @@ const { error } =
             nom_francais: nomFrancais,
             nom_latin: nomLatin
         });
+        
 if (error) {
 
     console.error(
@@ -2225,11 +2226,11 @@ if (error) {
             "Proposition envoyée avec succès."
         );
 
-        alert(
-            "Modification soumise."
-        );
-
         point.remove();
+
+        document.getElementById(
+            "terrainForm"
+        ).style.display = "none";
 
         document.getElementById(
             "terrainForm"
