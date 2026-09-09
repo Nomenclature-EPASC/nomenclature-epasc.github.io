@@ -2452,7 +2452,7 @@ console.log(
     "adminAcceptButton"
 ).addEventListener(
     "click",
-    function() {
+async function() {
 
         const proposalId =
             document.getElementById(
@@ -2464,11 +2464,62 @@ console.log(
             proposalId
         );
 
-        alert(
-            "Proposition " +
-            proposalId +
-            " prête à être acceptée."
-        );
+const { data: proposal, error: proposalError } =
+    await supabaseClient
+        .from("propositions_terrain")
+        .select("*")
+        .eq("id", proposalId)
+        .single();
+
+if (proposalError) {
+
+    console.error(
+        "Erreur récupération proposition :",
+        proposalError
+    );
+
+    alert(
+        "Erreur lors de la récupération : " +
+        proposalError.message
+    );
+
+    return;
+}
+
+const { data: plant, error: plantError } =
+    await supabaseClient
+        .from("plantes_terrain")
+        .insert({
+            x: proposal.x,
+            y: proposal.y,
+            nom_francais: proposal.nom_francais,
+            nom_latin: proposal.nom_latin
+        })
+        .select();
+
+if (plantError) {
+
+    console.error(
+        "Erreur création plante terrain :",
+        plantError
+    );
+
+    alert(
+        "Erreur lors de la création : " +
+        plantError.message
+    );
+
+    return;
+}
+
+console.log(
+    "Plante terrain créée :",
+    plant
+);
+
+alert(
+    "Plante ajoutée aux plantes permanentes."
+);
 
     }
 );
