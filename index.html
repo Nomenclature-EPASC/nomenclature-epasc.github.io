@@ -2524,10 +2524,7 @@ console.log(
     plant
 );
 
-alert(
-    "Plante ajoutée aux plantes permanentes."
-);
-    const { error: deleteError } =
+const { error: deleteError } =
     await supabaseClient
         .from("propositions_terrain")
         .delete()
