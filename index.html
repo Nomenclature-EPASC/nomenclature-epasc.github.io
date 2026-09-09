@@ -2549,11 +2549,28 @@ console.log(
     proposalId
 );
 
+/* Supprime immédiatement le point rouge */
+
+const proposalMarker =
+    document.querySelector(
+        '.terrain-marker-new[data-proposal-id="' +
+        proposalId +
+        '"]'
+    );
+
+if (proposalMarker) {
+    proposalMarker.remove();
+}
+
+/* Recharge les plantes permanentes */
+
+await loadTerrainPlants();
+
+/* Ferme la fenêtre */
+
 document.getElementById(
     "terrainAdminForm"
 ).style.display = "none";
-
-loadTerrainProposals();
 
     }
 );
