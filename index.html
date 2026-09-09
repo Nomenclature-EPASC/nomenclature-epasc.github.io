@@ -2448,6 +2448,30 @@ console.log(
             };
     }
 );
+        document.getElementById(
+    "adminAcceptButton"
+).addEventListener(
+    "click",
+    function() {
+
+        const proposalId =
+            document.getElementById(
+                "terrainAdminForm"
+            ).dataset.proposalId;
+
+        console.log(
+            "Proposition à accepter :",
+            proposalId
+        );
+
+        alert(
+            "Proposition " +
+            proposalId +
+            " prête à être acceptée."
+        );
+
+    }
+);
 
 </script>
 </body>
