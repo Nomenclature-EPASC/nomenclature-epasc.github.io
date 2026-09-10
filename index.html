@@ -274,31 +274,10 @@ async function updateLoginStatus() {
         await supabaseClient.auth.getUser();
 
 
-const loggedIn =
-    !!data.user;
+    const loggedIn =
+        !!data.user;
 
-editMode = loggedIn;
-    if (loggedIn) {
-
-    addingTerrainPlant = false;
-
-    if (terrainAddClickHandler) {
-
-        document.getElementById(
-            "map-container"
-        ).removeEventListener(
-            "click",
-            terrainAddClickHandler
-        );
-
-        terrainAddClickHandler = null;
-    }
-
-    document.getElementById(
-        "map-container"
-    ).style.cursor = "grab";
-}
-
+    editMode = loggedIn;
 
 document.querySelectorAll(".marker").forEach(function(marker) {
 
@@ -482,25 +461,17 @@ updateLoginStatus();
 ===================================================== */
 
 let editMode = false;
-let addingTerrainPlant = false;
-let terrainAddClickHandler = null;
 
 function startAddingTerrainPlant() {
-
-    addingTerrainPlant = true;
 
     console.log("Mode ajout activé");
 
     container.style.cursor = "crosshair";
 
-function placePoint(event) {
+    function placePoint(event) {
 
-    if (!addingTerrainPlant || editMode) {
-        return;
-    }
-
-    const rect =
-        container.getBoundingClientRect();
+        const rect =
+            container.getBoundingClientRect();
 
         const x =
             (event.clientX - rect.left - offsetX) / scale;
@@ -576,6 +547,11 @@ point.addEventListener("pointerup", function(event) {
 
 container.style.cursor = "grab";
 
+        container.removeEventListener(
+            "click",
+            placePoint
+        );
+
         console.log(
             "Point créé :",
             x,
@@ -608,14 +584,10 @@ setTimeout(function() {
 }, 100);
     }
 
-    terrainAddClickHandler = placePoint;
-
     container.addEventListener(
         "click",
-        terrainAddClickHandler
+        placePoint
     );
-
-}
 
 }
 
@@ -2286,20 +2258,6 @@ document.getElementById(
         if (point) {
             point.remove();
         }
-
-        addingTerrainPlant = false;
-
-        if (terrainAddClickHandler) {
-
-            container.removeEventListener(
-                "click",
-                terrainAddClickHandler
-            );
-
-            terrainAddClickHandler = null;
-        }
-
-        container.style.cursor = "grab";
 
     }
 );
