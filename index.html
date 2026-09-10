@@ -277,7 +277,12 @@ async function updateLoginStatus() {
     const loggedIn =
         !!data.user;
 
-    editMode = loggedIn;
+editMode = loggedIn;
+
+if (loggedIn) {
+    addingTerrainPlant = false;
+    container.style.cursor = "grab";
+}
 
 document.querySelectorAll(".marker").forEach(function(marker) {
 
