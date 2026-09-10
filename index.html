@@ -274,10 +274,14 @@ async function updateLoginStatus() {
         await supabaseClient.auth.getUser();
 
 
-    const loggedIn =
-        !!data.user;
+const loggedIn =
+    !!data.user;
 
-    editMode = loggedIn;
+editMode = loggedIn;
+
+if (loggedIn) {
+    addingTerrainPlant = false;
+}
 
 document.querySelectorAll(".marker").forEach(function(marker) {
 
@@ -461,17 +465,24 @@ updateLoginStatus();
 ===================================================== */
 
 let editMode = false;
+let addingTerrainPlant = false;
 
 function startAddingTerrainPlant() {
+
+    addingTerrainPlant = true;
 
     console.log("Mode ajout activé");
 
     container.style.cursor = "crosshair";
 
-    function placePoint(event) {
+function placePoint(event) {
 
-        const rect =
-            container.getBoundingClientRect();
+    if (editMode) {
+        return;
+    }
+
+    const rect =
+        container.getBoundingClientRect();
 
         const x =
             (event.clientX - rect.left - offsetX) / scale;
