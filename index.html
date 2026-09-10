@@ -284,8 +284,8 @@ document.querySelectorAll(".marker").forEach(function(marker) {
     marker.style.background =
         editMode ? "#ffff00" : "white";
 
-    marker.style.cursor =
-        editMode ? "move" : "pointer";
+marker.style.cursor =
+    editMode ? "crosshair" : "pointer";
 
 
 marker.onpointerdown = function(event) {
@@ -1398,7 +1398,7 @@ marker.addEventListener(
 );
 
 marker.style.cursor =
-    editMode ? "move" : "pointer";
+    editMode ? "crosshair" : "pointer";
 
 marker.onpointerdown =
     function(event) {
