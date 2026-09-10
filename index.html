@@ -282,6 +282,19 @@ editMode = loggedIn;
 if (loggedIn) {
     addingTerrainPlant = false;
     container.style.cursor = "grab";
+
+    document.getElementById(
+        "terrainForm"
+    ).style.display = "none";
+
+    const point =
+        document.querySelector(
+            ".terrain-marker-new"
+        );
+
+    if (point) {
+        point.remove();
+    }
 }
 
 document.querySelectorAll(".marker").forEach(function(marker) {
