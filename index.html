@@ -278,10 +278,27 @@ const loggedIn =
     !!data.user;
 
 editMode = loggedIn;
+    if (loggedIn) {
 
-if (loggedIn) {
     addingTerrainPlant = false;
+
+    if (terrainAddClickHandler) {
+
+        document.getElementById(
+            "map-container"
+        ).removeEventListener(
+            "click",
+            terrainAddClickHandler
+        );
+
+        terrainAddClickHandler = null;
+    }
+
+    document.getElementById(
+        "map-container"
+    ).style.cursor = "grab";
 }
+
 
 document.querySelectorAll(".marker").forEach(function(marker) {
 
@@ -466,6 +483,7 @@ updateLoginStatus();
 
 let editMode = false;
 let addingTerrainPlant = false;
+let terrainAddClickHandler = null;
 
 function startAddingTerrainPlant() {
 
@@ -477,7 +495,7 @@ function startAddingTerrainPlant() {
 
 function placePoint(event) {
 
-    if (editMode) {
+    if (!addingTerrainPlant || editMode) {
         return;
     }
 
@@ -558,11 +576,6 @@ point.addEventListener("pointerup", function(event) {
 
 container.style.cursor = "grab";
 
-        container.removeEventListener(
-            "click",
-            placePoint
-        );
-
         console.log(
             "Point créé :",
             x,
@@ -595,10 +608,14 @@ setTimeout(function() {
 }, 100);
     }
 
+    terrainAddClickHandler = placePoint;
+
     container.addEventListener(
         "click",
-        placePoint
+        terrainAddClickHandler
     );
+
+}
 
 }
 
@@ -2269,6 +2286,20 @@ document.getElementById(
         if (point) {
             point.remove();
         }
+
+        addingTerrainPlant = false;
+
+        if (terrainAddClickHandler) {
+
+            container.removeEventListener(
+                "click",
+                terrainAddClickHandler
+            );
+
+            terrainAddClickHandler = null;
+        }
+
+        container.style.cursor = "grab";
 
     }
 );
