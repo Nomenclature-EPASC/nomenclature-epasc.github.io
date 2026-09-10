@@ -476,10 +476,14 @@ function startAddingTerrainPlant() {
 
     container.style.cursor = "crosshair";
 
-    function placePoint(event) {
+function placePoint(event) {
 
-        const rect =
-            container.getBoundingClientRect();
+    if (!addingTerrainPlant || editMode) {
+        return;
+    }
+
+    const rect =
+        container.getBoundingClientRect();
 
         const x =
             (event.clientX - rect.left - offsetX) / scale;
