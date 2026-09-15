@@ -441,6 +441,13 @@ if (!response.ok) {
 
 });
 
+document.querySelectorAll(".terrain-marker").forEach(function(marker) {
+
+    marker.style.cursor =
+        editMode ? "move" : "pointer";
+
+});
+
     document.getElementById(
         "loginButton"
     ).style.display =
