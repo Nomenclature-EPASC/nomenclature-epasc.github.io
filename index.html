@@ -2152,10 +2152,13 @@ results.forEach(function(plant) {
     const result =
         document.createElement("div");
 
-    result.textContent =
-        plant["Nom français"] +
-        " — " +
-        plant["Nom latin"];
+result.innerHTML =
+    '<div style="font-weight: bold; font-style: italic;">' +
+    plant["Nom latin"] +
+    '</div>' +
+    '<div style="font-size: 13px; color: #777; margin-top: 2px;">' +
+    plant["Nom français"] +
+    '</div>';
 
     result.style.padding =
         "8px";
