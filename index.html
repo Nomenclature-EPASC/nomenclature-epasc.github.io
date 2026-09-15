@@ -447,6 +447,9 @@ document.querySelectorAll(".terrain-marker").forEach(function(marker) {
     marker.style.cursor =
         editMode ? "move" : "pointer";
 
+    marker.style.backgroundColor =
+        editMode ? "yellow" : "white";
+
 });
 
     document.getElementById(
@@ -1772,9 +1775,7 @@ function displayNumbers(data) {
 
         marker.className =
             "marker";
-        if (editMode) {
-    marker.style.backgroundColor = "yellow";
-}
+
 
         marker.dataset.id =
     item.id;
