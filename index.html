@@ -2698,6 +2698,93 @@ if (error) {
 
     }
 );
+        document.getElementById(
+    "deletePlantButton"
+).addEventListener(
+    "click",
+    async function() {
+
+        if (!window.selectedPlantForEdit) {
+            alert(
+                "Aucune plante sélectionnée."
+            );
+            return;
+        }
+
+        const firstConfirm =
+            confirm(
+                "Voulez-vous vraiment supprimer cette plante ?"
+            );
+
+        if (!firstConfirm) {
+            return;
+        }
+
+        const secondConfirm =
+            confirm(
+                "⚠️ Suppression définitive : cette plante sera retirée de la nomenclature et ne pourra pas être récupérée.\n\nContinuer ?"
+            );
+
+        if (!secondConfirm) {
+            return;
+        }
+
+        const plantId =
+            window.selectedPlantForEdit.id;
+
+        const { error } =
+            await supabaseClient
+                .from("numeros")
+                .delete()
+                .eq(
+                    "id",
+                    plantId
+                );
+
+        if (error) {
+            console.error(
+                "Erreur suppression plante :",
+                error
+            );
+
+            alert(
+                "Erreur lors de la suppression : " +
+                error.message
+            );
+
+            return;
+        }
+
+        alert(
+            "Plante supprimée."
+        );
+
+        document.getElementById(
+            "plantInfo"
+        ).style.display = "none";
+
+        window.selectedPlantForEdit = null;
+
+        const marker =
+            document.querySelector(
+                '.marker[data-id="' +
+                plantId +
+                '"]'
+            );
+
+        if (marker) {
+            marker.remove();
+        }
+
+        allPlants =
+            allPlants.filter(
+                function(plant) {
+                    return plant.id !== plantId;
+                }
+            );
+
+    }
+);
 
         document.getElementById(
     "adminEditButton"
