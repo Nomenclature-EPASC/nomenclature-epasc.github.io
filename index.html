@@ -1449,6 +1449,16 @@ marker.addEventListener(
 
         event.stopPropagation();
 
+        window.selectedPlantForEdit = null;
+
+        document.getElementById(
+            "adminPlantButtons"
+        ).style.display = "none";
+
+        document.getElementById(
+            "adminPlantEditForm"
+        ).style.display = "none";
+
         showTerrainPlantInfo(
             item,
             marker
