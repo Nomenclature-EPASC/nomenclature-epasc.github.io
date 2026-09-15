@@ -489,6 +489,33 @@ updateLoginStatus();
 let editMode = false;
 let addingTerrainPlant = false;
 
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape" && addingTerrainPlant) {
+
+        addingTerrainPlant = false;
+
+        container.style.cursor = "grab";
+
+        const form =
+            document.getElementById("terrainForm");
+
+        form.style.display = "none";
+
+        const point =
+            document.querySelector(
+                ".terrain-marker-new"
+            );
+
+        if (point) {
+            point.remove();
+        }
+
+        console.log("Mode ajout annulé avec Échap");
+    }
+
+});
+
 function startAddingTerrainPlant() {
 
     addingTerrainPlant = true;
