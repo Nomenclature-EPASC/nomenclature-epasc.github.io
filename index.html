@@ -2203,7 +2203,7 @@ position: fixed;
         gap: 8px;
     ">
 
-        <button id="adminEditButton">
+        <button id=>
             ✏️ Modifier
         </button>
 
@@ -2547,6 +2547,110 @@ if (error) {
         document.getElementById(
             "adminPlantEditForm"
         ).style.display = "block";
+
+    }
+);
+        document.getElementById(
+    "savePlantEditButton"
+).addEventListener(
+    "click",
+    async function() {
+
+        if (!window.selectedPlantForEdit) {
+            alert(
+                "Aucune plante sélectionnée."
+            );
+            return;
+        }
+
+        const french =
+            document.getElementById(
+                "editPlantFrenchInput"
+            ).value.trim();
+
+        const latin =
+            document.getElementById(
+                "editPlantLatinInput"
+            ).value.trim();
+
+        if (!french || !latin) {
+            alert(
+                "Veuillez remplir les deux noms."
+            );
+            return;
+        }
+
+        const plantId =
+            window.selectedPlantForEdit.id;
+
+        const { data, error } =
+            await supabaseClient
+                .from("numeros")
+                .update({
+                    "Nom français": french,
+                    "Nom latin": latin
+                })
+                .eq(
+                    "id",
+                    plantId
+                )
+                .select();
+
+        if (error) {
+
+            console.error(
+                "Erreur modification plante :",
+                error
+            );
+
+            alert(
+                "Erreur lors de la modification : " +
+                error.message
+            );
+
+            return;
+        }
+
+        console.log(
+            "Plante modifiée :",
+            data
+        );
+
+        alert(
+            "Modification enregistrée."
+        );
+
+        document.getElementById(
+            "adminPlantEditForm"
+        ).style.display = "none";
+
+        window.selectedPlantForEdit =
+            data[0];
+
+        document.getElementById(
+            "plantLatin"
+        ).textContent =
+            data[0]["Nom latin"];
+
+        document.getElementById(
+            "plantFrench"
+        ).textContent =
+            data[0]["Nom français"];
+
+        document.getElementById(
+            "adminPlantButtons"
+        ).style.display = "block";
+
+        allPlants =
+            allPlants.map(function(plant) {
+
+                if (plant.id === plantId) {
+                    return data[0];
+                }
+
+                return plant;
+
+            });
 
     }
 );
