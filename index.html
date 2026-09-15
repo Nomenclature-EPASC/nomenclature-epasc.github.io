@@ -1698,6 +1698,7 @@ function showTerrainPlantInfo(plant, marker) {
    AFFICHER LES NUMÉROS
 ===================================================== */
 function showPlantInfo(plant, marker) {
+    window.selectedPlantForEdit = plant;
 
     if (plant["Nom latin"] === "/") {
 
@@ -2016,11 +2017,66 @@ position: fixed;
         style="
             font-size: 16px;
             padding: 5px 10px;
-            margin-right: 5px;
         "
     >
         ✏️ Modifier
     </button>
+
+</div>
+
+<div id="adminPlantEditForm" style="
+    display: none;
+    margin-top: 12px;
+">
+
+    <input
+        id="editPlantFrenchInput"
+        type="text"
+        placeholder="Nom français"
+        style="
+            width: 100%;
+            padding: 7px;
+            margin-bottom: 7px;
+            font-size: 14px;
+        "
+    >
+
+    <input
+        id="editPlantLatinInput"
+        type="text"
+        placeholder="Nom latin"
+        style="
+            width: 100%;
+            padding: 7px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        "
+    >
+
+    <div style="text-align: center;">
+
+        <button
+            id="savePlantEditButton"
+            style="
+                font-size: 15px;
+                padding: 5px 10px;
+            "
+        >
+            💾 Enregistrer
+        </button>
+
+        <button
+            id="cancelPlantEditButton"
+            style="
+                font-size: 15px;
+                padding: 5px 10px;
+                margin-left: 5px;
+            "
+        >
+            Annuler
+        </button>
+
+    </div>
 
 </div>
 
@@ -2458,6 +2514,43 @@ if (error) {
 
     }
 );
+        document.getElementById(
+    "editPlantButton"
+).addEventListener(
+    "click",
+    function() {
+
+        if (!window.selectedPlantForEdit) {
+            alert(
+                "Aucune plante sélectionnée."
+            );
+            return;
+        }
+
+        const plant =
+            window.selectedPlantForEdit;
+
+        document.getElementById(
+            "editPlantFrenchInput"
+        ).value =
+            plant["Nom français"];
+
+        document.getElementById(
+            "editPlantLatinInput"
+        ).value =
+            plant["Nom latin"];
+
+        document.getElementById(
+            "adminPlantButtons"
+        ).style.display = "none";
+
+        document.getElementById(
+            "adminPlantEditForm"
+        ).style.display = "block";
+
+    }
+);
+
         document.getElementById(
     "adminEditButton"
 ).addEventListener(
