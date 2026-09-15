@@ -1772,6 +1772,9 @@ function displayNumbers(data) {
 
         marker.className =
             "marker";
+        if (editMode) {
+    marker.style.backgroundColor = "yellow";
+}
 
         marker.dataset.id =
     item.id;
