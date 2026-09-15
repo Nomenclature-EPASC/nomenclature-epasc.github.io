@@ -1729,6 +1729,12 @@ info.style.left =
 
 info.style.top =
     (rect.bottom + 10) + "px";
+
+document.getElementById(
+    "adminPlantButtons"
+).style.display =
+    editMode ? "block" : "none";
+
 }
 function displayNumbers(data) {
 
@@ -1998,6 +2004,26 @@ position: fixed;
     color: #777;
     text-align: center;
 "></div>
+
+<div id="adminPlantButtons" style="
+    display: none;
+    margin-top: 12px;
+    text-align: center;
+">
+
+    <button
+        id="editPlantButton"
+        style="
+            font-size: 16px;
+            padding: 5px 10px;
+            margin-right: 5px;
+        "
+    >
+        ✏️ Modifier
+    </button>
+
+</div>
+
 </div>
     <div id="terrainForm" style="
     display: none;
