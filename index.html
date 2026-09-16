@@ -2657,16 +2657,29 @@ if (window.selectedPlantType === "terrain") {
             plant
         );
 
-        const { data: newPlant, error: insertError } =
-            await supabaseClient
-                .from("numeros")
-                .insert({
-                    x: plant.x,
-                    y: plant.y,
-                    "Nom français": plant.nom_francais,
-                    "Nom latin": plant.nom_latin
-                })
-                .select();
+const { data: lastPlant } =
+    await supabaseClient
+        .from("numeros")
+        .select("numero")
+        .order("numero", { ascending: false })
+        .limit(1);
+
+const nextNumero =
+    lastPlant && lastPlant.length > 0
+        ? lastPlant[0].numero + 1
+        : 1;
+
+const { data: newPlant, error: insertError } =
+    await supabaseClient
+        .from("numeros")
+        .insert({
+            numero: nextNumero,
+            x: plant.x,
+            y: plant.y,
+            "Nom français": plant.nom_francais,
+            "Nom latin": plant.nom_latin
+        })
+        .select();
 
         if (insertError) {
 
