@@ -2425,7 +2425,7 @@ position: fixed;
         margin-bottom: 12px;
         text-align: center;
     ">
-        Proposition terrain
+        Nouvelle plante
     </div>
 
     <input
@@ -3683,6 +3683,86 @@ await loadTerrainPlants();
 document.getElementById(
     "terrainAdminForm"
 ).style.display = "none";
+
+    }
+);
+        document.getElementById(
+    "adminRejectButton"
+).addEventListener(
+    "click",
+    async function() {
+
+        const proposalId =
+            document.getElementById(
+                "terrainAdminForm"
+            ).dataset.proposalId;
+
+        if (!proposalId) {
+            alert(
+                "Erreur : proposition introuvable."
+            );
+            return;
+        }
+
+        const confirmation =
+            confirm(
+                "Voulez-vous vraiment refuser cette proposition ?"
+            );
+
+        if (!confirmation) {
+            return;
+        }
+
+        console.log(
+            "Proposition refusée :",
+            proposalId
+        );
+
+        const { data, error } =
+            await supabaseClient
+                .from("propositions_terrain")
+                .update({
+                    statut: "refusee"
+                })
+                .eq("id", proposalId)
+                .select();
+
+        if (error) {
+
+            console.error(
+                "Erreur refus proposition :",
+                error
+            );
+
+            alert(
+                "Erreur lors du refus : " +
+                error.message
+            );
+
+            return;
+        }
+
+        console.log(
+            "Proposition refusée avec succès :",
+            data
+        );
+
+        const proposalMarker =
+            document.querySelector(
+                '.terrain-marker-new[data-proposal-id="' +
+                proposalId +
+                '"]'
+            );
+
+        if (proposalMarker) {
+            proposalMarker.remove();
+        }
+
+        document.getElementById(
+            "terrainAdminForm"
+        ).style.display = "none";
+
+        loadTerrainProposals();
 
     }
 );
