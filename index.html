@@ -2740,6 +2740,10 @@ const { data: newPlant, error: insertError } =
             terrainMarker.remove();
         }
 
+        allPlants.push(newPlant[0]);
+
+displayNumbers(allPlants);
+
     }
 );
         document.getElementById(
