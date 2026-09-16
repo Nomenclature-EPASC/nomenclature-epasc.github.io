@@ -2627,6 +2627,70 @@ if (window.selectedPlantType === "terrain") {
     }
 );
         document.getElementById(
+    "convertTerrainButton"
+).addEventListener(
+    "click",
+    async function() {
+
+        if (
+            !window.selectedPlantForEdit ||
+            window.selectedPlantType !== "terrain"
+        ) {
+            return;
+        }
+
+        const plant =
+            window.selectedPlantForEdit;
+
+        const confirmation =
+            confirm(
+                "Voulez-vous ajouter cette plante à la nomenclature ?\n\n" +
+                "Elle sera retirée des plantes de terrain et deviendra une plante numérotée."
+            );
+
+        if (!confirmation) {
+            return;
+        }
+
+        console.log(
+            "Conversion de la plante terrain :",
+            plant
+        );
+
+        const { data: newPlant, error: insertError } =
+            await supabaseClient
+                .from("numeros")
+                .insert({
+                    x: plant.x,
+                    y: plant.y,
+                    "Nom français": plant.nom_francais,
+                    "Nom latin": plant.nom_latin
+                })
+                .select();
+
+        if (insertError) {
+
+            console.error(
+                "Erreur ajout à la nomenclature :",
+                insertError
+            );
+
+            alert(
+                "Erreur lors de l'ajout à la nomenclature : " +
+                insertError.message
+            );
+
+            return;
+        }
+
+        console.log(
+            "Nouvelle plante dans la nomenclature :",
+            newPlant
+        );
+
+    }
+);
+        document.getElementById(
     "savePlantEditButton"
 ).addEventListener(
     "click",
