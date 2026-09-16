@@ -2572,15 +2572,30 @@ if (error) {
         const plant =
             window.selectedPlantForEdit;
 
-        document.getElementById(
-            "editPlantFrenchInput"
-        ).value =
-            plant["Nom français"];
+if (window.selectedPlantType === "terrain") {
 
-        document.getElementById(
-            "editPlantLatinInput"
-        ).value =
-            plant["Nom latin"];
+    document.getElementById(
+        "editPlantFrenchInput"
+    ).value =
+        plant.nom_francais;
+
+    document.getElementById(
+        "editPlantLatinInput"
+    ).value =
+        plant.nom_latin;
+
+} else {
+
+    document.getElementById(
+        "editPlantFrenchInput"
+    ).value =
+        plant["Nom français"];
+
+    document.getElementById(
+        "editPlantLatinInput"
+    ).value =
+        plant["Nom latin"];
+}
 
         document.getElementById(
             "adminPlantButtons"
