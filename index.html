@@ -2245,6 +2245,37 @@ position: fixed;
     </div>
 
 </div>
+    <div id="proposalSentMessage" style="
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 25px 35px;
+    min-width: 280px;
+    text-align: center;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+    z-index: 5000;
+">
+
+    <div style="
+        font-size: 22px;
+        margin-bottom: 10px;
+    ">
+        ✅
+    </div>
+
+    <div style="
+        font-size: 19px;
+        font-weight: bold;
+    ">
+        Proposition envoyée !
+    </div>
+
+</div>
     <div id="terrainForm" style="
     display: none;
     position: fixed;
@@ -2677,19 +2708,28 @@ if (error) {
     return;
 }
 
-        console.log(
-            "Proposition envoyée avec succès."
-        );
+       console.log(
+    "Proposition envoyée avec succès."
+);
 
-        point.remove();
+point.remove();
 
-        document.getElementById(
-            "terrainForm"
-        ).style.display = "none";
+document.getElementById(
+    "terrainForm"
+).style.display = "none";
 
-        document.getElementById(
-            "terrainForm"
-        ).style.display = "none";
+const sentMessage =
+    document.getElementById(
+        "proposalSentMessage"
+    );
+
+sentMessage.style.display = "block";
+
+setTimeout(function() {
+
+    sentMessage.style.display = "none";
+
+}, 2500);
 
     }
 );
