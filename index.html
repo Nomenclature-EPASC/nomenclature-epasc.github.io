@@ -1452,7 +1452,8 @@ marker.addEventListener(
 
         event.stopPropagation();
 
-        window.selectedPlantForEdit = null;
+    window.selectedPlantForEdit = item;
+window.selectedPlantType = "terrain";
 
         document.getElementById(
             "adminPlantButtons"
@@ -1703,6 +1704,15 @@ function showTerrainPlantInfo(plant, marker) {
             rect.bottom +
             10
         ) + "px";
+    document.getElementById(
+    "adminPlantButtons"
+).style.display =
+    editMode ? "block" : "none";
+
+document.getElementById(
+    "adminPlantEditForm"
+).style.display =
+    "none";
 
 }
 
