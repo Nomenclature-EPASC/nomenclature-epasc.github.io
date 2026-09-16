@@ -2701,6 +2701,45 @@ const { data: newPlant, error: insertError } =
             newPlant
         );
 
+        const { error: deleteTerrainError } =
+            await supabaseClient
+                .from("plantes_terrain")
+                .delete()
+                .eq(
+                    "id",
+                    plant.id
+                );
+
+        if (deleteTerrainError) {
+
+            console.error(
+                "Erreur suppression plante terrain :",
+                deleteTerrainError
+            );
+
+            alert(
+                "La plante a été ajoutée à la nomenclature, " +
+                "mais le point terrain n'a pas pu être supprimé : " +
+                deleteTerrainError.message
+            );
+
+            return;
+        }
+
+        console.log(
+            "Point terrain supprimé après conversion."
+        );
+                const terrainMarker =
+            document.querySelector(
+                '.terrain-marker[data-id="' +
+                plant.id +
+                '"]'
+            );
+
+        if (terrainMarker) {
+            terrainMarker.remove();
+        }
+
     }
 );
         document.getElementById(
