@@ -157,7 +157,7 @@ cursor: move;
 <body>
 
 <div id="toolbar">
-    <button id="addTerrainButton" onclick="startAddingTerrainPlant()">
+ <button id="addTerrainButton" onclick="confirmAddTerrainPlant()">
     ➕
 </button>
 
@@ -491,6 +491,28 @@ updateLoginStatus();
 
 let editMode = false;
 let addingTerrainPlant = false;
+    function confirmAddTerrainPlant() {
+
+    const confirmation =
+        confirm(
+            "⚠️ Avant d’ajouter une plante\n\n" +
+            "Merci de n’ajouter une plante sur la carte que si vous êtes " +
+            "certain de son identification et de sa localisation.\n\n" +
+            "Les informations proposées seront vérifiées par les professeurs " +
+            "avant d’être publiées sur la carte. " +
+            "La plante ne sera visible qu’une fois votre proposition acceptée.\n\n" +
+            "Veuillez vérifier attentivement le nom de la plante et placer le " +
+            "point le plus précisément possible à l’endroit où elle se trouve.\n\n" +
+            "En cas de doute, merci de ne pas l’ajouter."
+        );
+
+    if (!confirmation) {
+        return;
+    }
+
+    startAddingTerrainPlant();
+
+}
 
 document.addEventListener("keydown", function(event) {
 
