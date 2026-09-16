@@ -2709,18 +2709,33 @@ if (window.selectedPlantType === "terrain") {
             "adminPlantEditForm"
         ).style.display = "none";
 
-        window.selectedPlantForEdit =
-            data[0];
+window.selectedPlantForEdit =
+    data[0];
 
-        document.getElementById(
-            "plantLatin"
-        ).textContent =
-            data[0]["Nom latin"];
+if (window.selectedPlantType === "terrain") {
 
-        document.getElementById(
-            "plantFrench"
-        ).textContent =
-            data[0]["Nom français"];
+    document.getElementById(
+        "plantLatin"
+    ).textContent =
+        data[0].nom_latin;
+
+    document.getElementById(
+        "plantFrench"
+    ).textContent =
+        data[0].nom_francais;
+
+} else {
+
+    document.getElementById(
+        "plantLatin"
+    ).textContent =
+        data[0]["Nom latin"];
+
+    document.getElementById(
+        "plantFrench"
+    ).textContent =
+        data[0]["Nom français"];
+}
 
         document.getElementById(
             "adminPlantButtons"
