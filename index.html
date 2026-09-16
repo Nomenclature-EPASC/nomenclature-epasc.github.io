@@ -491,26 +491,11 @@ updateLoginStatus();
 
 let editMode = false;
 let addingTerrainPlant = false;
-    function confirmAddTerrainPlant() {
+function confirmAddTerrainPlant() {
 
-    const confirmation =
-        confirm(
-            "⚠️ Avant d’ajouter une plante\n\n" +
-            "Merci de n’ajouter une plante sur la carte que si vous êtes " +
-            "certain de son identification et de sa localisation.\n\n" +
-            "Les informations proposées seront vérifiées par les professeurs " +
-            "avant d’être publiées sur la carte. " +
-            "La plante ne sera visible qu’une fois votre proposition acceptée.\n\n" +
-            "Veuillez vérifier attentivement le nom de la plante et placer le " +
-            "point le plus précisément possible à l’endroit où elle se trouve.\n\n" +
-            "En cas de doute, merci de ne pas l’ajouter."
-        );
-
-    if (!confirmation) {
-        return;
-    }
-
-    startAddingTerrainPlant();
+    document.getElementById(
+        "addTerrainWarning"
+    ).style.display = "flex";
 
 }
 
@@ -2160,6 +2145,106 @@ position: fixed;
 </div>
 
 </div>
+    <div id="addTerrainWarning" style="
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 4000;
+    align-items: center;
+    justify-content: center;
+">
+
+    <div style="
+        background: white;
+        border: 2px solid #333;
+        border-radius: 12px;
+        padding: 22px;
+        width: min(500px, calc(100vw - 40px));
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+    ">
+
+        <div style="
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 16px;
+        ">
+            ⚠️ Avant d’ajouter une plante
+        </div>
+
+        <div style="
+            font-size: 15px;
+            line-height: 1.5;
+        ">
+
+            Merci de n’ajouter une plante sur la carte que si vous êtes
+            <strong>certain de son identification et de sa localisation.</strong>
+
+            <br><br>
+
+            Les informations proposées seront vérifiées par les professeurs
+            avant d’être publiées sur la carte.
+            <strong>
+                La plante ne sera visible qu’une fois votre proposition acceptée.
+            </strong>
+
+            <br><br>
+
+            Veuillez vérifier attentivement le
+            <strong>nom de la plante</strong> et placer le point
+            <strong>le plus précisément possible</strong>
+            à l’endroit où elle se trouve.
+
+            <br><br>
+
+            En cas de doute, merci de <strong>ne pas l’ajouter.</strong>
+
+        </div>
+
+        <div style="
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 22px;
+        ">
+
+            <button
+                id="cancelAddTerrainWarning"
+                style="
+                    font-size: 16px;
+                    padding: 8px 18px;
+                    border: 1px solid #aaa;
+                    border-radius: 6px;
+                    background: #eee;
+                "
+            >
+                Annuler
+            </button>
+
+            <button
+                id="continueAddTerrainWarning"
+                style="
+                    font-size: 16px;
+                    padding: 8px 18px;
+                    border: 1px solid #555;
+                    border-radius: 6px;
+                    background: #ddd;
+                "
+            >
+                Continuer
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
     <div id="terrainForm" style="
     display: none;
     position: fixed;
@@ -2313,7 +2398,34 @@ position: fixed;
 
 </div>
     <script>
+document.getElementById(
+    "cancelAddTerrainWarning"
+).addEventListener(
+    "click",
+    function() {
 
+        document.getElementById(
+            "addTerrainWarning"
+        ).style.display = "none";
+
+    }
+);
+
+
+document.getElementById(
+    "continueAddTerrainWarning"
+).addEventListener(
+    "click",
+    function() {
+
+        document.getElementById(
+            "addTerrainWarning"
+        ).style.display = "none";
+
+        startAddingTerrainPlant();
+
+    }
+);
 document.getElementById("searchInput").addEventListener("input", function() {
 
     const search =
