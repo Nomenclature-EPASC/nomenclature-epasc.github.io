@@ -2106,6 +2106,17 @@ position: fixed;
         >
             Annuler
         </button>
+                <button
+            id="convertTerrainButton"
+            style="
+                display: none;
+                font-size: 15px;
+                padding: 5px 10px;
+                margin-left: 5px;
+            "
+        >
+            Ajouter à la nomenclature
+        </button>
         <button
     id="deletePlantButton"
     style="
@@ -2601,6 +2612,13 @@ if (window.selectedPlantType === "terrain") {
         document.getElementById(
             "adminPlantButtons"
         ).style.display = "none";
+
+                document.getElementById(
+            "convertTerrainButton"
+        ).style.display =
+            window.selectedPlantType === "terrain"
+                ? "inline-block"
+                : "none";
 
         document.getElementById(
             "adminPlantEditForm"
