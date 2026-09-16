@@ -149,6 +149,39 @@ top: 0;
 pointer-events: auto;
 cursor: move;
 }
+        /* VISEUR GSM - mode ajout */
+#terrainAddCrosshair {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 34px;
+    height: 34px;
+    z-index: 3500;
+    pointer-events: none;
+}
+
+#terrainAddCrosshair::before,
+#terrainAddCrosshair::after {
+    content: "";
+    position: absolute;
+    background: red;
+}
+
+#terrainAddCrosshair::before {
+    width: 2px;
+    height: 34px;
+    left: 16px;
+    top: 0;
+}
+
+#terrainAddCrosshair::after {
+    width: 34px;
+    height: 2px;
+    left: 0;
+    top: 16px;
+}
 /* TEST */
 
     </style>
@@ -527,11 +560,37 @@ document.addEventListener("keydown", function(event) {
 });
 
 function startAddingTerrainPlant() {
-
     addingTerrainPlant = true;
-
     console.log("Mode ajout activé");
 
+    // GSM : afficher immédiatement le viseur
+    if (window.innerWidth <= 600) {
+        document.getElementById(
+            "terrainAddCrosshair"
+        ).style.display = "block";
+
+        const form =
+            document.getElementById("terrainForm");
+
+        form.style.display = "block";
+
+        form.style.left = "50%";
+        form.style.top = "auto";
+        form.style.bottom = "20px";
+        form.style.transform = "translateX(-50%)";
+
+        document.getElementById(
+            "terrainFrenchInput"
+        ).value = "";
+
+        document.getElementById(
+            "terrainLatinInput"
+        ).value = "";
+
+        return;
+    }
+
+    // PC : comportement actuel inchangé
     container.style.cursor = "crosshair";
 
 function placePoint(event) {
@@ -2276,6 +2335,7 @@ position: fixed;
     </div>
 
 </div>
+    <div id="terrainAddCrosshair"></div>
     <div id="terrainForm" style="
     display: none;
     position: fixed;
