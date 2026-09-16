@@ -2458,9 +2458,9 @@ position: fixed;
         gap: 8px;
     ">
 
-        <button id=>
-            ✏️ Modifier
-        </button>
+<button id="adminEditButton">
+    ✏️ Modifier
+</button>
 
         <button id="adminMoveButton">
             ↔️ Déplacer
@@ -2690,7 +2690,8 @@ document.getElementById(
 
     }
 );
-        document.getElementById(
+
+document.getElementById(
     "terrainSendButton"
 ).addEventListener(
     "click",
@@ -2715,25 +2716,81 @@ document.getElementById(
             return;
         }
 
-        const point =
-            document.querySelector(
-                ".terrain-marker-new"
+        let x;
+        let y;
+
+        /* ==========================================
+           GSM → coordonnées sous le viseur
+        ========================================== */
+
+        if (window.innerWidth <= 600) {
+
+            const crosshair =
+                document.getElementById(
+                    "terrainAddCrosshair"
+                );
+
+            const crosshairRect =
+                crosshair.getBoundingClientRect();
+
+            const containerRect =
+                container.getBoundingClientRect();
+
+            const centerX =
+                crosshairRect.left +
+                crosshairRect.width / 2 -
+                containerRect.left;
+
+            const centerY =
+                crosshairRect.top +
+                crosshairRect.height / 2 -
+                containerRect.top;
+
+            x =
+                (centerX - offsetX) /
+                scale;
+
+            y =
+                (centerY - offsetY) /
+                scale;
+
+            console.log(
+                "Position sous le viseur :",
+                x,
+                y
             );
 
-        if (!point) {
+        } else {
 
-            alert(
-                "Erreur : point introuvable."
-            );
+            /* ==========================================
+               PC → comportement actuel inchangé
+            ========================================== */
 
-            return;
+            const point =
+                document.querySelector(
+                    ".terrain-marker-new"
+                );
+
+            if (!point) {
+
+                alert(
+                    "Erreur : point introuvable."
+                );
+
+                return;
+            }
+
+            x =
+                parseFloat(
+                    point.style.left
+                );
+
+            y =
+                parseFloat(
+                    point.style.top
+                );
+
         }
-
-        const x =
-            parseFloat(point.style.left);
-
-        const y =
-            parseFloat(point.style.top);
 
         console.log(
             "Envoi proposition :",
@@ -2743,56 +2800,75 @@ document.getElementById(
             nomLatin
         );
 
-const { error } =
-    await supabaseClient
-        .from("propositions_terrain")
-        .insert({
-            x: x,
-            y: y,
-            nom_francais: nomFrancais,
-            nom_latin: nomLatin
-        });
-        
-if (error) {
+        const { error } =
+            await supabaseClient
+                .from("propositions_terrain")
+                .insert({
+                    x: x,
+                    y: y,
+                    nom_francais: nomFrancais,
+                    nom_latin: nomLatin
+                });
 
-    console.error(
-        "Erreur envoi proposition :",
-        error
-    );
+        if (error) {
 
-    alert(
-        "Erreur lors de l'envoi : " +
-        error.message
-    );
+            console.error(
+                "Erreur envoi proposition :",
+                error
+            );
 
-    return;
-}
+            alert(
+                "Erreur lors de l'envoi : " +
+                error.message
+            );
 
-       console.log(
-    "Proposition envoyée avec succès."
-);
+            return;
+        }
 
-point.remove();
+        console.log(
+            "Proposition envoyée avec succès."
+        );
 
-document.getElementById(
-    "terrainForm"
-).style.display = "none";
+        const point =
+            document.querySelector(
+                ".terrain-marker-new"
+            );
 
-const sentMessage =
-    document.getElementById(
-        "proposalSentMessage"
-    );
+        if (point) {
+            point.remove();
+        }
 
-sentMessage.style.display = "block";
+        addingTerrainPlant = false;
 
-setTimeout(function() {
+        container.style.cursor = "grab";
 
-    sentMessage.style.display = "none";
+        document.getElementById(
+            "terrainAddCrosshair"
+        ).style.display = "none";
 
-}, 2500);
+        document.getElementById(
+            "terrainForm"
+        ).style.display = "none";
+
+        const sentMessage =
+            document.getElementById(
+                "proposalSentMessage"
+            );
+
+        sentMessage.style.display = "block";
+
+        setTimeout(function() {
+
+            sentMessage.style.display = "none";
+
+        }, 2500);
 
     }
 );
+
+
+
+        
         document.getElementById(
     "adminCloseButton"
 ).addEventListener(
