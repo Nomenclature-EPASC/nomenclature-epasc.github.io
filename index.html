@@ -515,14 +515,11 @@ document.querySelectorAll(".terrain-marker").forEach(function(marker) {
 }
 
 
-updateLoginStatus();
-
 
 /* =====================================================
    VARIABLES
 ===================================================== */
-// À chaque actualisation, retour obligatoire en mode visiteur
-supabaseClient.auth.signOut();
+
 let editMode = false;
 let addingTerrainPlant = false;
 function confirmAddTerrainPlant() {
@@ -2105,9 +2102,16 @@ window.addEventListener(
 );
 
 
-loadNumbers();
-loadTerrainPlants();
+// À chaque actualisation, on repart obligatoirement en mode visiteur
+supabaseClient.auth.signOut().then(function() {
 
+    updateLoginStatus();
+
+    loadNumbers();
+    loadTerrainPlants();
+
+});
+    
 if ("serviceWorker" in navigator) {
 
     let refreshing = false;
