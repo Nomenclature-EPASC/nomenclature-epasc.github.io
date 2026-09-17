@@ -521,7 +521,8 @@ updateLoginStatus();
 /* =====================================================
    VARIABLES
 ===================================================== */
-
+// À chaque actualisation, retour obligatoire en mode visiteur
+supabaseClient.auth.signOut();
 let editMode = false;
 let addingTerrainPlant = false;
 function confirmAddTerrainPlant() {
