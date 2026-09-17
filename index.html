@@ -1538,6 +1538,71 @@ window.selectedPlantType = "terrain";
 marker.style.cursor =
     editMode ? "move" : "pointer";
 
+        marker.style.cursor =
+    editMode ? "move" : "pointer";
+
+marker.addEventListener(
+    "dblclick",
+    function(event) {
+
+        if (editMode) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        scale = 1.5;
+
+        updateMap();
+
+        const zoomedMarkerRect =
+            marker.getBoundingClientRect();
+
+        const zoomedContainerRect =
+            container.getBoundingClientRect();
+
+        const zoomedMarkerCenterX =
+            zoomedMarkerRect.left +
+            zoomedMarkerRect.width / 2;
+
+        const zoomedMarkerCenterY =
+            zoomedMarkerRect.top +
+            zoomedMarkerRect.height / 2;
+
+        const zoomedContainerCenterX =
+            zoomedContainerRect.left +
+            zoomedContainerRect.width / 2;
+
+        const zoomedContainerCenterY =
+            zoomedContainerRect.top +
+            zoomedContainerRect.height / 2;
+
+        offsetX +=
+            zoomedContainerCenterX -
+            zoomedMarkerCenterX;
+
+        offsetY +=
+            zoomedContainerCenterY -
+            zoomedMarkerCenterY;
+
+        updateMap();
+
+        setTimeout(function() {
+
+            showTerrainPlantInfo(
+                item,
+                marker
+            );
+
+        }, 100);
+
+    }
+);
+
+marker.onpointerdown =
+    function(event) {
+
 marker.onpointerdown =
     function(event) {
 
