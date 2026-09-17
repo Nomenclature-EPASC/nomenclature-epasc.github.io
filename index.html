@@ -2571,10 +2571,6 @@ position: fixed;
         gap: 8px;
     ">
 
-<button id="adminEditButton">
-    ✏️ Modifier
-</button>
-
 
 
         <button id="adminAcceptButton">
@@ -3472,81 +3468,7 @@ document.getElementById(
     }
 );
 
-        document.getElementById(
-    "adminEditButton"
-).addEventListener(
-    "click",
-    async function() {
-
-        const french =
-            document.getElementById(
-                "adminFrenchInput"
-            ).value.trim();
-
-        const latin =
-            document.getElementById(
-                "adminLatinInput"
-            ).value.trim();
-
-        if (!french || !latin) {
-            alert(
-                "Veuillez remplir les deux noms."
-            );
-            return;
-        }
-
-const proposalId =
-    document.getElementById(
-        "terrainAdminForm"
-    ).dataset.proposalId;
-
-const { data, error } =
-    await supabaseClient
-        .from("propositions_terrain")
-        .update({
-            nom_francais: french,
-            nom_latin: latin
-        })
-        .eq("id", proposalId)
-        .select();
-
-console.log(
-    "Résultat modification Supabase :",
-    data
-);
-
-if (error) {
-    console.error(
-        "Erreur modification proposition :",
-        error
-    );
-
-    alert(
-        "Erreur lors de la modification : " +
-        error.message
-    );
-
-    return;
-}
-
-console.log(
-    "Modification Supabase réussie pour l'ID :",
-    proposalId
-);
-
-alert(
-    "Modification enregistrée."
-);
-
-document.getElementById(
-    "terrainAdminForm"
-).style.display = "none";
-
-loadTerrainProposals();
-
-    }
-);
-
+       
 
         document.getElementById(
     "adminAcceptButton"
@@ -3586,14 +3508,31 @@ if (proposalError) {
     return;
 }
 
+const french =
+    document.getElementById(
+        "adminFrenchInput"
+    ).value.trim();
+
+const latin =
+    document.getElementById(
+        "adminLatinInput"
+    ).value.trim();
+
+if (!french || !latin) {
+    alert(
+        "Veuillez remplir les deux noms."
+    );
+    return;
+}
+
 const { data: plant, error: plantError } =
     await supabaseClient
         .from("plantes_terrain")
         .insert({
             x: proposal.x,
             y: proposal.y,
-            nom_francais: proposal.nom_francais,
-            nom_latin: proposal.nom_latin
+            nom_francais: french,
+            nom_latin: latin
         })
         .select();
 
