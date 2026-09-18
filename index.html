@@ -2046,10 +2046,12 @@ marker.addEventListener(
                     marker.onpointermove = null;
                     marker.onpointerup = null;
 
-                    marker.dataset.moveEnabled = "false";
+marker.dataset.moveEnabled = "false";
 
-                    const newX =
-                        parseFloat(marker.style.left);
+marker.style.cursor = "pointer";
+
+const newX =
+    parseFloat(marker.style.left);
 
                     const newY =
                         parseFloat(marker.style.top);
