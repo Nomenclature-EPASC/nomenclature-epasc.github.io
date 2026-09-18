@@ -331,149 +331,7 @@ if (loggedIn) {
     }
 }
 
-document.querySelectorAll(".marker").forEach(function(marker) {
 
-    marker.style.background =
-        editMode ? "#ffff00" : "white";
-
-marker.style.cursor =
-    editMode ? "move" : "pointer";
-
-
-marker.onpointerdown = function(event) {
-
-    if (!editMode) {
-        return;
-    }
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    marker.setPointerCapture(event.pointerId);
-
-    const startX = event.clientX;
-    const startY = event.clientY;
-
-    const startLeft =
-        parseFloat(marker.style.left);
-
-    const startTop =
-        parseFloat(marker.style.top);
-
-
-    function move(e) {
-
-        const dx =
-            (e.clientX - startX) / scale;
-
-        const dy =
-            (e.clientY - startY) / scale;
-
-
-        marker.style.left =
-            (startLeft + dx) + "px";
-
-        marker.style.top =
-            (startTop + dy) + "px";
-
-    }
-
-
-async function stop() {
-
-    marker.releasePointerCapture(event.pointerId);
-
-    marker.onpointermove = null;
-    marker.onpointerup = null;
-
-
-    const newX =
-        parseFloat(marker.style.left);
-
-const newY =
-    parseFloat(marker.style.top);
-
-
-console.log(
-    "Sauvegarde :",
-    marker.dataset.id,
-    newX,
-    newY
-);
-
-
-try {
-
-    const response =
-        await fetch(
-                SUPABASE_URL +
-                "/rest/v1/numeros?id=eq." +
-                marker.dataset.id,
-                {
-                    method: "PATCH",
-
-                    headers: {
-                        "apikey":
-                            SUPABASE_KEY,
-
-"Authorization":
-    "Bearer " +
-    (await supabaseClient.auth.getSession()).data.session.access_token,
-
-                        "Content-Type":
-                            "application/json",
-
-"Prefer":
-    "return=representation"
-                    },
-
-                    body:
-                        JSON.stringify({
-                            x: newX,
-                            y: newY
-                        })
-                }
-            );
-
-
-if (!response.ok) {
-
-    console.error(
-        "Erreur sauvegarde position :",
-        response.status
-    );
-
-} else {
-
-    const result =
-        await response.json();
-
-    console.log(
-        "Réponse Supabase après sauvegarde :",
-        result
-    );
-
-}
-
-    } catch (error) {
-
-        console.error(
-            "Erreur lors de la sauvegarde :",
-            error
-        );
-
-    }
-
-}
-
-
-    marker.onpointermove = move;
-
-    marker.onpointerup = stop;
-
-};
-
-});
 
 document.querySelectorAll(".terrain-marker").forEach(function(marker) {
 
@@ -2038,70 +1896,230 @@ marker.style.background =
 marker.textContent =
     "N";
 
-let lastMarkerClick = 0;
+marker.addEventListener(
+    "click",
+    function(event) {
 
-marker.addEventListener("click", function(event) {
+        event.stopPropagation();
 
-    event.stopPropagation();
-
-    const now = Date.now();
-
-    // Double-clic
-    if (now - lastMarkerClick < 400) {
-
-        scale = 1.5;
-
-        updateMap();
-
-        const zoomedMarkerRect =
-            marker.getBoundingClientRect();
-
-        const zoomedContainerRect =
-            container.getBoundingClientRect();
-
-        const zoomedMarkerCenterX =
-            zoomedMarkerRect.left +
-            zoomedMarkerRect.width / 2;
-
-        const zoomedMarkerCenterY =
-            zoomedMarkerRect.top +
-            zoomedMarkerRect.height / 2;
-
-        const zoomedContainerCenterX =
-            zoomedContainerRect.left +
-            zoomedContainerRect.width / 2;
-
-        const zoomedContainerCenterY =
-            zoomedContainerRect.top +
-            zoomedContainerRect.height / 2;
-
-        offsetX +=
-            zoomedContainerCenterX -
-            zoomedMarkerCenterX;
-
-        offsetY +=
-            zoomedContainerCenterY -
-            zoomedMarkerCenterY;
-
-        updateMap();
-
-        setTimeout(function() {
-
+        if (!editMode) {
             showPlantInfo(item, marker);
-
-        }, 100);
-
-    } else {
-
-        // Simple clic
-        showPlantInfo(item, marker);
+        }
 
     }
+);
 
-    lastMarkerClick = now;
 
-});
+marker.addEventListener(
+    "dblclick",
+    function(event) {
 
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (!editMode) {
+
+            scale = 1.5;
+
+            updateMap();
+
+            const zoomedMarkerRect =
+                marker.getBoundingClientRect();
+
+            const zoomedContainerRect =
+                container.getBoundingClientRect();
+
+            const zoomedMarkerCenterX =
+                zoomedMarkerRect.left +
+                zoomedMarkerRect.width / 2;
+
+            const zoomedMarkerCenterY =
+                zoomedMarkerRect.top +
+                zoomedMarkerRect.height / 2;
+
+            const zoomedContainerCenterX =
+                zoomedContainerRect.left +
+                zoomedContainerRect.width / 2;
+
+            const zoomedContainerCenterY =
+                zoomedContainerRect.top +
+                zoomedContainerRect.height / 2;
+
+            offsetX +=
+                zoomedContainerCenterX -
+                zoomedMarkerCenterX;
+
+            offsetY +=
+                zoomedContainerCenterY -
+                zoomedMarkerCenterY;
+
+            updateMap();
+
+            setTimeout(function() {
+
+                showPlantInfo(item, marker);
+
+            }, 100);
+
+            return;
+        }
+
+        /* ADMIN → double-clic = autoriser le déplacement */
+
+        marker.dataset.moveEnabled = "true";
+
+        marker.style.cursor = "move";
+
+        console.log(
+            "Déplacement activé pour le point :",
+            marker.dataset.id
+        );
+
+    }
+);
+
+        marker.dataset.moveEnabled = "false";
+
+        marker.addEventListener(
+            "pointerdown",
+            function(event) {
+
+                if (
+                    !editMode ||
+                    marker.dataset.moveEnabled !== "true"
+                ) {
+                    return;
+                }
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                marker.setPointerCapture(
+                    event.pointerId
+                );
+
+                const startX =
+                    event.clientX;
+
+                const startY =
+                    event.clientY;
+
+                const startLeft =
+                    parseFloat(marker.style.left);
+
+                const startTop =
+                    parseFloat(marker.style.top);
+
+                function move(e) {
+
+                    const dx =
+                        (e.clientX - startX) /
+                        scale;
+
+                    const dy =
+                        (e.clientY - startY) /
+                        scale;
+
+                    marker.style.left =
+                        (startLeft + dx) + "px";
+
+                    marker.style.top =
+                        (startTop + dy) + "px";
+
+                }
+
+                async function stop() {
+
+                    marker.releasePointerCapture(
+                        event.pointerId
+                    );
+
+                    marker.onpointermove = null;
+                    marker.onpointerup = null;
+
+                    marker.dataset.moveEnabled = "false";
+
+                    const newX =
+                        parseFloat(marker.style.left);
+
+                    const newY =
+                        parseFloat(marker.style.top);
+
+                    console.log(
+                        "Sauvegarde :",
+                        marker.dataset.id,
+                        newX,
+                        newY
+                    );
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                SUPABASE_URL +
+                                "/rest/v1/numeros?id=eq." +
+                                marker.dataset.id,
+                                {
+                                    method: "PATCH",
+
+                                    headers: {
+                                        "apikey":
+                                            SUPABASE_KEY,
+
+                                        "Authorization":
+                                            "Bearer " +
+                                            (await supabaseClient.auth.getSession()).data.session.access_token,
+
+                                        "Content-Type":
+                                            "application/json",
+
+                                        "Prefer":
+                                            "return=representation"
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+                                            x: newX,
+                                            y: newY
+                                        })
+                                }
+                            );
+
+                        if (!response.ok) {
+
+                            console.error(
+                                "Erreur sauvegarde position :",
+                                response.status
+                            );
+
+                        } else {
+
+                            const result =
+                                await response.json();
+
+                            console.log(
+                                "Réponse Supabase après sauvegarde :",
+                                result
+                            );
+
+                        }
+
+                    } catch (error) {
+
+                        console.error(
+                            "Erreur lors de la sauvegarde :",
+                            error
+                        );
+
+                    }
+
+                }
+
+                marker.onpointermove = move;
+                marker.onpointerup = stop;
+
+            }
+        );
 
         marker.style.left =
             item.x + "px";
