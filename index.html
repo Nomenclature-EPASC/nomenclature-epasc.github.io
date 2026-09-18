@@ -1986,6 +1986,11 @@ marker.addEventListener(
 
         marker.style.cursor = "move";
 
+        const popup = document.getElementById("plantInfo");
+if (popup) {
+    popup.style.display = "none";
+}
+
         console.log(
             "Déplacement activé pour le point :",
             marker.dataset.id
