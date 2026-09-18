@@ -1919,7 +1919,12 @@ marker.addEventListener(
 
         event.stopPropagation();
 
-showPlantInfo(item, marker);
+        if (marker.dataset.ignoreNextClick === "true") {
+            marker.dataset.ignoreNextClick = "false";
+            return;
+        }
+
+        showPlantInfo(item, marker);
 
     }
 );
