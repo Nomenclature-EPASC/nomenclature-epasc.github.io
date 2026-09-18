@@ -1477,9 +1477,16 @@ marker.onpointerdown =
         event.preventDefault();
         event.stopPropagation();
 
+        const popup = document.getElementById("plantInfo");
+if (popup) {
+    popup.style.display = "none";
+}
+
         marker.setPointerCapture(
             event.pointerId
         );
+
+        
 
         const startX =
             event.clientX;
