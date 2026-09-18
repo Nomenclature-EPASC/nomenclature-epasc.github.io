@@ -343,6 +343,15 @@ document.querySelectorAll(".terrain-marker").forEach(function(marker) {
         editMode ? "yellow" : "white";
 
 });
+    document.querySelectorAll(".marker").forEach(function(marker) {
+
+    marker.style.background =
+        editMode ? "yellow" : "white";
+
+    marker.style.cursor =
+        editMode ? "pointer" : "pointer";
+
+});
 
     document.getElementById(
         "loginButton"
