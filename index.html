@@ -1351,6 +1351,64 @@ async function loadTerrainPlants() {
 
 }
 
+    function cancelAllMarkerMoves() {
+
+    document.querySelectorAll(
+        '[data-move-enabled="true"]'
+    ).forEach(
+        function(marker) {
+
+            marker.dataset.moveEnabled =
+                "false";
+
+            marker.style.cursor =
+                "pointer";
+
+        }
+    );
+
+}
+
+document.addEventListener(
+    "pointerdown",
+    function(event) {
+
+        const clickedMarker =
+            event.target.closest(
+                ".marker, .terrain-marker, .terrain-marker-new"
+            );
+
+        if (clickedMarker) {
+
+            document.querySelectorAll(
+                '[data-move-enabled="true"]'
+            ).forEach(
+                function(marker) {
+
+                    if (marker !== clickedMarker) {
+
+                        marker.dataset.moveEnabled =
+                            "false";
+
+                        marker.style.cursor =
+                            "pointer";
+
+                    }
+
+                }
+            );
+
+            return;
+        }
+
+        cancelAllMarkerMoves();
+
+    },
+    true
+);
+
+
+function displayTerrainPlants(data) {
 
 function displayTerrainPlants(data) {
 
