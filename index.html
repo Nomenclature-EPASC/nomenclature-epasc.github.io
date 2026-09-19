@@ -1682,13 +1682,23 @@ marker.addEventListener(
         marker.dataset.moveEnabled =
             "true";
 
-        marker.style.cursor =
-            "move";
+marker.style.cursor =
+    "move";
 
-        console.log(
-            "Déplacement activé pour la proposition :",
-            marker.dataset.proposalId
-        );
+
+const form =
+    document.getElementById("terrainAdminForm");
+
+if (form) {
+    form.style.display =
+        "none";
+}
+
+
+console.log(
+    "Déplacement activé pour la proposition :",
+    marker.dataset.proposalId
+);
 
     }
 );
