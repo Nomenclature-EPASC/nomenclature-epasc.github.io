@@ -1415,6 +1415,26 @@ marker.addEventListener(
     function(event) {
 
         if (editMode) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            marker.dataset.moveEnabled = "true";
+
+            marker.style.cursor = "move";
+
+            const popup =
+                document.getElementById("plantInfo");
+
+            if (popup) {
+                popup.style.display = "none";
+            }
+
+            console.log(
+                "Déplacement activé pour la plante terrain :",
+                marker.dataset.id
+            );
+
             return;
         }
 
@@ -1469,27 +1489,25 @@ marker.addEventListener(
     }
 );
 
+marker.dataset.moveEnabled = "false";
 
-marker.onpointerdown =
+marker.addEventListener(
+    "pointerdown",
     function(event) {
 
-        if (!editMode) {
+        if (
+            !editMode ||
+            marker.dataset.moveEnabled !== "true"
+        ) {
             return;
         }
 
         event.preventDefault();
         event.stopPropagation();
 
-        const popup = document.getElementById("plantInfo");
-if (popup) {
-    popup.style.display = "none";
-}
-
         marker.setPointerCapture(
             event.pointerId
         );
-
-        
 
         const startX =
             event.clientX;
@@ -1498,14 +1516,10 @@ if (popup) {
             event.clientY;
 
         const startLeft =
-            parseFloat(
-                marker.style.left
-            );
+            parseFloat(marker.style.left);
 
         const startTop =
-            parseFloat(
-                marker.style.top
-            );
+            parseFloat(marker.style.top);
 
         function move(e) {
 
@@ -1533,6 +1547,15 @@ if (popup) {
 
             marker.onpointermove = null;
             marker.onpointerup = null;
+
+            marker.dataset.moveEnabled = "false";
+
+            const popup =
+                document.getElementById("plantInfo");
+
+            if (popup) {
+                popup.style.display = "none";
+            }
 
             const newX =
                 parseFloat(
@@ -1589,7 +1612,9 @@ if (popup) {
         marker.onpointermove = move;
         marker.onpointerup = stop;
 
-    };
+    }
+);
+
 
         markers.appendChild(marker);
 
