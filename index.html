@@ -1414,30 +1414,16 @@ marker.addEventListener(
     "dblclick",
     function(event) {
 
-        event.preventDefault();
-        event.stopPropagation();
+        if (editMode) {
 
-        marker.dataset.moveEnabled =
-            "true";
+            event.preventDefault();
+            event.stopPropagation();
 
-        marker.style.cursor =
-            "move";
+marker.dataset.moveEnabled =
+    "true";
 
-
-        const form =
-            document.getElementById(
-                "terrainAdminForm"
-            );
-
-        if (form) {
-
-            form.style.display =
-                "none";
-
-        }
-
-    }
-);
+marker.style.cursor =
+    "move";
 
 
 const form =
