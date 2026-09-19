@@ -1377,6 +1377,18 @@ document.addEventListener(
             event.target.closest(
                 ".marker, .terrain-marker, .terrain-marker-new"
             );
+                const terrainForm =
+            document.getElementById(
+                "terrainAdminForm"
+            );
+
+        if (
+            terrainForm &&
+            terrainForm.style.display === "block" &&
+            !event.target.closest("#terrainAdminForm")
+        ) {
+            terrainForm.style.display = "none";
+        }
 
         if (clickedMarker) {
 
