@@ -1626,10 +1626,34 @@ marker.addEventListener(
 
             marker.onpointermove = null;
             marker.onpointerup = null;
+const moved =
+    Math.abs(
+        parseFloat(marker.style.left) -
+        startLeft
+    ) > 0.1 ||
+    Math.abs(
+        parseFloat(marker.style.top) -
+        startTop
+    ) > 0.1;
+if (!moved) {
+
+    marker.dataset.ignoreNextClick =
+        "false";
+
+    marker.dataset.moveEnabled =
+        "false";
+
+    marker.style.cursor =
+        "pointer";
+
+    return;
+}
 
 marker.dataset.ignoreNextClick =
     "true";
-            marker.dataset.moveEnabled = "false";
+
+marker.dataset.moveEnabled =
+    "false";
 
 marker.style.cursor = "pointer";
 
