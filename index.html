@@ -376,9 +376,23 @@ document.querySelectorAll(".terrain-marker").forEach(function(marker) {
             : "";
     if (loggedIn) {
 
-    loadTerrainProposals();
+        loadTerrainProposals();
 
-}
+    } else {
+
+        document.querySelectorAll(
+            ".terrain-marker-new"
+        ).forEach(
+            function(marker) {
+                marker.remove();
+            }
+        );
+
+        document.getElementById(
+            "terrainAdminForm"
+        ).style.display = "none";
+
+    }
 
 }
 
