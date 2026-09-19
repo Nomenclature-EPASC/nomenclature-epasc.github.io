@@ -1387,6 +1387,16 @@ marker.addEventListener(
 
         event.stopPropagation();
 
+        if (
+    marker.dataset.ignoreNextClick ===
+    "true"
+) {
+    marker.dataset.ignoreNextClick =
+        "false";
+
+    return;
+}
+
     window.selectedPlantForEdit = item;
 window.selectedPlantType = "terrain";
 
@@ -1559,7 +1569,9 @@ marker.addEventListener(
             marker.onpointermove = null;
             marker.onpointerup = null;
 
-marker.dataset.moveEnabled = "false";
+marker.dataset.ignoreNextClick =
+    "true";
+            marker.dataset.moveEnabled = "false";
 
 marker.style.cursor = "pointer";
 
@@ -1769,11 +1781,14 @@ marker.addEventListener(
             marker.onpointerup =
                 null;
 
-            marker.dataset.moveEnabled =
-                "false";
+marker.dataset.ignoreNextClick =
+    "true";
 
-            marker.style.cursor =
-                "pointer";
+marker.dataset.moveEnabled =
+    "false";
+
+marker.style.cursor =
+    "pointer";
 
 
             const newX =
@@ -1842,11 +1857,23 @@ marker.addEventListener(
 );
       
 
-        marker.addEventListener(
-            "click",
+marker.addEventListener(
+    "click",
     function(event) {
 
         event.stopPropagation();
+
+
+        if (
+            marker.dataset.ignoreNextClick ===
+            "true"
+        ) {
+            marker.dataset.ignoreNextClick =
+                "false";
+
+            return;
+        }
+
 
 const form =
     document.getElementById("terrainAdminForm");
