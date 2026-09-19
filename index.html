@@ -1895,14 +1895,24 @@ form.dataset.proposalId =
 form.style.display =
     "block";
 
+const rect =
+    marker.getBoundingClientRect();
+
 form.style.left =
-    marker.offsetLeft + "px";
+    (
+        rect.left +
+        rect.width / 2 -
+        form.offsetWidth / 2
+    ) + "px";
 
 form.style.top =
-    (marker.offsetTop + 30) + "px";
+    (
+        rect.bottom +
+        10
+    ) + "px";
 
 form.style.transform =
-    "translateX(-50%)";
+    "none";
 
     }
 );
