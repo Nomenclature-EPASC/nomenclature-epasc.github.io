@@ -130,7 +130,7 @@ top: 0;
     border-radius: 50%;
 
     pointer-events: auto;
-    cursor: move;
+cursor: pointer;
 }
         #addTerrainButton {
     margin-right: 10px;
@@ -337,7 +337,7 @@ if (loggedIn) {
 document.querySelectorAll(".terrain-marker").forEach(function(marker) {
 
     marker.style.cursor =
-        editMode ? "move" : "pointer";
+        "pointer";
 
     marker.style.backgroundColor =
         editMode ? "yellow" : "white";
@@ -1407,7 +1407,7 @@ window.selectedPlantType = "terrain";
 );
 
 marker.style.cursor =
-    editMode ? "move" : "pointer";
+    "pointer";
 
 
 marker.addEventListener(
@@ -1548,10 +1548,12 @@ marker.addEventListener(
             marker.onpointermove = null;
             marker.onpointerup = null;
 
-            marker.dataset.moveEnabled = "false";
+marker.dataset.moveEnabled = "false";
 
-            const popup =
-                document.getElementById("plantInfo");
+marker.style.cursor = "pointer";
+
+const popup =
+    document.getElementById("plantInfo");
 
             if (popup) {
                 popup.style.display = "none";
