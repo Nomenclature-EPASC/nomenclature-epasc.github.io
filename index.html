@@ -1419,9 +1419,20 @@ marker.addEventListener(
             event.preventDefault();
             event.stopPropagation();
 
-            marker.dataset.moveEnabled = "true";
+marker.dataset.moveEnabled =
+    "true";
 
-            marker.style.cursor = "move";
+marker.style.cursor =
+    "move";
+
+
+const form =
+    document.getElementById("terrainAdminForm");
+
+if (form) {
+    form.style.display =
+        "none";
+}
 
             const popup =
                 document.getElementById("plantInfo");
