@@ -2159,8 +2159,18 @@ marker.style.cursor =
 marker.style.background =
     editMode ? "yellow" : "white";
 
-marker.textContent =
-    "N";
+if (item.a_connaitre === true) {
+
+    marker.textContent = "★";
+    marker.style.fontSize = "11px";
+    marker.style.fontWeight = "bold";
+    marker.style.lineHeight = "20px";
+
+} else {
+
+    marker.textContent = "";
+
+}
 
 marker.addEventListener(
     "click",
