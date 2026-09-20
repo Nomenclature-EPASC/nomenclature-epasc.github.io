@@ -3113,39 +3113,14 @@ document.getElementById(
         const plantId =
             plant.id;
 
-        let error;
-
-        if (
-            window.selectedPlantType ===
-            "terrain"
-        ) {
-
-            const result =
-                await supabaseClient
-                    .from("plantes_terrain")
-                    .delete()
-                    .eq(
-                        "id",
-                        plantId
-                    );
-
-            error =
-                result.error;
-
-        } else {
-
-            const result =
-                await supabaseClient
-                    .from("numeros")
-                    .delete()
-                    .eq(
-                        "id",
-                        plantId
-                    );
-
-            error =
-                result.error;
-        }
+       const { error } =
+    await supabaseClient
+        .from("numeros")
+        .delete()
+        .eq(
+            "id",
+            plantId
+        );
 
         if (error) {
 
