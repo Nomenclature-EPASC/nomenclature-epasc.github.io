@@ -3622,7 +3622,17 @@ allPlants =
                 y: proposal.y,
                 "Nom français": french,
                 "Nom latin": latin,
-a_connaitre: false,
+a_connaitre:
+    allPlants.some(function(existingPlant) {
+
+        return (
+            existingPlant["Nom français"] === french &&
+            existingPlant["Nom latin"] === latin &&
+            existingPlant.a_connaitre === true
+        );
+
+    }),
+
 exemplaire_principal: false
             })
             .select();
