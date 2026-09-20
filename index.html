@@ -1841,13 +1841,69 @@ document.getElementById(
     "adminPlantEditForm"
 ).style.display =
     "none";
-    document.getElementById(
+document.getElementById(
     "principalPlantCheckbox"
-).onchange = function() {
+).onchange = async function() {
+
+    if (!this.checked) {
+        return;
+    }
+
+    const french =
+        plant["Nom français"];
+
+    const latin =
+        plant["Nom latin"];
+
+    const { error: resetError } =
+        await supabaseClient
+            .from("numeros")
+            .update({
+                exemplaire_principal: false
+            })
+            .eq("Nom français", french)
+            .eq("Nom latin", latin);
+
+    if (resetError) {
+        console.error(
+            "Erreur lors de la désactivation des anciens exemplaires principaux :",
+            resetError
+        );
+        return;
+    }
+
+    const { error: principalError } =
+        await supabaseClient
+            .from("numeros")
+            .update({
+                exemplaire_principal: true
+            })
+            .eq("id", plant.id);
+
+    if (principalError) {
+        console.error(
+            "Erreur lors de la définition de l'exemplaire principal :",
+            principalError
+        );
+        return;
+    }
+
+    plant.exemplaire_principal = true;
+
+    allPlants.forEach(function(otherPlant) {
+
+        if (
+            otherPlant["Nom français"] === french &&
+            otherPlant["Nom latin"] === latin
+        ) {
+            otherPlant.exemplaire_principal =
+                otherPlant.id === plant.id;
+        }
+
+    });
 
     console.log(
-        "Case exemplaire principal modifiée :",
-        this.checked
+        "Nouvel exemplaire principal enregistré."
     );
 
 };
