@@ -3030,45 +3030,18 @@ if (window.selectedPlantType === "terrain") {
         const plantId =
             window.selectedPlantForEdit.id;
 
-let data;
-let error;
-
-if (window.selectedPlantType === "terrain") {
-
-    const result =
-        await supabaseClient
-            .from("plantes_terrain")
-            .update({
-                nom_francais: french,
-                nom_latin: latin
-            })
-            .eq(
-                "id",
-                plantId
-            )
-            .select();
-
-    data = result.data;
-    error = result.error;
-
-} else {
-
-    const result =
-        await supabaseClient
-            .from("numeros")
-            .update({
-                "Nom français": french,
-                "Nom latin": latin
-            })
-            .eq(
-                "id",
-                plantId
-            )
-            .select();
-
-    data = result.data;
-    error = result.error;
-}
+const { data, error } =
+    await supabaseClient
+        .from("numeros")
+        .update({
+            "Nom français": french,
+            "Nom latin": latin
+        })
+        .eq(
+            "id",
+            plantId
+        )
+        .select();
 
         if (error) {
 
