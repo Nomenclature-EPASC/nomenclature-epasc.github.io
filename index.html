@@ -3333,14 +3333,21 @@ document.getElementById(
     "editPlantLatinInput"
 ).value =
     plant["Nom latin"];
-        document.getElementById(
-            "adminPlantButtons"
-        ).style.display = "none";
+document.getElementById(
+    "adminPlantButtons"
+).style.display = "none";
 
+document.getElementById(
+    "speciesNavigation"
+).style.display = "none";
 
-        document.getElementById(
-            "adminPlantEditForm"
-        ).style.display = "block";
+document.getElementById(
+    "adminPrincipalPlant"
+).style.display = "none";
+
+document.getElementById(
+    "adminPlantEditForm"
+).style.display = "block";
 
     }
 );
