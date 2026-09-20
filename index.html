@@ -177,7 +177,51 @@ cursor: pointer;
     top: 23px;
 }
 /* TEST */
+/* LISTES DEROULANTES - AJOUT DE PLANTE */
 
+.terrain-dropdown {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 2px);
+
+    max-height: 220px;
+    overflow-y: auto;
+
+    background: white;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+    z-index: 4000;
+}
+
+.terrain-dropdown-item {
+    padding: 9px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.terrain-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.terrain-dropdown-item:hover {
+    background: #f0f0f0;
+}
+
+.terrain-dropdown-main {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.terrain-dropdown-secondary {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #777;
+}
     </style>
 </head>
 
@@ -1200,26 +1244,41 @@ if (
  let allPlants = [];
 
 
-
-    // Prépare la liste des plantes pour le formulaire d'ajout
 function prepareTerrainPlantList() {
 
-    const latinDatalist =
+    const latinDropdown =
         document.getElementById(
-            "terrainLatinChoices"
+            "terrainLatinDropdown"
         );
 
-    const frenchDatalist =
+    const frenchDropdown =
         document.getElementById(
-            "terrainFrenchChoices"
+            "terrainFrenchDropdown"
         );
 
-    if (!latinDatalist || !frenchDatalist) {
+    const latinInput =
+        document.getElementById(
+            "terrainLatinInput"
+        );
+
+    const frenchInput =
+        document.getElementById(
+            "terrainFrenchInput"
+        );
+
+    if (
+        !latinDropdown ||
+        !frenchDropdown ||
+        !latinInput ||
+        !frenchInput
+    ) {
         return;
     }
 
-    latinDatalist.innerHTML = "";
-    frenchDatalist.innerHTML = "";
+
+    /* ==========================================
+       CONSTRUIRE UNE LISTE UNIQUE DE SPECIES
+    ========================================== */
 
     const species = [];
 
@@ -1260,133 +1319,239 @@ function prepareTerrainPlantList() {
 
     });
 
-    species.forEach(function(plant) {
 
-        /* =========================
-           LISTE NOM LATIN
-        ========================= */
+    /* ==========================================
+       CREER LA LISTE LATINE
+    ========================================== */
 
-        if (
-            plant.latin &&
-            plant.latin !== "/"
-        ) {
+    function updateLatinDropdown() {
 
-            const optionLatin =
-                document.createElement("option");
+        const search =
+            latinInput.value
+                .toLowerCase()
+                .trim();
 
-            optionLatin.value =
-                plant.latin;
+        latinDropdown.innerHTML = "";
 
-            optionLatin.label =
-                plant.french;
+        const results =
+            species.filter(function(plant) {
 
-            latinDatalist.appendChild(
-                optionLatin
+                return (
+                    plant.latin &&
+                    plant.latin !== "/" &&
+                    (
+                        plant.latin
+                            .toLowerCase()
+                            .includes(search) ||
+                        plant.french
+                            .toLowerCase()
+                            .includes(search)
+                    )
+                );
+
+            });
+
+        results.forEach(function(plant) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "terrain-dropdown-item";
+
+            item.innerHTML =
+                '<div class="terrain-dropdown-main">' +
+                    plant.latin +
+                '</div>' +
+                '<div class="terrain-dropdown-secondary">' +
+                    plant.french +
+                '</div>';
+
+            item.addEventListener(
+                "pointerdown",
+                function(event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    latinInput.value =
+                        plant.latin;
+
+                    frenchInput.value =
+                        plant.french;
+
+                    latinDropdown.style.display =
+                        "none";
+
+                }
             );
 
-        }
+            latinDropdown.appendChild(item);
+
+        });
+
+        latinDropdown.style.display =
+            results.length > 0
+                ? "block"
+                : "none";
+
+    }
 
 
-        /* =========================
-           LISTE NOM FRANÇAIS
-        ========================= */
+    /* ==========================================
+       CREER LA LISTE FRANÇAISE
+    ========================================== */
 
-        if (plant.french) {
+    function updateFrenchDropdown() {
 
-            const optionFrench =
-                document.createElement("option");
+        const search =
+            frenchInput.value
+                .toLowerCase()
+                .trim();
 
-            optionFrench.value =
-                plant.french;
+        frenchDropdown.innerHTML = "";
 
-            optionFrench.label =
-                plant.latin;
+        const results =
+            species.filter(function(plant) {
 
-            frenchDatalist.appendChild(
-                optionFrench
+                return (
+                    plant.french &&
+                    (
+                        plant.french
+                            .toLowerCase()
+                            .includes(search) ||
+                        plant.latin
+                            .toLowerCase()
+                            .includes(search)
+                    )
+                );
+
+            });
+
+        results.forEach(function(plant) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "terrain-dropdown-item";
+
+            item.innerHTML =
+                '<div class="terrain-dropdown-main">' +
+                    plant.french +
+                '</div>' +
+                '<div class="terrain-dropdown-secondary">' +
+                    plant.latin +
+                '</div>';
+
+            item.addEventListener(
+                "pointerdown",
+                function(event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    frenchInput.value =
+                        plant.french;
+
+                    latinInput.value =
+                        plant.latin;
+
+                    frenchDropdown.style.display =
+                        "none";
+
+                }
             );
 
-        }
+            frenchDropdown.appendChild(item);
 
-    });
+        });
+
+        frenchDropdown.style.display =
+            results.length > 0
+                ? "block"
+                : "none";
+
+    }
 
 
-    /* =========================
-       LATIN → FRANÇAIS
-    ========================= */
+    /* ==========================================
+       EVENEMENTS
+    ========================================== */
 
-    document.getElementById(
-        "terrainLatinInput"
-    ).addEventListener(
-        "change",
+    latinInput.addEventListener(
+        "focus",
         function() {
 
-            const latin =
-                this.value.trim();
+            updateLatinDropdown();
 
-            const plant =
-                allPlants.find(function(plant) {
+        }
+    );
 
-                    return (
-                        String(
-                            plant["Nom latin"] || ""
-                        ).trim() === latin
-                    );
+    latinInput.addEventListener(
+        "input",
+        function() {
 
-                });
+            updateLatinDropdown();
 
-            if (plant) {
+        }
+    );
 
-                document.getElementById(
-                    "terrainFrenchInput"
-                ).value =
-                    String(
-                        plant["Nom français"] || ""
-                    ).trim();
+
+    frenchInput.addEventListener(
+        "focus",
+        function() {
+
+            updateFrenchDropdown();
+
+        }
+    );
+
+    frenchInput.addEventListener(
+        "input",
+        function() {
+
+            updateFrenchDropdown();
+
+        }
+    );
+
+
+    /* ==========================================
+       FERMER LES LISTES EN CLIQUANT AILLEURS
+    ========================================== */
+
+    document.addEventListener(
+        "pointerdown",
+        function(event) {
+
+            if (
+                !event.target.closest(
+                    "#terrainLatinInput, #terrainLatinDropdown"
+                )
+            ) {
+
+                latinDropdown.style.display =
+                    "none";
+
+            }
+
+            if (
+                !event.target.closest(
+                    "#terrainFrenchInput, #terrainFrenchDropdown"
+                )
+            ) {
+
+                frenchDropdown.style.display =
+                    "none";
 
             }
 
         }
     );
 
-
-    /* =========================
-       FRANÇAIS → LATIN
-    ========================= */
-
-    document.getElementById(
-        "terrainFrenchInput"
-    ).addEventListener(
-        "change",
-        function() {
-
-            const french =
-                this.value.trim();
-
-            const plant =
-                allPlants.find(function(plant) {
-
-                    return (
-                        String(
-                            plant["Nom français"] || ""
-                        ).trim() === french
-                    );
-
-                });
-
-            if (plant) {
-
-                document.getElementById(
-                    "terrainLatinInput"
-                ).value =
-                    String(
-                        plant["Nom latin"] || ""
-                    ).trim();
-
-            }
-
-        }
-    );
+}
+  
 
 }
     
@@ -2888,21 +3053,48 @@ position: fixed;
 
 <datalist id="terrainLatinChoices"></datalist>
 
-<input
-    id="terrainFrenchInput"
-    type="text"
-    list="terrainFrenchChoices"
-    placeholder="Nom français"
-    autocomplete="off"
-    style="
-        width: 100%;
-        padding: 9px;
-        margin-bottom: 8px;
-        font-size: 16px;
-    "
->
+<div style="position: relative; margin-bottom: 8px;">
 
-<datalist id="terrainFrenchChoices"></datalist>
+    <input
+        id="terrainLatinInput"
+        type="text"
+        placeholder="Nom latin"
+        autocomplete="off"
+        style="
+            width: 100%;
+            padding: 9px;
+            font-size: 16px;
+        "
+    >
+
+    <div
+        id="terrainLatinDropdown"
+        class="terrain-dropdown"
+    ></div>
+
+</div>
+
+
+<div style="position: relative; margin-bottom: 8px;">
+
+    <input
+        id="terrainFrenchInput"
+        type="text"
+        placeholder="Nom français"
+        autocomplete="off"
+        style="
+            width: 100%;
+            padding: 9px;
+            font-size: 16px;
+        "
+    >
+
+    <div
+        id="terrainFrenchDropdown"
+        class="terrain-dropdown"
+    ></div>
+
+</div>
 
 
 
