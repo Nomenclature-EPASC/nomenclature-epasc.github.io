@@ -1661,53 +1661,6 @@ form.style.transform =
 }
 
 
-function showTerrainPlantInfo(plant, marker) {
-
-    document.getElementById("plantLatin").style.display =
-        "block";
-
-    document.getElementById("plantLatin").textContent =
-        plant.nom_latin;
-
-    document.getElementById("plantFrench").textContent =
-        plant.nom_francais;
-
-    const info =
-        document.getElementById("plantInfo");
-
-    info.style.display =
-        "block";
-
-    const rect =
-        marker.getBoundingClientRect();
-
-    info.style.position =
-        "fixed";
-
-    info.style.left =
-        (
-            rect.left +
-            rect.width / 2 -
-            info.offsetWidth / 2
-        ) + "px";
-
-    info.style.top =
-        (
-            rect.bottom +
-            10
-        ) + "px";
-    document.getElementById(
-    "adminPlantButtons"
-).style.display =
-    editMode ? "block" : "none";
-
-document.getElementById(
-    "adminPlantEditForm"
-).style.display =
-    "none";
-
-}
-
 
 /* =====================================================
    AFFICHER LES PLANTES
