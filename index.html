@@ -2696,7 +2696,19 @@ setTimeout(function() {
     document.getElementById("searchInput").blur();
 }, 300);
 
+document.getElementById(
+    "speciesNavigation"
+).style.display =
+    selectedSpeciesResults.length > 1
+        ? "block"
+        : "none";
 
+document.getElementById(
+    "speciesPosition"
+).textContent =
+    (selectedSpeciesIndex + 1) +
+    " / " +
+    selectedSpeciesResults.length;
 const selectedPlant =
     selectedSpeciesResults[selectedSpeciesIndex];
 
