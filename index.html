@@ -2779,60 +2779,30 @@ position: fixed;
     </div>
 
 <input
-    id="terrainLatinInput"
+    id="terrainPlantInput"
     type="text"
-    list="terrainLatinChoices"
-    placeholder="Nom latin"
+    list="terrainPlantChoices"
+    placeholder="Rechercher une plante..."
+    autocomplete="off"
     style="
         width: 100%;
         padding: 9px;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
         font-size: 16px;
     "
 >
 
-<div
-    id="terrainLatinChoices"
-    style="
-        display: none;
-        max-height: 150px;
-        overflow-y: auto;
-        margin-top: -8px;
-        margin-bottom: 8px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        background: white;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    "
-></div>
+<datalist id="terrainPlantChoices"></datalist>
+
+<input
+    id="terrainLatinInput"
+    type="hidden"
+>
 
 <input
     id="terrainFrenchInput"
-    type="text"
-    list="terrainFrenchChoices"
-    placeholder="Nom français"
-    style="
-        width: 100%;
-        padding: 9px;
-        margin-bottom: 8px;
-        font-size: 16px;
-    "
+    type="hidden"
 >
-
-<div
-    id="terrainFrenchChoices"
-    style="
-        display: none;
-        max-height: 150px;
-        overflow-y: auto;
-        margin-top: -4px;
-        margin-bottom: 8px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        background: white;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    "
-></div>
 
 
 
