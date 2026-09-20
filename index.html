@@ -3071,31 +3071,15 @@ const { data, error } =
 window.selectedPlantForEdit =
     data[0];
 
-if (window.selectedPlantType === "terrain") {
+document.getElementById(
+    "plantLatin"
+).textContent =
+    data[0]["Nom latin"];
 
-    document.getElementById(
-        "plantLatin"
-    ).textContent =
-        data[0].nom_latin;
-
-    document.getElementById(
-        "plantFrench"
-    ).textContent =
-        data[0].nom_francais;
-
-} else {
-
-    document.getElementById(
-        "plantLatin"
-    ).textContent =
-        data[0]["Nom latin"];
-
-    document.getElementById(
-        "plantFrench"
-    ).textContent =
-        data[0]["Nom français"];
-}
-
+document.getElementById(
+    "plantFrench"
+).textContent =
+    data[0]["Nom français"];
         document.getElementById(
             "adminPlantButtons"
         ).style.display = "block";
