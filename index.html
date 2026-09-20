@@ -1199,17 +1199,155 @@ if (
 
  let allPlants = [];
 
-    function prepareTerrainPlantLists() {
+function prepareTerrainPlantLists() {
 
     const latinList =
-        document.getElementById("terrainLatinChoices");
+        document.getElementById(
+            "terrainLatinChoices"
+        );
 
     const frenchList =
-        document.getElementById("terrainFrenchChoices");
+        document.getElementById(
+            "terrainFrenchChoices"
+        );
 
     if (!latinList || !frenchList) {
         return;
     }
+
+    latinList.innerHTML = "";
+    frenchList.innerHTML = "";
+
+    const species = [];
+
+    allPlants.forEach(function(plant) {
+
+        const latin =
+            String(
+                plant["Nom latin"] || ""
+            ).trim();
+
+        const french =
+            String(
+                plant["Nom français"] || ""
+            ).trim();
+
+        if (!latin && !french) {
+            return;
+        }
+
+        const exists =
+            species.some(function(existing) {
+
+                return (
+                    existing.latin === latin &&
+                    existing.french === french
+                );
+
+            });
+
+        if (!exists) {
+
+            species.push({
+                latin: latin,
+                french: french
+            });
+
+        }
+
+    });
+
+    species.forEach(function(plant) {
+
+        if (plant.latin) {
+
+            const item =
+                document.createElement("div");
+
+            item.textContent =
+                plant.latin;
+
+            item.style.padding =
+                "8px 10px";
+
+            item.style.cursor =
+                "pointer";
+
+            item.style.borderBottom =
+                "1px solid #eee";
+
+            item.addEventListener(
+                "pointerdown",
+                function(event) {
+
+                    event.preventDefault();
+
+                    document.getElementById(
+                        "terrainLatinInput"
+                    ).value =
+                        plant.latin;
+
+                    document.getElementById(
+                        "terrainFrenchInput"
+                    ).value =
+                        plant.french;
+
+                    latinList.style.display =
+                        "none";
+
+                }
+            );
+
+            latinList.appendChild(item);
+
+        }
+
+        if (plant.french) {
+
+            const item =
+                document.createElement("div");
+
+            item.textContent =
+                plant.french;
+
+            item.style.padding =
+                "8px 10px";
+
+            item.style.cursor =
+                "pointer";
+
+            item.style.borderBottom =
+                "1px solid #eee";
+
+            item.addEventListener(
+                "pointerdown",
+                function(event) {
+
+                    event.preventDefault();
+
+                    document.getElementById(
+                        "terrainFrenchInput"
+                    ).value =
+                        plant.french;
+
+                    document.getElementById(
+                        "terrainLatinInput"
+                    ).value =
+                        plant.latin;
+
+                    frenchList.style.display =
+                        "none";
+
+                }
+            );
+
+            frenchList.appendChild(item);
+
+        }
+
+    });
+
+}
 
     latinList.innerHTML = "";
     frenchList.innerHTML = "";
