@@ -2869,9 +2869,8 @@ box-shadow: none;
     background: white;
 "></div>
 </div>
-    <div id="plantNotLocatedInfo">
-    🌱 <strong>Oups ! Cette plante nous échappe encore !</strong>
-    <br><br>
+<div id="plantNotLocatedInfo">
+    🌱 <strong>Oups ! Cette plante nous échappe encore !</strong><br>
     Elle n'a pas encore été localisée sur le terrain.
 </div>
 <div id="plantInfo" style="
@@ -3559,9 +3558,16 @@ if (!marker) {
         selectedPlant
     );
 
-    document.getElementById(
-        "plantNotLocatedInfo"
-    ).style.display = "block";
+    const notLocatedInfo =
+        document.getElementById(
+            "plantNotLocatedInfo"
+        );
+
+    notLocatedInfo.style.display = "block";
+
+    setTimeout(function() {
+        notLocatedInfo.style.display = "none";
+    }, 2500);
 
     return;
 }
