@@ -1690,6 +1690,12 @@ function showPlantInfo(plant, marker) {
         " / " +
         sameSpecies.length;
 
+    window.currentSpeciesResults =
+        sameSpecies;
+
+    window.currentSpeciesIndex =
+        selectedSpeciesIndex;
+
     window.selectedPlantForEdit = plant;
 
     if (plant["Nom latin"] === "/") {
@@ -2669,6 +2675,39 @@ const results =
             }) === index;
 
         });
+
+    document.getElementById(
+    "speciesPreviousButton"
+).addEventListener("click", function(event) {
+
+    event.stopPropagation();
+
+    if (!window.currentSpeciesResults ||
+        window.currentSpeciesResults.length < 2) {
+        return;
+    }
+
+    window.currentSpeciesIndex--;
+
+    if (window.currentSpeciesIndex < 0) {
+        window.currentSpeciesIndex =
+            window.currentSpeciesResults.length - 1;
+    }
+
+    showPlantInfo(
+        window.currentSpeciesResults[
+            window.currentSpeciesIndex
+        ],
+        document.querySelector(
+            '.marker[data-id="' +
+            window.currentSpeciesResults[
+                window.currentSpeciesIndex
+            ].id +
+            '"]'
+        )
+    );
+
+});
 
 results.forEach(function(plant) {
 
