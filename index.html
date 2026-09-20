@@ -1833,7 +1833,10 @@ document.getElementById(
     "adminPrincipalPlant"
 ).style.display =
     editMode ? "block" : "none";
-
+document.getElementById(
+    "principalPlantCheckbox"
+).checked =
+    plant.exemplaire_principal === true;
 document.getElementById(
     "adminPlantEditForm"
 ).style.display =
