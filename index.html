@@ -1647,6 +1647,100 @@ form.style.transform =
 /* =====================================================
    AFFICHER LES PLANTES
 ===================================================== */
+    function navigateSpecies(direction) {
+
+    if (!window.currentSpeciesResults ||
+        window.currentSpeciesResults.length < 2) {
+        return;
+    }
+
+    window.currentSpeciesIndex += direction;
+
+    if (window.currentSpeciesIndex < 0) {
+
+        window.currentSpeciesIndex =
+            window.currentSpeciesResults.length - 1;
+
+    }
+
+    if (
+        window.currentSpeciesIndex >=
+        window.currentSpeciesResults.length
+    ) {
+
+        window.currentSpeciesIndex = 0;
+
+    }
+
+    const selectedPlant =
+        window.currentSpeciesResults[
+            window.currentSpeciesIndex
+        ];
+
+    const marker =
+        document.querySelector(
+            '.marker[data-id="' +
+            selectedPlant.id +
+            '"]'
+        );
+
+    if (!marker) {
+        return;
+    }
+
+    scale = 1.5;
+
+    updateMap();
+
+    const zoomedMarkerRect =
+        marker.getBoundingClientRect();
+
+    const zoomedContainerRect =
+        container.getBoundingClientRect();
+
+    const zoomedMarkerCenterX =
+        zoomedMarkerRect.left +
+        zoomedMarkerRect.width / 2;
+
+    const zoomedMarkerCenterY =
+        zoomedMarkerRect.top +
+        zoomedMarkerRect.height / 2;
+
+    const zoomedContainerCenterX =
+        zoomedContainerRect.left +
+        zoomedContainerRect.width / 2;
+
+    const zoomedContainerCenterY =
+        zoomedContainerRect.top +
+        zoomedContainerRect.height / 2;
+
+    offsetX +=
+        zoomedContainerCenterX -
+        zoomedMarkerCenterX;
+
+    offsetY +=
+        zoomedContainerCenterY -
+        zoomedMarkerCenterY;
+
+    updateMap();
+
+    document.getElementById(
+        "speciesPosition"
+    ).textContent =
+        (window.currentSpeciesIndex + 1) +
+        " / " +
+        window.currentSpeciesResults.length;
+
+    setTimeout(function() {
+
+        showPlantInfo(
+            selectedPlant,
+            marker
+        );
+
+    }, 100);
+
+}
 function showPlantInfo(plant, marker) {
 
     const sameSpecies =
@@ -2676,38 +2770,7 @@ const results =
 
         });
 
-    document.getElementById(
-    "speciesPreviousButton"
-).addEventListener("click", function(event) {
 
-    event.stopPropagation();
-
-    if (!window.currentSpeciesResults ||
-        window.currentSpeciesResults.length < 2) {
-        return;
-    }
-
-    window.currentSpeciesIndex--;
-
-    if (window.currentSpeciesIndex < 0) {
-        window.currentSpeciesIndex =
-            window.currentSpeciesResults.length - 1;
-    }
-
-    showPlantInfo(
-        window.currentSpeciesResults[
-            window.currentSpeciesIndex
-        ],
-        document.querySelector(
-            '.marker[data-id="' +
-            window.currentSpeciesResults[
-                window.currentSpeciesIndex
-            ].id +
-            '"]'
-        )
-    );
-
-});
 
 results.forEach(function(plant) {
 
