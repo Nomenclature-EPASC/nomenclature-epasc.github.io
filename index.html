@@ -12,6 +12,20 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
+        #appCredit {
+    position: fixed;
+    left: 50%;
+    bottom: 6px;
+    transform: translateX(-50%);
+
+    z-index: 3000;
+
+    font-size: 10px;
+    color: rgba(80, 80, 80, 0.65);
+
+    white-space: nowrap;
+    pointer-events: none;
+}
         * {
             box-sizing: border-box;
         }
@@ -347,6 +361,10 @@ cursor: pointer;
 </head>
 
 <body>
+
+    <div id="appCredit">
+    Conception et développement · © 2026 MAMA
+</div>
 
 <div id="toolbar">
  <button id="addTerrainButton" onclick="confirmAddTerrainPlant()">
