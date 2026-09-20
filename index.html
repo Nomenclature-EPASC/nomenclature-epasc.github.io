@@ -3150,42 +3150,30 @@ document.getElementById(
         window.selectedPlantForEdit =
             null;
 
-        if (
-            window.selectedPlantType ===
-            "terrain"
-        ) {
 
-            const terrainMarker =
-                document.querySelector(
-                    '.terrain-marker[data-id="' +
-                    plantId +
-                    '"]'
-                );
+const marker =
+    document.querySelector(
+        '.marker[data-id="' +
+        plantId +
+        '"]'
+    );
 
-            if (terrainMarker) {
-                terrainMarker.remove();
-            }
+if (marker) {
+    marker.remove();
+}
 
-        } else {
-
-            const marker =
-                document.querySelector(
-                    '.marker[data-id="' +
-                    plantId +
-                    '"]'
-                );
-
-            if (marker) {
-                marker.remove();
-            }
-
-            allPlants =
-                allPlants.filter(
-                    function(plant) {
-                        return plant.id !== plantId;
-                    }
-                );
+allPlants =
+    allPlants.filter(
+        function(plant) {
+            return plant.id !== plantId;
         }
+    );
+
+
+
+
+
+        
 
         window.selectedPlantType =
             null;
