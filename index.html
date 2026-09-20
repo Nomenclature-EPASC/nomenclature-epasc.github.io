@@ -231,6 +231,62 @@ cursor: pointer;
     }
 
 }
+
+        #loginModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 9999;
+
+    align-items: center;
+    justify-content: center;
+}
+
+#loginBox {
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+}
+
+#loginTitle {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#loginBox input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px;
+    margin-bottom: 12px;
+
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#loginButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+#loginButtons button {
+    flex: 1;
+    padding: 11px;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
     </style>
 </head>
 
@@ -244,6 +300,48 @@ cursor: pointer;
     <button id="loginButton" onclick="login()" style="float: right;">
     🔐
 </button>
+
+    <div id="loginModal">
+
+    <div id="loginBox">
+
+        <div id="loginTitle">
+            Connexion administrateur
+        </div>
+
+        <input
+            id="loginIdentifier"
+            type="text"
+            placeholder="Identifiant"
+            autocomplete="username"
+        >
+
+        <input
+            id="loginPassword"
+            type="password"
+            placeholder="Mot de passe"
+            autocomplete="current-password"
+        >
+
+        <div id="loginButtons">
+
+            <button
+                type="button"
+                onclick="submitLogin()">
+                Se connecter
+            </button>
+
+            <button
+                type="button"
+                onclick="closeLoginModal()">
+                Annuler
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 <button id="logoutButton"
         onclick="logout()"
@@ -300,27 +398,47 @@ const SUPABASE_KEY =
         SUPABASE_KEY
     );
 
-
 async function login() {
 
-    const email =
-        prompt("Adresse e-mail administrateur :");
+    document.getElementById(
+        "loginModal"
+    ).style.display = "flex";
 
-    if (!email)
-        return;
+    document.getElementById(
+        "loginIdentifier"
+    ).focus();
 
+}
+
+
+async function submitLogin() {
+
+    const identifier =
+        document.getElementById(
+            "loginIdentifier"
+        ).value.trim();
 
     const password =
-        prompt("Mot de passe :");
+        document.getElementById(
+            "loginPassword"
+        ).value;
 
-    if (!password)
+    if (!identifier || !password) {
+
+        alert(
+            "Veuillez remplir l'identifiant et le mot de passe."
+        );
+
         return;
+    }
 
 
     const { data, error } =
         await supabaseClient.auth.signInWithPassword({
-            email: email,
+
+            email: identifier,
             password: password
+
         });
 
 
@@ -335,7 +453,26 @@ async function login() {
     }
 
 
+    closeLoginModal();
+
     updateLoginStatus();
+
+}
+
+
+function closeLoginModal() {
+
+    document.getElementById(
+        "loginModal"
+    ).style.display = "none";
+
+    document.getElementById(
+        "loginIdentifier"
+    ).value = "";
+
+    document.getElementById(
+        "loginPassword"
+    ).value = "";
 
 }
 
