@@ -1312,58 +1312,7 @@ async function loadTerrainProposals() {
     displayTerrainProposals(data);
 
 }
-async function loadTerrainPlants() {
 
-    const url =
-        SUPABASE_URL +
-        "/rest/v1/plantes_terrain?select=*";
-
-    try {
-
-        const response =
-            await fetch(
-                url,
-                {
-                    headers: {
-                        "apikey":
-                            SUPABASE_KEY,
-
-                        "Authorization":
-                            "Bearer " +
-                            SUPABASE_KEY
-                    }
-                }
-            );
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Erreur Supabase plantes terrain : " +
-                response.status
-            );
-
-        }
-
-        const data =
-            await response.json();
-
-        console.log(
-            "Plantes de terrain chargées :",
-            data
-        );
-
-        displayTerrainPlants(data);
-
-    } catch (error) {
-
-        console.error(
-            "Impossible de charger les plantes de terrain :",
-            error
-        );
-
-    }
-
-}
 
     function cancelAllMarkerMoves() {
 
