@@ -2601,10 +2601,10 @@ result.innerHTML =
     plant["Nom français"] +
     '</div>' +
     (
-        sameSpecies.length > 1
-            ? '<div style="font-size: 12px; color: #777; margin-top: 3px;">' +
-              sameSpecies.length +
-              ' résultats</div>'
+'<div style="font-size: 12px; color: #777; margin-top: 3px; text-align: right;">' +
+sameSpecies.length +
+(sameSpecies.length === 1 ? ' résultat' : ' résultats') +
+'</div>'
             : ''
     );
 
