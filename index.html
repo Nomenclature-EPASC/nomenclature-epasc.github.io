@@ -406,12 +406,9 @@ if (loggedIn) {
         loggedIn ? "inline-block" : "none";
 
 
-    document.getElementById(
-        "adminStatus"
-    ).textContent =
-        loggedIn
-            ? "✏️ MODE ÉDITION"
-            : "";
+document.getElementById(
+    "adminStatus"
+).textContent = "";
     if (loggedIn) {
 
         loadTerrainProposals();
