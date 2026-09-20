@@ -2641,18 +2641,32 @@ setTimeout(function() {
     document.getElementById("searchInput").blur();
 }, 300);
 
+
+const selectedPlant =
+    selectedSpeciesResults[selectedSpeciesIndex];
+
 const marker =
         document.querySelector(
-            '.marker[data-id="' + plant.id + '"]'
+            '.marker[data-id="' + selectedPlant.id + '"]'
         );
 
     if (!marker) {
         console.log(
             "Cette plante n'est pas encore placée sur la carte :",
-            plant
+            selectedPlant
         );
         return;
     }
+
+
+
+
+
+
+
+
+
+    
 
 scale = 1.5;
 
