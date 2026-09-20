@@ -40,7 +40,39 @@ button {
     font-size: 22px;
     cursor: pointer;
 }
+/* BOUTON QR CODE GSM */
 
+#qrShareButton {
+    display: none;
+}
+
+@media (max-width: 600px) {
+
+    #qrShareButton {
+        display: flex;
+        position: fixed;
+        left: 12px;
+        bottom: 12px;
+
+        width: 42px;
+        height: 42px;
+
+        align-items: center;
+        justify-content: center;
+
+        background: white;
+        border: 2px solid #333;
+        border-radius: 50%;
+
+        font-size: 21px;
+        line-height: 1;
+
+        z-index: 2000;
+
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+}
 #map-container {
     position: absolute;
 top: 0;
@@ -380,7 +412,9 @@ cursor: pointer;
 </div>
 
 
-
+<button id="qrShareButton" aria-label="Partager la carte">
+    ▦
+</button>
 <div id="map-container">
 
     <div id="map">
