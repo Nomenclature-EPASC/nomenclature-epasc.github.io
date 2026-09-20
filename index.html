@@ -16,6 +16,39 @@
             box-sizing: border-box;
         }
 
+        /* ÉCRAN DE DÉMARRAGE */
+
+#startupScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+
+    opacity: 1;
+    transition: opacity 0.35s ease;
+}
+
+#startupScreen img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+}
+
+#startupCredit {
+    margin-top: 14px;
+
+    font-size: 11px;
+    color: #888;
+
+    letter-spacing: 0.2px;
+}
+
         html, body {
             margin: 0;
             width: 100%;
@@ -347,6 +380,13 @@ cursor: pointer;
 </head>
 
 <body>
+
+    <div id="startupScreen">
+    <img src="icon.png" alt="">
+    <div id="startupCredit">
+        Conception et développement · © 2026 MAMA
+    </div>
+</div>
 
 <div id="toolbar">
  <button id="addTerrainButton" onclick="confirmAddTerrainPlant()">
@@ -2772,11 +2812,19 @@ const newX =
 ===================================================== */
 
 function fitPlanToWindowAndReveal() {
-
     fitPlanToWindow();
-
     map.style.opacity = "1";
 
+    const startupScreen =
+        document.getElementById("startupScreen");
+
+    if (startupScreen) {
+        startupScreen.style.opacity = "0";
+
+        setTimeout(function() {
+            startupScreen.style.display = "none";
+        }, 350);
+    }
 }
 
 
