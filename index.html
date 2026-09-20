@@ -1204,16 +1204,22 @@ if (
     // Prépare la liste des plantes pour le formulaire d'ajout
 function prepareTerrainPlantList() {
 
-    const datalist =
+    const latinDatalist =
         document.getElementById(
-            "terrainPlantChoices"
+            "terrainLatinChoices"
         );
 
-    if (!datalist) {
+    const frenchDatalist =
+        document.getElementById(
+            "terrainFrenchChoices"
+        );
+
+    if (!latinDatalist || !frenchDatalist) {
         return;
     }
 
-    datalist.innerHTML = "";
+    latinDatalist.innerHTML = "";
+    frenchDatalist.innerHTML = "";
 
     const species = [];
 
@@ -1256,22 +1262,9 @@ function prepareTerrainPlantList() {
 
     species.forEach(function(plant) {
 
-        if (plant.french) {
-
-            const optionFrench =
-                document.createElement("option");
-
-            optionFrench.value =
-                plant.french;
-
-            optionFrench.label =
-                plant.latin;
-
-            datalist.appendChild(
-                optionFrench
-            );
-
-        }
+        /* =========================
+           LISTE NOM LATIN
+        ========================= */
 
         if (
             plant.latin &&
@@ -1287,13 +1280,113 @@ function prepareTerrainPlantList() {
             optionLatin.label =
                 plant.french;
 
-            datalist.appendChild(
+            latinDatalist.appendChild(
                 optionLatin
             );
 
         }
 
+
+        /* =========================
+           LISTE NOM FRANÇAIS
+        ========================= */
+
+        if (plant.french) {
+
+            const optionFrench =
+                document.createElement("option");
+
+            optionFrench.value =
+                plant.french;
+
+            optionFrench.label =
+                plant.latin;
+
+            frenchDatalist.appendChild(
+                optionFrench
+            );
+
+        }
+
     });
+
+
+    /* =========================
+       LATIN → FRANÇAIS
+    ========================= */
+
+    document.getElementById(
+        "terrainLatinInput"
+    ).addEventListener(
+        "change",
+        function() {
+
+            const latin =
+                this.value.trim();
+
+            const plant =
+                allPlants.find(function(plant) {
+
+                    return (
+                        String(
+                            plant["Nom latin"] || ""
+                        ).trim() === latin
+                    );
+
+                });
+
+            if (plant) {
+
+                document.getElementById(
+                    "terrainFrenchInput"
+                ).value =
+                    String(
+                        plant["Nom français"] || ""
+                    ).trim();
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       FRANÇAIS → LATIN
+    ========================= */
+
+    document.getElementById(
+        "terrainFrenchInput"
+    ).addEventListener(
+        "change",
+        function() {
+
+            const french =
+                this.value.trim();
+
+            const plant =
+                allPlants.find(function(plant) {
+
+                    return (
+                        String(
+                            plant["Nom français"] || ""
+                        ).trim() === french
+                    );
+
+                });
+
+            if (plant) {
+
+                document.getElementById(
+                    "terrainLatinInput"
+                ).value =
+                    String(
+                        plant["Nom latin"] || ""
+                    ).trim();
+
+            }
+
+        }
+    );
 
 }
     
