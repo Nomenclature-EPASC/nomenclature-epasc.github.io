@@ -2153,11 +2153,54 @@ position: fixed;
     text-align: center;
 "></div>
 
-   <div id="speciesNavigation" style="
+<div id="speciesNavigation" style="
     display: none;
-    margin-top: 12px;
+    margin-top: 10px;
     text-align: center;
 ">
+
+    <div style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+    ">
+
+        <button
+            id="speciesPreviousButton"
+            style="
+                font-size: 15px;
+                line-height: 1;
+                padding: 2px 6px;
+                width: 28px;
+                height: 26px;
+            "
+        >
+            ◀
+        </button>
+
+        <div id="speciesPosition" style="
+            font-size: 13px;
+            color: #777;
+            min-width: 35px;
+        "></div>
+
+        <button
+            id="speciesNextButton"
+            style="
+                font-size: 15px;
+                line-height: 1;
+                padding: 2px 6px;
+                width: 28px;
+                height: 26px;
+            "
+        >
+            ▶
+        </button>
+
+    </div>
+
+</div>
 
     <div id="speciesPosition" style="
         font-size: 13px;
