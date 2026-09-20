@@ -2644,6 +2644,19 @@ let selectedSpeciesIndex =
 
     });
 
+    const navigation =
+    document.getElementById("speciesNavigation");
+
+if (sameSpecies.length > 1) {
+
+    navigation.style.display = "block";
+
+} else {
+
+    navigation.style.display = "none";
+
+}
+
 if (selectedSpeciesIndex === -1) {
     selectedSpeciesIndex = 0;
 }
