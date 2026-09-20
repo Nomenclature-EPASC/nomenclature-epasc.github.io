@@ -203,6 +203,7 @@ cursor: pointer;
     cursor: pointer;
     border-bottom: 1px solid #eee;
 }
+        
 
 .terrain-dropdown-item:last-child {
     border-bottom: none;
@@ -221,6 +222,14 @@ cursor: pointer;
     margin-top: 2px;
     font-size: 12px;
     color: #777;
+}
+        @media (max-width: 600px) {
+
+    .terrain-dropdown {
+        top: auto;
+        bottom: calc(100% + 2px);
+    }
+
 }
     </style>
 </head>
