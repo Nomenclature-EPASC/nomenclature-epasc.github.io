@@ -1846,6 +1846,9 @@ document.getElementById(
 ).onchange = async function() {
 
     if (!this.checked) {
+
+        this.checked = true;
+
         return;
     }
 
