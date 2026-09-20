@@ -3562,7 +3562,6 @@ allPlants =
     "adminAcceptButton"
 ).onclick = async function() {
 
-    alert("BOUTON ACCEPTER CLIQUÉ");
 
     const proposalId =
         document.getElementById(
@@ -3623,8 +3622,8 @@ allPlants =
                 y: proposal.y,
                 "Nom français": french,
                 "Nom latin": latin,
-                a_connaitre: true,
-                exemplaire_principal: false
+a_connaitre: false,
+exemplaire_principal: false
             })
             .select();
 
