@@ -3874,12 +3874,14 @@ if (!french || !latin) {
 
 const { data: plant, error: plantError } =
     await supabaseClient
-        .from("plantes_terrain")
+        .from("numeros")
         .insert({
             x: proposal.x,
             y: proposal.y,
-            nom_francais: french,
-            nom_latin: latin
+            "Nom français": french,
+            "Nom latin": latin,
+            a_connaitre: true,
+            exemplaire_principal: false
         })
         .select();
 
@@ -3942,9 +3944,9 @@ if (proposalMarker) {
     proposalMarker.remove();
 }
 
-/* Recharge les plantes permanentes */
+/* Recharge les plantes depuis numeros */
 
-await loadTerrainPlants();
+await loadNumbers();
 
 /* Ferme la fenêtre */
 
