@@ -1199,6 +1199,90 @@ if (
 
  let allPlants = [];
 
+    function prepareTerrainPlantLists() {
+
+    const latinList =
+        document.getElementById("terrainLatinChoices");
+
+    const frenchList =
+        document.getElementById("terrainFrenchChoices");
+
+    if (!latinList || !frenchList) {
+        return;
+    }
+
+    latinList.innerHTML = "";
+    frenchList.innerHTML = "";
+
+    const species = [];
+
+    allPlants.forEach(function(plant) {
+
+        const latin =
+            String(plant["Nom latin"] || "").trim();
+
+        const french =
+            String(plant["Nom français"] || "").trim();
+
+        if (!latin && !french) {
+            return;
+        }
+
+        const exists =
+            species.some(function(existing) {
+
+                return (
+                    existing.latin === latin &&
+                    existing.french === french
+                );
+
+            });
+
+        if (!exists) {
+
+            species.push({
+                latin: latin,
+                french: french
+            });
+
+        }
+
+    });
+
+    species.forEach(function(plant) {
+
+        if (plant.latin) {
+
+            const latinOption =
+                document.createElement("option");
+
+            latinOption.value =
+                plant.latin;
+
+            latinList.appendChild(
+                latinOption
+            );
+
+        }
+
+        if (plant.french) {
+
+            const frenchOption =
+                document.createElement("option");
+
+            frenchOption.value =
+                plant.french;
+
+            frenchList.appendChild(
+                frenchOption
+            );
+
+        }
+
+    });
+
+}
+
     // Prépare la liste des plantes pour le formulaire d'ajout
 function prepareTerrainPlantList() {
 
@@ -1335,7 +1419,7 @@ async function loadNumbers() {
 
         allPlants = data;
 
-        prepareTerrainPlantList();
+        prepareTerrainPlantLists();
 
 
         console.log(
