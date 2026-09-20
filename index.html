@@ -423,7 +423,48 @@ document.addEventListener("keydown", function(event) {
     }
 
 });
+document.getElementById(
+    "terrainPlantInput"
+).addEventListener("input", function() {
 
+    const value =
+        this.value.trim().toLowerCase();
+
+    const plant =
+        allPlants.find(function(plant) {
+
+            const french =
+                String(
+                    plant["Nom français"] || ""
+                ).trim().toLowerCase();
+
+            const latin =
+                String(
+                    plant["Nom latin"] || ""
+                ).trim().toLowerCase();
+
+            return (
+                french === value ||
+                latin === value
+            );
+
+        });
+
+    if (plant) {
+
+        document.getElementById(
+            "terrainFrenchInput"
+        ).value =
+            plant["Nom français"];
+
+        document.getElementById(
+            "terrainLatinInput"
+        ).value =
+            plant["Nom latin"];
+
+    }
+
+});
 function startAddingTerrainPlant() {
     addingTerrainPlant = true;
     console.log("Mode ajout activé");
