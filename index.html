@@ -294,6 +294,22 @@ cursor: pointer;
     }
 
 }
+        #plantNotLocatedInfo {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 15px;
+    min-width: 240px;
+    max-width: 320px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1001;
+    text-align: center;
+}
     </style>
 </head>
 
@@ -2853,6 +2869,11 @@ box-shadow: none;
     background: white;
 "></div>
 </div>
+    <div id="plantNotLocatedInfo">
+    🌱 <strong>Oups ! Cette plante nous échappe encore !</strong>
+    <br><br>
+    Elle n'a pas encore été localisée sur le terrain.
+</div>
 <div id="plantInfo" style="
     display: none;
 position: fixed;
@@ -3530,6 +3551,7 @@ const marker =
             '.marker[data-id="' + selectedPlant.id + '"]'
         );
 
+
 if (!marker) {
 
     console.log(
@@ -3537,60 +3559,15 @@ if (!marker) {
         selectedPlant
     );
 
-    const info =
-        document.getElementById("plantInfo");
-
     document.getElementById(
-        "plantLatin"
-    ).style.display =
-        selectedPlant["Nom latin"] === "/"
-            ? "none"
-            : "block";
-
-    document.getElementById(
-        "plantLatin"
-    ).textContent =
-        selectedPlant["Nom latin"];
-
-    document.getElementById(
-        "plantFrench"
-    ).textContent =
-        selectedPlant["Nom français"];
-
-    document.getElementById(
-        "speciesNavigation"
-    ).style.display =
-        selectedSpeciesResults.length > 1
-            ? "block"
-            : "none";
-
-    document.getElementById(
-        "speciesPosition"
-    ).textContent =
-        (selectedSpeciesIndex + 1) +
-        " / " +
-        selectedSpeciesResults.length;
-
-    info.style.display =
-        "block";
-
-    info.style.position =
-        "fixed";
-
-    info.style.left =
-        "50%";
-
-    info.style.top =
-        "50%";
-
-    info.style.transform =
-        "translate(-50%, -50%)";
+        "plantNotLocatedInfo"
+    ).style.display = "block";
 
     return;
 }
-
-  
-
+    document.getElementById(
+    "plantNotLocatedInfo"
+).style.display = "none";
 scale = 1.5;
 
 updateMap();
