@@ -2789,10 +2789,10 @@ position: fixed;
 </div>
 
 <input
-    id="terrainPlantInput"
+    id="terrainLatinInput"
     type="text"
-    list="terrainPlantChoices"
-    placeholder="Rechercher une plante..."
+    list="terrainLatinChoices"
+    placeholder="Nom latin"
     autocomplete="off"
     style="
         width: 100%;
@@ -2802,12 +2802,28 @@ position: fixed;
     "
 >
 
-<datalist id="terrainPlantChoices"></datalist>
+<datalist id="terrainLatinChoices"></datalist>
 
 <input
-    id="terrainLatinInput"
-    type="hidden"
+    id="terrainFrenchInput"
+    type="text"
+    list="terrainFrenchChoices"
+    placeholder="Nom français"
+    autocomplete="off"
+    style="
+        width: 100%;
+        padding: 9px;
+        margin-bottom: 8px;
+        font-size: 16px;
+    "
 >
+
+<datalist id="terrainFrenchChoices"></datalist>
+
+
+
+
+        
 
 <input
     id="terrainFrenchInput"
