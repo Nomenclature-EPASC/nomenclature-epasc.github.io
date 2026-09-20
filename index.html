@@ -1741,6 +1741,18 @@ form.style.transform =
     }, 100);
 
 }
+    document.getElementById(
+    "speciesPreviousButton"
+).addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        navigateSpecies(-1);
+
+    }
+);
 function showPlantInfo(plant, marker) {
 
     const sameSpecies =
