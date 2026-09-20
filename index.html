@@ -2933,7 +2933,6 @@ position: fixed;
 
 <button
     id="adminAcceptButton"
-    onclick="alert('CLIC DIRECT SUR ACCEPTER')"
 >
     ✅ Accepter
 </button>
@@ -3818,149 +3817,136 @@ document.getElementById(
     }
 );
 
-       
-
-        document.getElementById(
+  document.getElementById(
     "adminAcceptButton"
-).addEventListener(
-    "click",
-async function() {
+).onclick = async function() {
 
     alert("BOUTON ACCEPTER CLIQUÉ");
 
-        const proposalId =
-            document.getElementById(
-                "terrainAdminForm"
-            ).dataset.proposalId;
+    const proposalId =
+        document.getElementById(
+            "terrainAdminForm"
+        ).dataset.proposalId;
 
-        console.log(
-            "Proposition à accepter :",
-            proposalId
+    console.log(
+        "Proposition à accepter :",
+        proposalId
+    );
+
+    const { data: proposal, error: proposalError } =
+        await supabaseClient
+            .from("propositions_terrain")
+            .select("*")
+            .eq("id", proposalId)
+            .single();
+
+    if (proposalError) {
+
+        console.error(
+            "Erreur récupération proposition :",
+            proposalError
         );
 
-const { data: proposal, error: proposalError } =
-    await supabaseClient
-        .from("propositions_terrain")
-        .select("*")
-        .eq("id", proposalId)
-        .single();
+        alert(
+            "Erreur lors de la récupération : " +
+            proposalError.message
+        );
 
-if (proposalError) {
-
-    console.error(
-        "Erreur récupération proposition :",
-        proposalError
-    );
-
-    alert(
-        "Erreur lors de la récupération : " +
-        proposalError.message
-    );
-
-    return;
-}
-
-const french =
-    document.getElementById(
-        "adminFrenchInput"
-    ).value.trim();
-
-const latin =
-    document.getElementById(
-        "adminLatinInput"
-    ).value.trim();
-
-if (!french || !latin) {
-    alert(
-        "Veuillez remplir les deux noms."
-    );
-    return;
-}
-
-const { data: plant, error: plantError } =
-    await supabaseClient
-        .from("numeros")
-        .insert({
-            x: proposal.x,
-            y: proposal.y,
-            "Nom français": french,
-            "Nom latin": latin,
-            a_connaitre: true,
-            exemplaire_principal: false
-        })
-        .select();
-
-if (plantError) {
-
-    console.error(
-        "Erreur création plante terrain :",
-        plantError
-    );
-
-    alert(
-        "Erreur lors de la création : " +
-        plantError.message
-    );
-
-    return;
-}
-
-console.log(
-    "Plante terrain créée :",
-    plant
-);
-
-const { error: deleteError } =
-    await supabaseClient
-        .from("propositions_terrain")
-        .delete()
-        .eq("id", proposalId);
-
-if (deleteError) {
-
-    console.error(
-        "Erreur suppression proposition :",
-        deleteError
-    );
-
-    alert(
-        "La plante a été créée, mais la proposition n'a pas pu être supprimée : " +
-        deleteError.message
-    );
-
-    return;
-}
-
-console.log(
-    "Proposition supprimée :",
-    proposalId
-);
-
-/* Supprime immédiatement le point rouge */
-
-const proposalMarker =
-    document.querySelector(
-        '.terrain-marker-new[data-proposal-id="' +
-        proposalId +
-        '"]'
-    );
-
-if (proposalMarker) {
-    proposalMarker.remove();
-}
-
-/* Recharge les plantes depuis numeros */
-
-await loadNumbers();
-
-/* Ferme la fenêtre */
-
-document.getElementById(
-    "terrainAdminForm"
-).style.display = "none";
-
+        return;
     }
-);
+
+    const french =
+        document.getElementById(
+            "adminFrenchInput"
+        ).value.trim();
+
+    const latin =
+        document.getElementById(
+            "adminLatinInput"
+        ).value.trim();
+
+    if (!french || !latin) {
+
+        alert(
+            "Veuillez remplir les deux noms."
+        );
+
+        return;
+    }
+
+    const { data: plant, error: plantError } =
+        await supabaseClient
+            .from("numeros")
+            .insert({
+                x: proposal.x,
+                y: proposal.y,
+                "Nom français": french,
+                "Nom latin": latin,
+                a_connaitre: true,
+                exemplaire_principal: false
+            })
+            .select();
+
+    if (plantError) {
+
+        console.error(
+            "Erreur création plante :",
+            plantError
+        );
+
+        alert(
+            "Erreur lors de la création : " +
+            plantError.message
+        );
+
+        return;
+    }
+
+    console.log(
+        "Nouvelle plante créée :",
+        plant
+    );
+
+    const { error: deleteError } =
+        await supabaseClient
+            .from("propositions_terrain")
+            .delete()
+            .eq("id", proposalId);
+
+    if (deleteError) {
+
+        console.error(
+            "Erreur suppression proposition :",
+            deleteError
+        );
+
+        alert(
+            "La plante a été créée, mais la proposition n'a pas pu être supprimée : " +
+            deleteError.message
+        );
+
+        return;
+    }
+
+    const proposalMarker =
+        document.querySelector(
+            '.terrain-marker-new[data-proposal-id="' +
+            proposalId +
+            '"]'
+        );
+
+    if (proposalMarker) {
+        proposalMarker.remove();
+    }
+
+    await loadNumbers();
+
+    document.getElementById(
+        "terrainAdminForm"
+    ).style.display = "none";
+};     
+
+        
         document.getElementById(
     "adminRejectButton"
 ).addEventListener(
