@@ -3530,23 +3530,66 @@ const marker =
             '.marker[data-id="' + selectedPlant.id + '"]'
         );
 
-    if (!marker) {
-        console.log(
-            "Cette plante n'est pas encore placée sur la carte :",
-            selectedPlant
-        );
-        return;
-    }
+if (!marker) {
 
+    console.log(
+        "Cette plante n'est pas encore placée sur la carte :",
+        selectedPlant
+    );
 
+    const info =
+        document.getElementById("plantInfo");
 
+    document.getElementById(
+        "plantLatin"
+    ).style.display =
+        selectedPlant["Nom latin"] === "/"
+            ? "none"
+            : "block";
 
+    document.getElementById(
+        "plantLatin"
+    ).textContent =
+        selectedPlant["Nom latin"];
 
+    document.getElementById(
+        "plantFrench"
+    ).textContent =
+        selectedPlant["Nom français"];
 
+    document.getElementById(
+        "speciesNavigation"
+    ).style.display =
+        selectedSpeciesResults.length > 1
+            ? "block"
+            : "none";
 
+    document.getElementById(
+        "speciesPosition"
+    ).textContent =
+        (selectedSpeciesIndex + 1) +
+        " / " +
+        selectedSpeciesResults.length;
 
+    info.style.display =
+        "block";
 
-    
+    info.style.position =
+        "fixed";
+
+    info.style.left =
+        "50%";
+
+    info.style.top =
+        "50%";
+
+    info.style.transform =
+        "translate(-50%, -50%)";
+
+    return;
+}
+
+  
 
 scale = 1.5;
 
