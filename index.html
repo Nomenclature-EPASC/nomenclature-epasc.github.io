@@ -2743,6 +2743,18 @@ document.getElementById(
 
     }
 );
+        document.getElementById(
+    "speciesNextButton"
+).addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        navigateSpecies(1);
+
+    }
+);
 document.getElementById("searchInput").addEventListener("input", function() {
 
     const search =
