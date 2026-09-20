@@ -2870,8 +2870,8 @@ box-shadow: none;
 "></div>
 </div>
 <div id="plantNotLocatedInfo">
-    🌱 <strong>Oups ! Cette plante nous échappe encore !</strong><br>
-    Elle n'a pas encore été localisée sur le terrain.
+    <div><strong>🌱 Oups ! Cette plante nous échappe encore !</strong></div>
+    <div>Elle n'a pas encore été localisée sur le terrain.</div>
 </div>
 <div id="plantInfo" style="
     display: none;
@@ -3567,7 +3567,7 @@ if (!marker) {
 
     setTimeout(function() {
         notLocatedInfo.style.display = "none";
-    }, 2500);
+    }, 3500);
 
     return;
 }
