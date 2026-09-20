@@ -2593,6 +2593,19 @@ const sameSpecies =
 
     });
 
+    let selectedSpeciesResults = sameSpecies;
+
+let selectedSpeciesIndex =
+    sameSpecies.findIndex(function(plantResult) {
+
+        return plantResult.exemplaire_principal === true;
+
+    });
+
+if (selectedSpeciesIndex === -1) {
+    selectedSpeciesIndex = 0;
+}
+
 result.innerHTML =
     '<div style="font-weight: bold; font-style: italic;">' +
     plant["Nom latin"] +
