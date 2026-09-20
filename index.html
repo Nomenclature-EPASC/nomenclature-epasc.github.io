@@ -2551,13 +2551,29 @@ document.getElementById("searchInput").addEventListener("input", function() {
         return;
     }
 
-    const results =
-        allPlants.filter(function(plant) {
+const results =
+    allPlants
+        .filter(function(plant) {
 
             return (
                 String(plant["Nom français"]).toLowerCase().includes(search) ||
                 String(plant["Nom latin"]).toLowerCase().includes(search)
             );
+
+        })
+        .filter(function(plant, index, array) {
+
+            return array.findIndex(function(otherPlant) {
+
+                return (
+                    otherPlant["Nom français"] ===
+                    plant["Nom français"] &&
+
+                    otherPlant["Nom latin"] ===
+                    plant["Nom latin"]
+                );
+
+            }) === index;
 
         });
 
