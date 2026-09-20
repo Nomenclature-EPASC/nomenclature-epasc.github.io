@@ -1648,6 +1648,48 @@ form.style.transform =
    AFFICHER LES PLANTES
 ===================================================== */
 function showPlantInfo(plant, marker) {
+
+    const sameSpecies =
+        allPlants.filter(function(otherPlant) {
+
+            return (
+                otherPlant["Nom français"] === plant["Nom français"] &&
+                otherPlant["Nom latin"] === plant["Nom latin"]
+            );
+
+        });
+
+    const navigation =
+        document.getElementById("speciesNavigation");
+
+    if (sameSpecies.length > 1) {
+
+        navigation.style.display = "block";
+
+    } else {
+
+        navigation.style.display = "none";
+
+    }
+
+    let selectedSpeciesIndex =
+        sameSpecies.findIndex(function(plantResult) {
+
+            return plantResult.id === plant.id;
+
+        });
+
+    if (selectedSpeciesIndex === -1) {
+        selectedSpeciesIndex = 0;
+    }
+
+    document.getElementById(
+        "speciesPosition"
+    ).textContent =
+        (selectedSpeciesIndex + 1) +
+        " / " +
+        sameSpecies.length;
+
     window.selectedPlantForEdit = plant;
 
     if (plant["Nom latin"] === "/") {
