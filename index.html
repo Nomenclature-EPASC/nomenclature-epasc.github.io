@@ -1198,6 +1198,102 @@ if (
 ===================================================== */
 
  let allPlants = [];
+
+    // Prépare la liste des plantes pour le formulaire d'ajout
+function prepareTerrainPlantList() {
+
+    const datalist =
+        document.getElementById(
+            "terrainPlantChoices"
+        );
+
+    if (!datalist) {
+        return;
+    }
+
+    datalist.innerHTML = "";
+
+    const species = [];
+
+    allPlants.forEach(function(plant) {
+
+        const french =
+            String(
+                plant["Nom français"] || ""
+            ).trim();
+
+        const latin =
+            String(
+                plant["Nom latin"] || ""
+            ).trim();
+
+        if (!french && !latin) {
+            return;
+        }
+
+        const alreadyExists =
+            species.some(function(existingPlant) {
+
+                return (
+                    existingPlant.french === french &&
+                    existingPlant.latin === latin
+                );
+
+            });
+
+        if (!alreadyExists) {
+
+            species.push({
+                french: french,
+                latin: latin
+            });
+
+        }
+
+    });
+
+    species.forEach(function(plant) {
+
+        if (plant.french) {
+
+            const optionFrench =
+                document.createElement("option");
+
+            optionFrench.value =
+                plant.french;
+
+            optionFrench.label =
+                plant.latin;
+
+            datalist.appendChild(
+                optionFrench
+            );
+
+        }
+
+        if (
+            plant.latin &&
+            plant.latin !== "/"
+        ) {
+
+            const optionLatin =
+                document.createElement("option");
+
+            optionLatin.value =
+                plant.latin;
+
+            optionLatin.label =
+                plant.french;
+
+            datalist.appendChild(
+                optionLatin
+            );
+
+        }
+
+    });
+
+}
     
 async function loadNumbers() {
 
@@ -1238,6 +1334,8 @@ async function loadNumbers() {
             await response.json();
 
         allPlants = data;
+
+        prepareTerrainPlantList();
 
 
         console.log(
