@@ -1841,6 +1841,16 @@ document.getElementById(
     "adminPlantEditForm"
 ).style.display =
     "none";
+    document.getElementById(
+    "principalPlantCheckbox"
+).onchange = function() {
+
+    console.log(
+        "Case exemplaire principal modifiée :",
+        this.checked
+    );
+
+};
 
 }
 function displayNumbers(data) {
