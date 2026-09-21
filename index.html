@@ -3177,6 +3177,24 @@ document.addEventListener(
 
 
         /* -----------------------------------------------------
+           Détection iPhone / iPad
+        ----------------------------------------------------- */
+
+        function isAppleMobile() {
+
+            return (
+                /iPhone|iPad|iPod/i.test(navigator.userAgent)
+                ||
+                (
+                    navigator.platform === "MacIntel" &&
+                    navigator.maxTouchPoints > 1
+                )
+            );
+
+        }
+
+
+        /* -----------------------------------------------------
            Vérifier si l'application est déjà installée
         ----------------------------------------------------- */
 
@@ -3194,7 +3212,8 @@ document.addEventListener(
 
 
         /* -----------------------------------------------------
-           Installation disponible
+           INSTALLATION ANDROID
+           → comportement actuel inchangé
         ----------------------------------------------------- */
 
         window.addEventListener(
@@ -3239,6 +3258,35 @@ document.addEventListener(
             "click",
             async function() {
 
+                /* ==========================================
+                   IPHONE / IPAD
+                   → pas de fenêtre native
+                ========================================== */
+
+                if (isAppleMobile()) {
+
+                    pwaInstallPrompt.querySelector("strong").textContent =
+                        "📱 Installer la Nomenclature";
+
+                    pwaInstallPrompt.querySelector("p").innerHTML =
+                        "Pour installer la Nomenclature sur ton iPhone :<br><br>" +
+                        "1. Appuie sur <strong>Partager</strong> ⬆️<br>" +
+                        "2. Choisis <strong>Sur l’écran d’accueil</strong><br>" +
+                        "3. Active <strong>Ouvrir comme app web</strong><br>" +
+                        "4. Appuie sur <strong>Ajouter</strong>.";
+
+                    pwaInstallButton.style.display = "none";
+
+                    return;
+
+                }
+
+
+                /* ==========================================
+                   ANDROID
+                   → comportement actuel inchangé
+                ========================================== */
+
                 if (deferredInstallPrompt) {
 
                     deferredInstallPrompt.prompt();
@@ -3278,7 +3326,7 @@ document.addEventListener(
 
 
         /* -----------------------------------------------------
-           TEST TEMPORAIRE
+           AFFICHAGE AUTOMATIQUE SUR MOBILE
         ----------------------------------------------------- */
 
         if (
@@ -3290,12 +3338,42 @@ document.addEventListener(
             setTimeout(
                 function() {
 
+                    if (isAppleMobile()) {
+
+                        /* ======================================
+                           IPHONE / IPAD
+                        ====================================== */
+
+                        pwaInstallPrompt.style.display = "block";
+
+                        pwaInstallPrompt.querySelector("strong").textContent =
+                            "📱 Installer la Nomenclature";
+
+                        pwaInstallPrompt.querySelector("p").innerHTML =
+                            "Pour installer la Nomenclature sur ton iPhone :<br><br>" +
+                            "1. Appuie sur <strong>Partager</strong> ⬆️<br>" +
+                            "2. Choisis <strong>Sur l’écran d’accueil</strong><br>" +
+                            "3. Active <strong>Ouvrir comme app web</strong><br>" +
+                            "4. Appuie sur <strong>Ajouter</strong>.";
+
+                        pwaInstallButton.style.display = "none";
+
+                        return;
+
+                    }
+
+
+                    /* ======================================
+                       ANDROID
+                       → comportement actuel inchangé
+                    ====================================== */
+
                     if (!deferredInstallPrompt) {
 
                         pwaInstallPrompt.style.display = "block";
 
                         pwaInstallPrompt.querySelector("strong").textContent =
-                            "TEST PWA";
+                            "📱 Installer la Nomenclature";
 
                     }
 
@@ -3307,7 +3385,6 @@ document.addEventListener(
 
     }
 );
-
 </script>
     <div id="plantSearch" style="
     position: fixed;
@@ -4817,6 +4894,10 @@ exemplaire_principal: false
     <div id="pwaInstallPrompt">
 
    <strong>📱 Installer la Nomenclature</strong>
+
+<div id="pwaInstallPrompt">
+
+    <strong>📱 Installer la Nomenclature</strong>
 
     <p>
         Installe l'application sur ton téléphone
