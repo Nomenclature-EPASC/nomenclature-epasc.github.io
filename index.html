@@ -3113,7 +3113,26 @@ window.addEventListener(
 
         deferredInstallPrompt = event;
 
+        if (
+            window.matchMedia(
+                "(display-mode: standalone)"
+            ).matches
+        ) {
+            return;
+        }
+
         pwaInstallPrompt.style.display = "block";
+
+    }
+);
+
+    window.addEventListener(
+    "appinstalled",
+    function() {
+
+        pwaInstallPrompt.style.display = "none";
+
+        deferredInstallPrompt = null;
 
     }
 );
