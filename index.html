@@ -486,7 +486,38 @@ async function login() {
 
 }
 
+document.addEventListener("keydown", function(event) {
 
+    const loginModal =
+        document.getElementById("loginModal");
+
+    if (
+        window.innerWidth > 600 &&
+        loginModal.style.display === "flex"
+    ) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            submitLogin();
+
+        }
+
+        if (event.key === "Escape") {
+
+            event.preventDefault();
+
+            closeLoginModal();
+
+        }
+
+    }
+
+});
+
+
+async function submitLogin() {
 async function submitLogin() {
 
     const identifier =
