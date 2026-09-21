@@ -3276,34 +3276,53 @@ document.addEventListener(
             }
         );
 
+/* -----------------------------------------------------
+   INSTALLATION IPHONE / IPAD
+----------------------------------------------------- */
 
-        /* -----------------------------------------------------
-           TEST TEMPORAIRE
-        ----------------------------------------------------- */
+function isAppleMobile() {
 
-        if (
-            !isPWAInstalled()
-            &&
-            window.matchMedia("(max-width: 600px)").matches
-        ) {
+    return (
+        /iPhone|iPad|iPod/i.test(navigator.userAgent)
+        ||
+        (
+            navigator.platform === "MacIntel" &&
+            navigator.maxTouchPoints > 1
+        )
+    );
 
-            setTimeout(
-                function() {
+}
 
-                    if (!deferredInstallPrompt) {
 
-                        pwaInstallPrompt.style.display = "block";
+if (
+    isAppleMobile()
+    &&
+    !isPWAInstalled()
+) {
 
-                        pwaInstallPrompt.querySelector("strong").textContent =
-                            "TEST PWA";
+    setTimeout(
+        function() {
 
-                    }
+            pwaInstallPrompt.style.display = "block";
 
-                },
-                1500
-            );
+            pwaInstallPrompt.querySelector("strong").textContent =
+                "📱 Installer la Nomenclature";
 
-        }
+            pwaInstallPrompt.querySelector("p").innerHTML =
+                "Pour installer la Nomenclature :<br><br>" +
+                "1. Appuie sur <strong>Partager</strong> ⬆️<br>" +
+                "2. Choisis <strong>Sur l’écran d’accueil</strong><br>" +
+                "3. Active <strong>Ouvrir comme app web</strong><br>" +
+                "4. Appuie sur <strong>Ajouter</strong>.";
+
+            pwaInstallButton.style.display = "none";
+
+        },
+        1500
+    );
+
+}
+
 
     }
 );
