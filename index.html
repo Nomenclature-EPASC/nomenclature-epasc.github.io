@@ -415,6 +415,74 @@ cursor: pointer;
     text-align: center;
             white-space: nowrap;
 }
+        /* =====================================================
+   INSTALLATION PWA
+===================================================== */
+
+#pwaInstallPrompt {
+    display: none;
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 70px;
+
+    transform: translateX(-50%);
+
+    width: min(90vw, 360px);
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 18px;
+
+    box-shadow: 0 5px 25px rgba(0,0,0,0.30);
+
+    z-index: 9000;
+
+    text-align: center;
+}
+
+#pwaInstallPrompt strong {
+    display: block;
+
+    font-size: 18px;
+
+    margin-bottom: 8px;
+}
+
+#pwaInstallPrompt p {
+    margin: 0 0 15px 0;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
+#pwaInstallButton {
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 10px 18px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+#pwaInstallClose {
+    margin-left: 8px;
+
+    border: none;
+
+    background: transparent;
+
+    padding: 10px;
+
+    cursor: pointer;
+}
     </style>
 </head>
 
@@ -3021,6 +3089,65 @@ qrOverlay.addEventListener(
 
     }
 );
+    /* =====================================================
+   INSTALLATION PWA
+===================================================== */
+
+let deferredInstallPrompt = null;
+
+const pwaInstallPrompt =
+    document.getElementById("pwaInstallPrompt");
+
+const pwaInstallButton =
+    document.getElementById("pwaInstallButton");
+
+const pwaInstallClose =
+    document.getElementById("pwaInstallClose");
+
+
+window.addEventListener(
+    "beforeinstallprompt",
+    function(event) {
+
+        event.preventDefault();
+
+        deferredInstallPrompt = event;
+
+        pwaInstallPrompt.style.display = "block";
+
+    }
+);
+
+
+pwaInstallButton.addEventListener(
+    "click",
+    async function() {
+
+        if (!deferredInstallPrompt) {
+            return;
+        }
+
+        deferredInstallPrompt.prompt();
+
+        const result =
+            await deferredInstallPrompt.userChoice;
+
+        deferredInstallPrompt = null;
+
+        pwaInstallPrompt.style.display = "none";
+
+    }
+);
+
+
+pwaInstallClose.addEventListener(
+    "click",
+    function() {
+
+        pwaInstallPrompt.style.display = "none";
+
+    }
+);
 </script>
     <div id="plantSearch" style="
     position: fixed;
@@ -4527,5 +4654,23 @@ exemplaire_principal: false
 );
 
 </script>
+    <div id="pwaInstallPrompt">
+
+    <strong>📱 Installer la Nomenclature EPASC</strong>
+
+    <p>
+        Installe l'application sur ton téléphone
+        pour y accéder rapidement.
+    </p>
+
+    <button id="pwaInstallButton">
+        Installer l'application
+    </button>
+
+    <button id="pwaInstallClose">
+        Plus tard
+    </button>
+
+</div>
 </body>
 </html>
