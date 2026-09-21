@@ -3223,18 +3223,21 @@ if (
     window.matchMedia("(max-width: 600px)").matches
 ) {
 
-    setTimeout(
-        function() {
+setTimeout(
+    function() {
 
-            if (!deferredInstallPrompt) {
+        if (!deferredInstallPrompt) {
 
-                pwaInstallPrompt.style.display = "block";
+            pwaInstallPrompt.style.display = "block";
 
-            }
+            pwaInstallPrompt.querySelector("strong").textContent =
+                "TEST PWA";
 
-        },
-        1500
-    );
+        }
+
+    },
+    1500
+);
 
 }
 
