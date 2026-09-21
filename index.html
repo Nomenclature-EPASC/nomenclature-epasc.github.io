@@ -3013,13 +3013,9 @@ qrShareButton.addEventListener(
 
 qrOverlay.addEventListener(
     "click",
-    function(event) {
+    function() {
 
-        if (event.target === qrOverlay.querySelector("img")) {
-
-            qrOverlay.style.display = "none";
-
-        }
+        qrOverlay.style.display = "none";
 
     }
 );
