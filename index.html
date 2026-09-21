@@ -2319,15 +2319,17 @@ form.style.transform =
 
 function showPlantInfo(plant, marker) {
 
-    const sameSpecies =
-        allPlants.filter(function(otherPlant) {
+const sameSpecies =
+    allPlants.filter(function(otherPlant) {
 
-            return (
-                otherPlant["Nom français"] === plant["Nom français"] &&
-                otherPlant["Nom latin"] === plant["Nom latin"]
-            );
+        return (
+            otherPlant.x !== null &&
+            otherPlant.y !== null &&
+            otherPlant["Nom français"] === plant["Nom français"] &&
+            otherPlant["Nom latin"] === plant["Nom latin"]
+        );
 
-        });
+    });
 
     const navigation =
         document.getElementById("speciesNavigation");
