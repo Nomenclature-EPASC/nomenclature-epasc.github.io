@@ -3485,8 +3485,12 @@ const results =
         .filter(function(plant) {
 
             return (
-                String(plant["Nom français"]).toLowerCase().includes(search) ||
-                String(plant["Nom latin"]).toLowerCase().includes(search)
+                plant.x !== null &&
+                plant.y !== null &&
+                (
+                    String(plant["Nom français"]).toLowerCase().includes(search) ||
+                    String(plant["Nom latin"]).toLowerCase().includes(search)
+                )
             );
 
         })
@@ -3517,6 +3521,8 @@ const sameSpecies =
     allPlants.filter(function(otherPlant) {
 
         return (
+            otherPlant.x !== null &&
+            otherPlant.y !== null &&
             otherPlant["Nom français"] === plant["Nom français"] &&
             otherPlant["Nom latin"] === plant["Nom latin"]
         );
