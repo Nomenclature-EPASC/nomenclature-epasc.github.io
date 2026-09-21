@@ -1,0 +1,10 @@
+{
+    "name": "Nomenclature EPASC",
+    "short_name": "Nomenclature",
+    "description": "Carte interactive de nomenclature de l'EPASC",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "orientation": "any"
+}
