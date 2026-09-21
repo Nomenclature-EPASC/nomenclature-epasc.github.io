@@ -3093,154 +3093,153 @@ qrOverlay.addEventListener(
    INSTALLATION PWA
 ===================================================== */
 
-let deferredInstallPrompt = null;
-
-const pwaInstallPrompt =
-    document.getElementById("pwaInstallPrompt");
-
-const pwaInstallButton =
-    document.getElementById("pwaInstallButton");
-
-const pwaInstallClose =
-    document.getElementById("pwaInstallClose");
-
-
-/* -----------------------------------------------------
-   Vérifier si l'application est déjà installée
------------------------------------------------------ */
-
-function isPWAInstalled() {
-
-    return (
-        window.matchMedia(
-            "(display-mode: standalone)"
-        ).matches
-        ||
-        window.navigator.standalone === true
-    );
-
-}
-
-
-/* -----------------------------------------------------
-   Événement d'installation disponible
------------------------------------------------------ */
-
-window.addEventListener(
-    "beforeinstallprompt",
-    function(event) {
-
-        event.preventDefault();
-
-        deferredInstallPrompt = event;
-
-        if (isPWAInstalled()) {
-            return;
-        }
-
-        pwaInstallPrompt.style.display = "block";
-
-    }
-);
-
-
-/* -----------------------------------------------------
-   Installation terminée
------------------------------------------------------ */
-
-window.addEventListener(
-    "appinstalled",
+document.addEventListener(
+    "DOMContentLoaded",
     function() {
 
-        pwaInstallPrompt.style.display = "none";
+        let deferredInstallPrompt = null;
 
-        deferredInstallPrompt = null;
+        const pwaInstallPrompt =
+            document.getElementById("pwaInstallPrompt");
 
-    }
-);
+        const pwaInstallButton =
+            document.getElementById("pwaInstallButton");
+
+        const pwaInstallClose =
+            document.getElementById("pwaInstallClose");
 
 
-/* -----------------------------------------------------
-   Bouton INSTALLER
------------------------------------------------------ */
+        /* -----------------------------------------------------
+           Vérifier si l'application est déjà installée
+        ----------------------------------------------------- */
 
-pwaInstallButton.addEventListener(
-    "click",
-    async function() {
+        function isPWAInstalled() {
 
-        if (deferredInstallPrompt) {
-
-            deferredInstallPrompt.prompt();
-
-            await deferredInstallPrompt.userChoice;
-
-            deferredInstallPrompt = null;
-
-            pwaInstallPrompt.style.display = "none";
-
-            return;
+            return (
+                window.matchMedia(
+                    "(display-mode: standalone)"
+                ).matches
+                ||
+                window.navigator.standalone === true
+            );
 
         }
 
-        /*
-           Si Chrome ne fournit pas
-           beforeinstallprompt, on explique
-           comment installer manuellement.
-        */
 
-        pwaInstallPrompt.querySelector("p").innerHTML =
-            "Dans Chrome, appuie sur <strong>⋮</strong> " +
-            "puis sur <strong>Installer l'application</strong>.";
+        /* -----------------------------------------------------
+           Installation disponible
+        ----------------------------------------------------- */
 
-        pwaInstallButton.style.display = "none";
+        window.addEventListener(
+            "beforeinstallprompt",
+            function(event) {
 
-    }
-);
+                event.preventDefault();
 
+                deferredInstallPrompt = event;
 
-/* -----------------------------------------------------
-   Bouton PLUS TARD
------------------------------------------------------ */
+                if (isPWAInstalled()) {
+                    return;
+                }
 
-pwaInstallClose.addEventListener(
-    "click",
-    function() {
+                pwaInstallPrompt.style.display = "block";
 
-        pwaInstallPrompt.style.display = "none";
-
-    }
-);
+            }
+        );
 
 
-/* -----------------------------------------------------
-   Affichage automatique sur mobile
-   si l'application n'est pas déjà installée
------------------------------------------------------ */
+        /* -----------------------------------------------------
+           Installation terminée
+        ----------------------------------------------------- */
 
-if (
-    !isPWAInstalled()
-    &&
-    window.matchMedia("(max-width: 600px)").matches
-) {
+        window.addEventListener(
+            "appinstalled",
+            function() {
 
-setTimeout(
-    function() {
+                pwaInstallPrompt.style.display = "none";
 
-        if (!deferredInstallPrompt) {
+                deferredInstallPrompt = null;
 
-            pwaInstallPrompt.style.display = "block";
+            }
+        );
 
-            pwaInstallPrompt.querySelector("strong").textContent =
-                "TEST PWA";
+
+        /* -----------------------------------------------------
+           Bouton INSTALLER
+        ----------------------------------------------------- */
+
+        pwaInstallButton.addEventListener(
+            "click",
+            async function() {
+
+                if (deferredInstallPrompt) {
+
+                    deferredInstallPrompt.prompt();
+
+                    await deferredInstallPrompt.userChoice;
+
+                    deferredInstallPrompt = null;
+
+                    pwaInstallPrompt.style.display = "none";
+
+                    return;
+
+                }
+
+                pwaInstallPrompt.querySelector("p").innerHTML =
+                    "Dans Chrome, appuie sur <strong>⋮</strong> " +
+                    "puis sur <strong>Installer l'application</strong>.";
+
+                pwaInstallButton.style.display = "none";
+
+            }
+        );
+
+
+        /* -----------------------------------------------------
+           Bouton PLUS TARD
+        ----------------------------------------------------- */
+
+        pwaInstallClose.addEventListener(
+            "click",
+            function() {
+
+                pwaInstallPrompt.style.display = "none";
+
+            }
+        );
+
+
+        /* -----------------------------------------------------
+           TEST TEMPORAIRE
+        ----------------------------------------------------- */
+
+        if (
+            !isPWAInstalled()
+            &&
+            window.matchMedia("(max-width: 600px)").matches
+        ) {
+
+            setTimeout(
+                function() {
+
+                    if (!deferredInstallPrompt) {
+
+                        pwaInstallPrompt.style.display = "block";
+
+                        pwaInstallPrompt.querySelector("strong").textContent =
+                            "TEST PWA";
+
+                    }
+
+                },
+                1500
+            );
 
         }
 
-    },
-    1500
+    }
 );
-
-}
-
 
 </script>
     <div id="plantSearch" style="
