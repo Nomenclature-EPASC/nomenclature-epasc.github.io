@@ -3055,6 +3055,56 @@ if ("serviceWorker" in navigator) {
 
 
     // Vérifier le Service Worker lorsque la PWA redevient visible
+   /* =====================================================
+   VERIFICATION AUTOMATIQUE DE LA VERSION DE LA PAGE
+===================================================== */
+
+let signatureIndex = null;
+
+function verifierVersionIndex() {
+
+    fetch("./", {
+        method: "HEAD",
+        cache: "no-store"
+    })
+    .then(function(response) {
+
+        const nouvelleSignature =
+            response.headers.get("ETag") ||
+            response.headers.get("Last-Modified");
+
+        if (!nouvelleSignature) {
+            return;
+        }
+
+        if (signatureIndex === null) {
+
+            signatureIndex = nouvelleSignature;
+
+            return;
+        }
+
+        if (nouvelleSignature !== signatureIndex) {
+
+            signatureIndex = nouvelleSignature;
+
+            window.location.reload();
+
+        }
+
+    })
+    .catch(function() {
+
+        /* Rien à faire si la vérification échoue */
+
+    });
+
+}
+
+
+/* Première vérification */
+
+verifierVersionIndex();
     document.addEventListener("visibilitychange", function() {
 
         if (document.visibilityState === "visible") {
@@ -3064,6 +3114,8 @@ if ("serviceWorker" in navigator) {
                 registration.update();
 
             });
+
+            verifierVersionIndex();
 
         }
 
