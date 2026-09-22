@@ -1309,6 +1309,9 @@ window.addEventListener(
 
 let touchMode = null;
 
+    let mobileMoveMarker = null;
+let mobileMoveData = null;
+
 let touchStartX = 0;
 let touchStartY = 0;
 
@@ -1334,7 +1337,96 @@ let pinchNeedsInit = false;
 /* =====================================================
    TOUCHSTART
 ===================================================== */
+/* =====================================================
+   DÉPLACEMENT GSM — PRISE DU POINT
+===================================================== */
 
+container.addEventListener(
+    "touchstart",
+    function(event) {
+
+        if (!mobileMoveMarker) {
+            return;
+        }
+
+        if (event.touches.length !== 1) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const touch =
+            event.touches[0];
+
+        const markerRect =
+            mobileMoveMarker.getBoundingClientRect();
+
+        /*
+            On mémorise exactement l'endroit
+            où le doigt touche par rapport au point.
+        */
+
+        const offsetScreenX =
+            touch.clientX -
+            markerRect.left;
+
+        const offsetScreenY =
+            touch.clientY -
+            markerRect.top;
+
+        /*
+            Conversion en coordonnées
+            internes de la carte.
+        */
+
+        const offsetX =
+            offsetScreenX / scale;
+
+        const offsetY =
+            offsetScreenY / scale;
+
+        const startLeft =
+            parseFloat(
+                mobileMoveMarker.style.left
+            );
+
+        const startTop =
+            parseFloat(
+                mobileMoveMarker.style.top
+            );
+
+        mobileMoveData = {
+
+            startX:
+                touch.clientX,
+
+            startY:
+                touch.clientY,
+
+            startLeft:
+                startLeft,
+
+            startTop:
+                startTop,
+
+            offsetX:
+                offsetX,
+
+            offsetY:
+                offsetY
+        };
+
+        console.log(
+            "Prise du point GSM :",
+            mobileMoveData
+        );
+    },
+    {
+        passive: false,
+        capture: true
+    }
+);
 container.addEventListener(
     "touchstart",
     function(event) {
@@ -1383,7 +1475,57 @@ if (event.touches.length === 2) {
 /* =====================================================
    TOUCHMOVE
 ===================================================== */
+/* =====================================================
+   DÉPLACEMENT GSM — SUIVI DU DOIGT
+===================================================== */
 
+container.addEventListener(
+    "touchmove",
+    function(event) {
+
+        if (!mobileMoveMarker || !mobileMoveData) {
+            return;
+        }
+
+        if (event.touches.length !== 1) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const touch =
+            event.touches[0];
+
+        const dx =
+            (
+                touch.clientX -
+                mobileMoveData.startX
+            ) / scale;
+
+        const dy =
+            (
+                touch.clientY -
+                mobileMoveData.startY
+            ) / scale;
+
+        mobileMoveMarker.style.left =
+            (
+                mobileMoveData.startLeft +
+                dx
+            ) + "px";
+
+        mobileMoveMarker.style.top =
+            (
+                mobileMoveData.startTop +
+                dy
+            ) + "px";
+    },
+    {
+        passive: false,
+        capture: true
+    }
+);
 container.addEventListener(
     "touchmove",
     function(event) {
@@ -1594,7 +1736,124 @@ offsetY =
 /* =====================================================
    TOUCHEND
 ===================================================== */
+/* =====================================================
+   DÉPLACEMENT GSM — FIN DU DÉPLACEMENT
+===================================================== */
 
+container.addEventListener(
+    "touchend",
+    async function(event) {
+
+        if (!mobileMoveMarker || !mobileMoveData) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const marker =
+            mobileMoveMarker;
+
+        const newX =
+            parseFloat(
+                marker.style.left
+            );
+
+        const newY =
+            parseFloat(
+                marker.style.top
+            );
+
+        console.log(
+            "Sauvegarde position GSM :",
+            marker.dataset.id,
+            newX,
+            newY
+        );
+
+        /* Désactiver le mode déplacement */
+
+        mobileMoveMarker = null;
+        mobileMoveData = null;
+
+        marker.dataset.mobileMove =
+            "false";
+
+        marker.style.zIndex = "";
+
+        try {
+
+            const session =
+                await supabaseClient
+                    .auth
+                    .getSession();
+
+            const accessToken =
+                session.data.session &&
+                session.data.session.access_token;
+
+            const response =
+                await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/numeros?id=eq." +
+                    marker.dataset.id,
+                    {
+                        method: "PATCH",
+
+                        headers: {
+                            "apikey":
+                                SUPABASE_KEY,
+
+                            "Authorization":
+                                "Bearer " +
+                                accessToken,
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Prefer":
+                                "return=representation"
+                        },
+
+                        body: JSON.stringify({
+                            x: newX,
+                            y: newY
+                        })
+                    }
+                );
+
+            if (!response.ok) {
+
+                console.error(
+                    "Erreur sauvegarde position GSM :",
+                    response.status
+                );
+
+            } else {
+
+                const result =
+                    await response.json();
+
+                console.log(
+                    "Position GSM sauvegardée :",
+                    result
+                );
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Erreur sauvegarde GSM :",
+                error
+            );
+        }
+
+    },
+    {
+        passive: false,
+        capture: true
+    }
+);
 container.addEventListener(
     "touchend",
     function(event) {
@@ -4426,13 +4685,65 @@ document.getElementById(
 );
 
 
+/* =====================================================
+   BOUTON DÉPLACER — GSM
+===================================================== */
 
+document.getElementById(
+    "movePlantButton"
+).addEventListener(
+    "click",
+    function(event) {
 
+        event.preventDefault();
+        event.stopPropagation();
 
+        if (!window.selectedPlantForEdit) {
+            return;
+        }
 
+        const plant =
+            window.selectedPlantForEdit;
 
-        
+        const marker =
+            document.querySelector(
+                '.marker[data-id="' +
+                plant.id +
+                '"]'
+            );
+
+        if (!marker) {
+            return;
+        }
+
+        /* Fermer la bulle */
+
         document.getElementById(
+            "plantInfo"
+        ).style.display = "none";
+
+        /* Activer le déplacement GSM */
+
+        mobileMoveMarker = marker;
+
+        marker.dataset.mobileMove =
+            "true";
+
+        marker.style.zIndex =
+            "500";
+
+        console.log(
+            "Mode déplacement GSM activé pour :",
+            marker.dataset.id
+        );
+    }
+);
+
+
+/* ===================================================== */
+
+
+document.getElementById(
     "savePlantEditButton"
 ).addEventListener(
     "click",
