@@ -3101,38 +3101,28 @@ if (popup) {
                     event.pointerId
                 );
 
-const startX =
-    event.clientX;
-
-const startY =
-    event.clientY;
-
-const startLeft =
-    parseFloat(marker.style.left);
-
-const startTop =
-    parseFloat(marker.style.top);
-
-const startScale =
-    scale;
+const mapRect =
+    container.getBoundingClientRect();
 
 function move(e) {
 
-    const dx =
-        (e.clientX - startX) /
-        startScale;
+    const rect =
+        container.getBoundingClientRect();
 
-    const dy =
-        (e.clientY - startY) /
-        startScale;
+    const x =
+        (e.clientX - rect.left - offsetX) /
+        scale;
 
-                    marker.style.left =
-                        (startLeft + dx) + "px";
+    const y =
+        (e.clientY - rect.top - offsetY) /
+        scale;
 
-                    marker.style.top =
-                        (startTop + dy) + "px";
+    marker.style.left =
+        x + "px";
 
-                }
+    marker.style.top =
+        y + "px";
+}
 
                 async function stop() {
 
