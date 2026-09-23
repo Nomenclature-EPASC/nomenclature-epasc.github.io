@@ -1048,6 +1048,8 @@ let offsetY = 0;
 
 let dragging = false;
 
+    let activeMovingMarker = null;
+
 let startX;
 
 let startY;
@@ -3099,27 +3101,30 @@ if (popup) {
                     event.pointerId
                 );
 
-                const startX =
-                    event.clientX;
+const startX =
+    event.clientX;
 
-                const startY =
-                    event.clientY;
+const startY =
+    event.clientY;
 
-                const startLeft =
-                    parseFloat(marker.style.left);
+const startLeft =
+    parseFloat(marker.style.left);
 
-                const startTop =
-                    parseFloat(marker.style.top);
+const startTop =
+    parseFloat(marker.style.top);
 
-                function move(e) {
+const startScale =
+    scale;
 
-                    const dx =
-                        (e.clientX - startX) /
-                        scale;
+function move(e) {
 
-                    const dy =
-                        (e.clientY - startY) /
-                        scale;
+    const dx =
+        (e.clientX - startX) /
+        startScale;
+
+    const dy =
+        (e.clientY - startY) /
+        startScale;
 
                     marker.style.left =
                         (startLeft + dx) + "px";
