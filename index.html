@@ -2392,7 +2392,25 @@ const clickedMarker =
 );
 
 
-    function displayTerrainProposals(data) {
+function displayTerrainProposals(data) {
+
+    /* =====================================================
+       SUPPRIMER LES ANCIENS MARQUEURS DE PROPOSITIONS
+       avant de reconstruire la liste
+    ===================================================== */
+
+    document.querySelectorAll(
+        ".terrain-marker-new[data-proposal-id]"
+    ).forEach(function(marker) {
+
+        marker.remove();
+
+    });
+
+
+    /* =====================================================
+       RECRÉER LES MARQUEURS À PARTIR DE SUPABASE
+    ===================================================== */
 
     data.forEach(function(item) {
 
