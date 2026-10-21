@@ -6300,6 +6300,54 @@ const newX =
 
 }
 
+function updatePlantMapCounters() {
+    const counters = document.getElementById("plantMapCounters");
+    if (!counters) return;
+
+    const plantsById = new Map(
+        allPlants.map(function(plant) {
+            return [String(plant.id), plant];
+        })
+    );
+    const displayedPlantIds = new Set();
+    const displayedSpecies = new Set();
+
+    markers.querySelectorAll(".marker[data-id]").forEach(function(marker) {
+        if (
+            marker.dataset.pendingDuplicate === "true" ||
+            marker.classList.contains("pending-duplicate-marker")
+        ) {
+            return;
+        }
+
+        const plantId = String(marker.dataset.id);
+        const plant = plantsById.get(plantId);
+        if (!plant || displayedPlantIds.has(plantId)) return;
+
+        displayedPlantIds.add(plantId);
+
+        const french = String(plant["Nom français"] || "").trim();
+        const latin = String(plant["Nom latin"] || "").trim();
+        if (french || latin) {
+            // Même identité d'espèce que les regroupements existants de la recherche.
+            displayedSpecies.add(JSON.stringify([french, latin]));
+        }
+    });
+
+    const speciesCount = displayedSpecies.size;
+    const plantationCount = displayedPlantIds.size;
+    counters.textContent =
+        speciesCount + (speciesCount === 1 ? " espèce" : " espèces") +
+        " · " +
+        plantationCount + (plantationCount === 1 ? " plantation" : " plantations");
+}
+
+// Les marqueurs sont ajoutés ou retirés à plusieurs endroits (chargement,
+// ajout et suppression). Observer leur conteneur garde les compteurs synchronisés.
+const plantMapCounterObserver = new MutationObserver(updatePlantMapCounters);
+plantMapCounterObserver.observe(markers, { childList: true });
+document.addEventListener("DOMContentLoaded", updatePlantMapCounters, { once: true });
+
 function updatePendingDuplicateStatus(message) {
     const status =
         document.getElementById("duplicateStatus");
@@ -6969,6 +7017,15 @@ box-shadow: none;
             outline: none;
         "
     >
+    <div id="plantMapCounters" style="
+        margin-top: 2px;
+        color: rgba(0, 0, 0, 0.48);
+        font-size: 12px;
+        line-height: 1.2;
+        text-align: center;
+        white-space: nowrap;
+        pointer-events: none;
+    ">0 espèce · 0 plantation</div>
 <div id="searchResults" style="
     margin-top: 5px;
     max-height: 300px;
