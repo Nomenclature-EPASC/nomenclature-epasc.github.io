@@ -54,6 +54,371 @@ button {
     font-size: 22px;
     cursor: pointer;
 }
+
+#mapCalibrationButton {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: 24px;
+    line-height: 1;
+    touch-action: manipulation;
+}
+
+#adminAccessControls {
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.toolbar-control-frame {
+    border: 2px solid rgba(60, 60, 60, 0.45);
+    border-radius: 6px;
+    background: transparent;
+}
+
+#mapCalibrationModal {
+    display: none;
+    position: fixed;
+    top: 70px;
+    right: 12px;
+    z-index: 9000;
+    pointer-events: none;
+}
+
+#mapCalibrationPanel {
+    width: min(420px, calc(100vw - 32px));
+    max-height: calc(100vh - 86px);
+    overflow-y: auto;
+    padding: 22px;
+    border: 2px solid #333;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    pointer-events: auto;
+}
+
+#calibrationAim {
+    display: none;
+    position: fixed;
+    z-index: 8998;
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+#calibrationAim::before,
+#calibrationAim::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    content: "";
+    background: var(--calibration-aim-color, #1769aa);
+    box-shadow: 0 0 1px white;
+}
+
+#calibrationAim::before {
+    width: 38px;
+    height: 1.3px;
+    transform: translate(-50%, -50%);
+}
+
+#calibrationAim::after {
+    width: 1.3px;
+    height: 38px;
+    transform: translate(-50%, -50%);
+}
+
+#calibrationAim.reference {
+    --calibration-aim-color: #1769aa;
+}
+
+#calibrationAim.webp {
+    --calibration-aim-color: #8e44ad;
+}
+
+body.calibration-placement-active #map-container,
+body.calibration-placement-active #map-container * {
+    cursor: none !important;
+}
+
+#mapCalibrationTitle {
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#closeMapCalibrationButton {
+    padding: 8px 18px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    background: #eee;
+    font-size: 15px;
+}
+
+#calibrationPlanFile {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    opacity: 0;
+}
+
+#calibrationPlanFileButton {
+    display: block;
+    width: 100%;
+    margin: 0 0 14px;
+    padding: 7px 10px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    background: #eee;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#calibrationPlanFile:focus-visible + #calibrationPlanFileButton {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}
+
+#calibrationOpacityLabel {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    text-align: left;
+}
+
+#calibrationOpacity {
+    display: block;
+    width: 100%;
+    margin: 0 0 16px;
+}
+
+#calibrationScaleLabel {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    text-align: left;
+}
+
+#calibrationScale {
+    display: block;
+    width: 100%;
+    margin: 0 0 16px;
+}
+
+#calibrationScaleResults {
+    margin: 0 0 16px;
+    padding: 12px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    text-align: left;
+    font-size: 13px;
+}
+
+#calibrationScaleResultsTitle {
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#calibrationScaleMeasurements {
+    margin: 8px 0;
+    padding-left: 20px;
+    line-height: 1.45;
+}
+
+#calibrationScaleActions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+#calibrationScaleActions button {
+    padding: 7px 10px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    background: #eee;
+    font-size: 14px;
+}
+
+#calibrationScaleActions button:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+#calibrationScaleValidationMessage {
+    margin-top: 8px;
+    color: #27632a;
+    font-weight: bold;
+}
+
+#calibrationPlanActions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+#calibrationPlanActions button {
+    padding: 7px 10px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    background: #eee;
+    font-size: 14px;
+}
+
+#calibrationPlanActions button:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+#calibrationPlan.movable {
+    cursor: grab;
+}
+
+#calibrationPointControls {
+    margin: 0 0 16px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.calibrationPointGroup {
+    margin-top: 8px;
+}
+
+.calibrationPointGroupTitle {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.calibrationPointButtons {
+    display: flex;
+    gap: 6px;
+}
+
+.calibrationPointEntry {
+    display: flex;
+    gap: 2px;
+}
+
+.calibrationPointButtons button,
+#clearCalibrationPointsButton {
+    padding: 6px 9px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    background: #eee;
+    font-size: 13px;
+}
+
+.calibrationPointButtons button[aria-pressed="true"] {
+    outline: 2px solid #333;
+}
+
+.calibrationPointMoveButton {
+    min-width: 27px;
+    padding: 5px !important;
+}
+
+#calibrationPointStatus {
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+#calibrationPoints {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.calibrationPointMarker {
+    position: absolute;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: transparent;
+    font-size: 0;
+    pointer-events: auto;
+    touch-action: none;
+    user-select: none;
+    transform: translate(-50%, -50%) scale(var(--calibration-point-screen-factor, 1));
+    cursor: default;
+}
+
+.calibrationPointMarker::before,
+.calibrationPointMarker::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    content: "";
+    background: var(--calibration-point-color);
+    box-shadow: 0 0 1px white;
+    pointer-events: none;
+}
+
+.calibrationPointMarker::before {
+    width: 36px;
+    height: 1.2px;
+    transform: translate(-50%, -50%);
+}
+
+.calibrationPointMarker::after {
+    width: 1.2px;
+    height: 36px;
+    transform: translate(-50%, -50%);
+}
+
+.calibrationPointLabel {
+    position: absolute;
+    bottom: calc(100% + 3px);
+    left: 50%;
+    color: var(--calibration-point-color);
+    font: bold 15px/18px Arial, sans-serif;
+    white-space: nowrap;
+    text-shadow: -1px -1px 1px white, 1px -1px 1px white,
+        -1px 1px 1px white, 1px 1px 1px white;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.calibrationPointMarker.reference {
+    --calibration-point-color: #1769aa;
+}
+
+.calibrationPointMarker.webp {
+    --calibration-point-color: #8e44ad;
+}
+
+.calibrationPointMarker.active {
+    outline: 2px dashed var(--calibration-point-color);
+    outline-offset: 2px;
+    cursor: grab;
+}
+
+#calibrationPointActions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
 /* BOUTON QR CODE GSM */
 /* =====================================================
    QR CODE
@@ -169,6 +534,13 @@ top: 0;
     cursor: grabbing;
 }
 
+/* Calibration : les marqueurs restent visibles mais ne sont plus interactifs.
+   Les événements "traversent" les marqueurs et atteignent la carte (zoom/pan OK). */
+body.map-calibration-open #markers .marker,
+body.map-calibration-open #markers .terrain-marker-new {
+    pointer-events: none !important;
+}
+
 
 #map {
     position: absolute;
@@ -189,6 +561,18 @@ top: 0;
             pointer-events: none;
         }
 
+#calibrationPlan {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: none;
+    pointer-events: none;
+    user-select: none;
+}
+
 /* MARQUEURS DES PLANTES */
 
         #markers {
@@ -205,7 +589,7 @@ top: 0;
 .marker {
     position: absolute;
 
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(var(--marker-counter-scale, 1));
 
     width: 24px;
     height: 24px;
@@ -227,6 +611,23 @@ top: 0;
             pointer-events: auto;
         }
 
+#map-container.plant-deletion-cursor,
+#map-container.plant-deletion-cursor .marker {
+    cursor: var(--map-action-cursor, crosshair) !important;
+}
+
+#map-container.plant-add-cursor-active,
+#map-container.plant-add-cursor-active .marker,
+#map-container.plant-add-cursor-active .terrain-marker-new {
+    cursor: var(--map-action-cursor, crosshair) !important;
+}
+
+#map-container.desktop-edit-cursor,
+#map-container.desktop-edit-cursor .marker,
+#map-container.desktop-edit-cursor .terrain-marker-new {
+    cursor: var(--map-action-cursor, crosshair) !important;
+}
+
 
 
 
@@ -234,13 +635,128 @@ top: 0;
 
 
         
-        #addTerrainButton {
-    margin-right: 10px;
+        #proposalMenuContainer {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
 }
+
+#addTerrainButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: auto;
+    margin-right: 10px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    font-size: 22px;
+    touch-action: manipulation;
+}
+
+#proposalMenu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 1px;
+    z-index: 2001;
+    box-sizing: border-box;
+    width: 44px;
+    min-height: 100px;
+    padding: 3px 2px;
+}
+
+#proposalMenu button {
+    position: relative;
+    left: -4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 24px;
+    touch-action: manipulation;
+}
+
+#proposalMenu #deletePlantMenuAction {
+    color: #333;
+}
+
+#proposalMenu button:active {
+    background: transparent;
+}
+
+#addPlantMenuAction {
+    color: #9b59b6;
+    font-size: 26px;
+}
+
+.menu-settings-icon,
+.desktop-proposal-pencil { display: none; }
+.mobile-proposal-pencil { display: none; }
+
+@media (min-width: 601px) {
+    .menu-settings-icon { display: inline-flex; }
+    .menu-settings-icon svg { width: 22px; height: 22px; }
+    .menu-pencil-icon { display: none; }
+    .desktop-proposal-pencil { display: inline; font-size: 23px; line-height: 1; }
+}
+
+@media (max-width: 600px) {
+    .menu-pencil-icon { display: none; }
+    .menu-settings-icon { display: inline-flex; }
+    .menu-settings-icon svg { width: 22px; height: 22px; }
+    .desktop-proposal-pencil { display: inline; font-size: 23px; line-height: 1; }
+    .mobile-proposal-pencil { display: none; }
+}
+
+#proposePlantNameModificationButton svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+}
+
+#plantNameProposalDialog {
+    display: none;
+    position: fixed;
+    z-index: 5000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    width: min(420px, calc(100vw - 28px));
+    max-height: 80vh;
+    overflow: auto;
+    padding: 16px;
+    color: #222;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px #0004;
+}
+
+#plantNameProposalDialog label { display: block; margin: 10px 0 4px; }
+#plantNameProposalDialog input { box-sizing: border-box; width: 100%; padding: 8px; }
+#plantNameProposalDialog button { min-height: 40px; }
+#plantNameProposalAdminActions { margin-top: 10px; text-align: center; }
+#plantNameProposalAdminActions > strong { display: block; text-align: center; }
+#plantNameProposalAdminActions .name-proposal-card { border-top: 1px solid #ccc; padding: 8px 0; }
+#plantNameProposalAdminActions .name-proposal-title { display: block; margin-bottom: 4px; text-align: center; }
+#plantNameProposalAdminActions .name-proposal-details { margin: 8px 0; font-size: 13px; white-space: pre-line; text-align: center; }
+#plantNameProposalAdminActions .name-proposal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+#plantNameProposalAdminActions button { min-height: 36px; }
+
         .terrain-marker-new {
     position: absolute;
 
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(var(--marker-counter-scale, 1));
 
     width: 24px;
     height: 24px;
@@ -252,6 +768,20 @@ top: 0;
 pointer-events: auto;
 cursor: pointer;
 }
+
+#plantInfo.proposal-pending-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#plantInfo.proposal-pending-centered #plantFrench {
+    margin-top: 0 !important;
+}
+
         /* VISEUR GSM - mode ajout */
 #terrainAddCrosshair {
     display: none;
@@ -285,6 +815,11 @@ cursor: pointer;
     left: 0;
     top: 23px;
 }
+
+#mobileDeletionSelectionPanel {
+    display: none;
+}
+
 /* TEST */
 /* LISTES DEROULANTES - AJOUT DE PLANTE */
 
@@ -515,13 +1050,65 @@ cursor: pointer;
 </div>
 
 <div id="toolbar">
- <button id="addTerrainButton" onclick="confirmAddTerrainPlant()">
-    ➕
-</button>
+<div id="proposalMenuContainer">
+    <button
+        id="addTerrainButton"
+        type="button"
+        aria-label="Ouvrir le menu des propositions"
+        title="Ouvrir le menu des propositions"
+        aria-expanded="false"
+        aria-controls="proposalMenu"
+    >
+        <span class="menu-pencil-icon" aria-hidden="true">✏️</span>
+        <span class="menu-settings-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16M8 4v4m8 2v4m-5 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+    <div id="proposalMenu" class="toolbar-control-frame" role="menu">
+        <button id="addPlantMenuAction" type="button" role="menuitem">
+            ➕︎
+        </button>
+        <button id="proposePlantNameModificationButton" type="button" role="menuitem" aria-label="Proposer une modification" title="Proposer une modification" aria-pressed="false">
+            <span class="desktop-proposal-pencil" aria-hidden="true">✏️</span>
+            <svg class="mobile-proposal-pencil" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9M15 3h6v6M10 14l10-10 3 3-10 10-4 1 1-4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button id="deletePlantMenuAction" type="button" role="menuitem" aria-label="Proposer la suppression d'une plante" title="Proposer la suppression">
+            🗑️
+        </button>
+    </div>
+</div>
 
+<section id="plantNameProposalDialog" role="dialog" aria-modal="true" aria-labelledby="plantNameProposalTitle">
+    <h2 id="plantNameProposalTitle">Proposer une modification</h2>
+    <p id="plantNameProposalCurrent"></p>
+    <label for="plantNameProposalFrench">Nom français proposé</label>
+    <input id="plantNameProposalFrench" maxlength="250" autocomplete="off">
+    <label for="plantNameProposalLatin">Nom latin proposé</label>
+    <input id="plantNameProposalLatin" maxlength="250" autocomplete="off">
+    <p id="plantNameProposalMessage" role="status"></p>
+    <button id="submitPlantNameProposal" type="button">Envoyer</button>
+    <button id="cancelPlantNameProposal" type="button">Annuler</button>
+</section>
+
+<div id="adminAccessControls">
     <button id="loginButton" onclick="login()" style="float: right;">
     🔐
 </button>
+
+<button id="logoutButton"
+        onclick="logout()"
+        style="display:none; float: right;">
+    🔓
+</button>
+
+<button
+    id="mapCalibrationButton"
+    type="button"
+    aria-label="Calibration de la carte"
+    title="Calibration de la carte"
+    onclick="toggleMapCalibration()"
+>
+    🗺️
+</button>
+</div>
 
     <div id="loginModal">
 
@@ -565,17 +1152,101 @@ cursor: pointer;
 
 </div>
 
-<button id="logoutButton"
-        onclick="logout()"
-        style="display:none; float: right;">
-    🔓
-</button>
-
     <span id="adminStatus"></span>
 
 
 
 </div>
+
+<div id="mapCalibrationModal" role="dialog" aria-modal="false" aria-labelledby="mapCalibrationTitle">
+    <div id="mapCalibrationPanel">
+        <div id="mapCalibrationTitle">🗺️ Calibration de la carte</div>
+        <input
+            id="calibrationPlanFile"
+            type="file"
+            accept=".webp,image/webp"
+            onchange="loadCalibrationPlan()"
+        >
+        <label id="calibrationPlanFileButton" for="calibrationPlanFile">Choisir un fichier WebP</label>
+        <label id="calibrationOpacityLabel" for="calibrationOpacity">
+            Transparence : 50 %
+        </label>
+        <input
+            id="calibrationOpacity"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="50"
+            oninput="updateCalibrationOpacity()"
+        >
+        <label id="calibrationScaleLabel" for="calibrationScale">
+            Taille du plan : 100 %
+        </label>
+        <input
+            id="calibrationScale"
+            type="range"
+            min="25"
+            max="200"
+            step="1"
+            value="100"
+            oninput="updateCalibrationScale()"
+            disabled
+        >
+        <div id="calibrationPointControls">
+            <strong>📍 Points de référence</strong>
+            <div class="calibrationPointGroup">
+                <div class="calibrationPointGroupTitle">Plan actuel</div>
+                <div class="calibrationPointButtons">
+                    <div class="calibrationPointEntry"><button type="button" data-calibration-group="reference" data-calibration-label="A" onclick="selectCalibrationPoint('reference', 'A')">A</button><button class="calibrationPointMoveButton" data-calibration-move-group="reference" data-calibration-move-label="A" type="button" onclick="armCalibrationPointMove('reference', 'A')" aria-label="Déverrouiller le point A" title="Déplacer A" disabled>↔</button></div>
+                    <div class="calibrationPointEntry"><button type="button" data-calibration-group="reference" data-calibration-label="B" onclick="selectCalibrationPoint('reference', 'B')">B</button><button class="calibrationPointMoveButton" data-calibration-move-group="reference" data-calibration-move-label="B" type="button" onclick="armCalibrationPointMove('reference', 'B')" aria-label="Déverrouiller le point B" title="Déplacer B" disabled>↔</button></div>
+                    <div class="calibrationPointEntry"><button type="button" data-calibration-group="reference" data-calibration-label="C" onclick="selectCalibrationPoint('reference', 'C')">C</button><button class="calibrationPointMoveButton" data-calibration-move-group="reference" data-calibration-move-label="C" type="button" onclick="armCalibrationPointMove('reference', 'C')" aria-label="Déverrouiller le point C" title="Déplacer C" disabled>↔</button></div>
+                    <div class="calibrationPointEntry"><button type="button" data-calibration-group="reference" data-calibration-label="D" onclick="selectCalibrationPoint('reference', 'D')">D</button><button class="calibrationPointMoveButton" data-calibration-move-group="reference" data-calibration-move-label="D" type="button" onclick="armCalibrationPointMove('reference', 'D')" aria-label="Déverrouiller le point D" title="Déplacer D" disabled>↔</button></div>
+                </div>
+            </div>
+            <div class="calibrationPointGroup">
+                <div class="calibrationPointGroupTitle">Nouveau WebP</div>
+                <div class="calibrationPointButtons">
+                    <div class="calibrationPointEntry"><button type="button" data-calibration-group="webp" data-calibration-label="A" onclick="selectCalibrationPoint('webp', 'A')" disabled>A′</button><button class="calibrationPointMoveButton" data-calibration-move-group="webp" data-calibration-move-label="A" type="button" onclick="armCalibrationPointMove('webp', 'A')" aria-label="Déverrouiller le point A′" title="Déplacer A′" disabled>↔</button></div>
+                    <div class="calibrationPointEntry"><button type="button" data-calibration-group="webp" data-calibration-label="B" onclick="selectCalibrationPoint('webp', 'B')" disabled>B′</button><button class="calibrationPointMoveButton" data-calibration-move-group="webp" data-calibration-move-label="B" type="button" onclick="armCalibrationPointMove('webp', 'B')" aria-label="Déverrouiller le point B′" title="Déplacer B′" disabled>↔</button></div>
+                    <div class="calibrationPointEntry"><button type="button" data-calibration-group="webp" data-calibration-label="C" onclick="selectCalibrationPoint('webp', 'C')" disabled>C′</button><button class="calibrationPointMoveButton" data-calibration-move-group="webp" data-calibration-move-label="C" type="button" onclick="armCalibrationPointMove('webp', 'C')" aria-label="Déverrouiller le point C′" title="Déplacer C′" disabled>↔</button></div>
+                    <div class="calibrationPointEntry"><button type="button" data-calibration-group="webp" data-calibration-label="D" onclick="selectCalibrationPoint('webp', 'D')" disabled>D′</button><button class="calibrationPointMoveButton" data-calibration-move-group="webp" data-calibration-move-label="D" type="button" onclick="armCalibrationPointMove('webp', 'D')" aria-label="Déverrouiller le point D′" title="Déplacer D′" disabled>↔</button></div>
+                </div>
+            </div>
+            <div id="calibrationPointStatus">Sélectionnez un point dans le panneau, puis placez-le sur la carte.</div>
+            <div id="calibrationPointActions">
+                <button id="clearCalibrationPointsButton" type="button" onclick="clearCalibrationPoints()">🗑️ Effacer les points</button>
+            </div>
+        </div>
+        <section id="calibrationScaleResults" aria-live="polite">
+            <div id="calibrationScaleResultsTitle">Résultat de la calibration</div>
+            <div id="calibrationScaleResultStatus">Placez les quatre paires de points pour calculer l'échelle.</div>
+            <div id="calibrationScaleResultValue">Échelle calculée : —</div>
+            <div id="calibrationScaleResultPercent">Échelle en pourcentage : —</div>
+            <div id="calibrationScaleResultSpread">Écart entre les mesures : —</div>
+            <ul id="calibrationScaleMeasurements"></ul>
+            <div id="calibrationScaleActions">
+                <button id="validateCalibrationScaleButton" type="button" onclick="validateCalibrationScale()" disabled>
+                    ✅ Valider l'échelle
+                </button>
+            </div>
+            <div id="calibrationScaleValidationMessage" aria-live="polite"></div>
+        </section>
+        <div id="calibrationPlanActions">
+            <button id="toggleCalibrationPlanButton" type="button" onclick="toggleCalibrationPlan()" disabled>
+                👁️ Afficher / masquer le nouveau plan
+            </button>
+            <button id="removeCalibrationPlanButton" type="button" onclick="removeCalibrationPlan()" disabled>
+                🗑️ Retirer le plan
+            </button>
+        </div>
+        <button id="closeMapCalibrationButton" type="button" onclick="closeMapCalibration()">
+            Fermer
+        </button>
+    </div>
+</div>
+
+<div id="calibrationAim" aria-hidden="true"></div>
 
 
 <button id="qrShareButton" aria-label="Afficher le QR code">
@@ -604,6 +1275,8 @@ cursor: pointer;
 
         <div id="markers"></div>
 
+        <div id="calibrationPoints" aria-label="Points de référence de calibration"></div>
+
     </div>
 
 </div>
@@ -623,10 +1296,10 @@ cursor: pointer;
 */
 
 const SUPABASE_URL =
-    "https://wcdhghogvargjwsvljzy.supabase.co/";
+    "https://dllbwtpooiskvuhtxpck.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_HEkxwYdy0DEcfRK7YOz-IA_q4iG31-J";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsbGJ3dHBvb2lza3Z1aHR4cGNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MTY0NzUsImV4cCI6MjEwNTk5MjQ3NX0.1t7WZnkfFmOT2Iuy7kJCa9frax-CVSf1s-hZakq-wjg";
 
     const supabaseClient =
     window.supabase.createClient(
@@ -647,6 +1320,13 @@ async function login() {
 }
 
 document.addEventListener("keydown", function(event) {
+
+    if (mapCalibrationIsOpen &&
+        !calibrationEventIsOnAllowedUi(event)) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+    }
 
     const loginModal =
         document.getElementById("loginModal");
@@ -753,6 +1433,930 @@ async function logout() {
 }
 
 
+let mapCalibrationIsOpen = false;
+let calibrationPlacementSequenceActive = false;
+let calibrationPlacementCompleted = false;
+let activeCalibrationPointMove = null;
+
+function suspendPlantInteractionsForCalibration() {
+    // Copie en cours de placement
+    if (pendingPlantDuplicate && !pendingPlantDuplicate.isSubmitting) {
+        discardPendingPlantDuplicate();
+    }
+
+    // Déplacement PC en cours
+    if (desktopMoveMarker) {
+        desktopMoveMarker.dataset.moveEnabled = "false";
+        desktopMoveMarker.style.cursor = "pointer";
+        desktopMoveMarker.style.zIndex = "";
+        if (desktopMoveOriginalAppearance) {
+            desktopMoveMarker.style.background = desktopMoveOriginalAppearance.background;
+            desktopMoveMarker.style.border = desktopMoveOriginalAppearance.border;
+            desktopMoveMarker.style.boxShadow = desktopMoveOriginalAppearance.boxShadow;
+        }
+        desktopMoveMarker = null;
+        desktopMoveOriginalAppearance = null;
+    }
+
+    // Déplacement GSM en cours
+    if (mobileMoveMarker) {
+        if (mobileMoveOriginalAppearance) {
+            mobileMoveMarker.style.background = mobileMoveOriginalAppearance.background;
+            mobileMoveMarker.style.border = mobileMoveOriginalAppearance.border;
+            mobileMoveMarker.style.boxShadow = mobileMoveOriginalAppearance.boxShadow;
+        }
+        mobileMoveMarker.dataset.mobileMove = "false";
+        mobileMoveMarker.style.zIndex = "";
+        mobileMoveMarker = null;
+        mobileMoveData = null;
+        mobileMoveOriginalAppearance = null;
+    }
+
+    // Formulaire de proposition ouvert
+    const adminForm = document.getElementById("terrainAdminForm");
+    if (adminForm) adminForm.style.display = "none";
+}
+
+function openMapCalibration() {
+    const panel = document.getElementById("mapCalibrationModal");
+    if (panel) {
+        suspendPlantInteractionsForCalibration();
+        panel.style.display = "block";
+        mapCalibrationIsOpen = true;
+        document.body.classList.add("map-calibration-open");
+        hidePlantInfo();
+    }
+}
+
+function toggleMapCalibration() {
+    if (mapCalibrationIsOpen) {
+        closeMapCalibration();
+    } else {
+        openMapCalibration();
+    }
+}
+
+// Éléments d'interface qui doivent rester utilisables pendant la calibration.
+const CALIBRATION_ALLOWED_UI_SELECTOR =
+    "#mapCalibrationPanel, #mapCalibrationButton, #pwaInstallPrompt";
+
+function calibrationEventIsOnAllowedUi(event) {
+    return event.target instanceof Element &&
+        Boolean(event.target.closest(CALIBRATION_ALLOWED_UI_SELECTOR));
+}
+
+function closeMapCalibration() {
+    setCalibrationPlanMoveMode(false);
+    mapCalibrationIsOpen = false;
+    calibrationPlanDragging = false;
+    activeCalibrationPointDrag = null;
+    activeCalibrationPointMove = null;
+    selectedCalibrationPoint = null;
+    calibrationPlacementSequenceActive = false;
+    calibrationPlacementCompleted = false;
+    document.body.classList.remove("map-calibration-open", "calibration-placement-active");
+    const aim = document.getElementById("calibrationAim");
+    if (aim) aim.style.display = "none";
+    const panel = document.getElementById("mapCalibrationModal");
+    if (panel) {
+        panel.style.display = "none";
+    }
+    renderCalibrationPoints();
+}
+
+let calibrationPlanObjectUrl = null;
+let pendingCalibrationPlanObjectUrl = null;
+let calibrationPlanLoadVersion = 0;
+let calibrationOffsetX = 0;
+let calibrationOffsetY = 0;
+let calibrationScale = 1;
+let calibrationPlanMoveMode = false;
+let calibrationPlanDragging = false;
+let calibrationPlanDragStartX = 0;
+let calibrationPlanDragStartY = 0;
+let calibrationPlanDragOffsetX = 0;
+let calibrationPlanDragOffsetY = 0;
+const calibrationPoints = {
+    A: { referenceX: null, referenceY: null, calibrationX: null, calibrationY: null },
+    B: { referenceX: null, referenceY: null, calibrationX: null, calibrationY: null },
+    C: { referenceX: null, referenceY: null, calibrationX: null, calibrationY: null },
+    D: { referenceX: null, referenceY: null, calibrationX: null, calibrationY: null }
+};
+let selectedCalibrationPoint = null;
+let calibrationPointsVisible = true;
+let activeCalibrationPointDrag = null;
+let calculatedCalibrationScale = null;
+
+// Translation (X/Y) qui superpose au mieux A′B′C′D′ sur A B C D pour l'échelle donnée
+// (échelle uniforme : moyenne des écarts, soit les moindres carrés pour une translation).
+function computeCalibrationOffsetForScale(targetScale) {
+    let sumX = 0;
+    let sumY = 0;
+    let count = 0;
+    ["A", "B", "C", "D"].forEach(function(label) {
+        const point = calibrationPoints[label];
+        if (![point.referenceX, point.referenceY, point.calibrationX, point.calibrationY]
+            .every(Number.isFinite)) {
+            return;
+        }
+        sumX += point.referenceX - point.calibrationX * targetScale;
+        sumY += point.referenceY - point.calibrationY * targetScale;
+        count++;
+    });
+    return count === 4 ? { x: sumX / count, y: sumY / count } : null;
+}
+
+function getCalibrationPointMapPosition(group, point) {
+    const data = calibrationPoints[point];
+    if (!data) {
+        return null;
+    }
+
+    if (group === "reference") {
+        return data.referenceX === null || data.referenceY === null
+            ? null
+            : { x: data.referenceX, y: data.referenceY };
+    }
+
+    if (data.calibrationX === null || data.calibrationY === null) {
+        return null;
+    }
+
+    return {
+        x: calibrationOffsetX + data.calibrationX * calibrationScale,
+        y: calibrationOffsetY + data.calibrationY * calibrationScale
+    };
+}
+
+function updateCalibrationPointStatus() {
+    const status = document.getElementById("calibrationPointStatus");
+    if (!status) {
+        return;
+    }
+
+    const pointStatus = ["A", "B", "C", "D"].map(function(label) {
+        const point = calibrationPoints[label];
+        const referencePlaced = point.referenceX !== null && point.referenceY !== null;
+        const calibrationPlaced = point.calibrationX !== null && point.calibrationY !== null;
+        return label + " : " + (referencePlaced ? "placé" : "—") +
+            " · " + label + "' : " + (calibrationPlaced ? "placé" : "—");
+    });
+
+    if (activeCalibrationPointMove) {
+        const name = activeCalibrationPointMove.group === "reference"
+            ? activeCalibrationPointMove.label
+            : activeCalibrationPointMove.label + "′";
+        status.textContent = "Point actif : " + name + " — déplacer le point sur la carte.";
+        status.style.whiteSpace = "normal";
+    } else if (selectedCalibrationPoint) {
+        const name = selectedCalibrationPoint.group === "reference"
+            ? selectedCalibrationPoint.label
+            : selectedCalibrationPoint.label + "′";
+        status.textContent = selectedCalibrationPoint.group === "webp"
+            ? "Placez maintenant " + name + " sur le nouveau WebP."
+            : "Point actif : " + name + " — cliquez sur le plan pour le placer.";
+        status.style.whiteSpace = "normal";
+    } else if (calibrationPlacementCompleted) {
+        status.textContent = "✅ Les 4 paires de points sont placées";
+        status.style.whiteSpace = "normal";
+    } else {
+        status.textContent = pointStatus.join("\n");
+        status.style.whiteSpace = "pre-line";
+    }
+
+    document.querySelectorAll("[data-calibration-group][data-calibration-label]")
+        .forEach(function(button) {
+            const selected = selectedCalibrationPoint &&
+                selectedCalibrationPoint.group === button.dataset.calibrationGroup &&
+                selectedCalibrationPoint.label === button.dataset.calibrationLabel;
+            button.setAttribute("aria-pressed", String(Boolean(selected)));
+        });
+
+    document.querySelectorAll(".calibrationPointMoveButton").forEach(function(button) {
+        const group = button.dataset.calibrationMoveGroup;
+        const label = button.dataset.calibrationMoveLabel;
+        const point = calibrationPoints[label];
+        const exists = Boolean(point) && (group === "reference"
+            ? point.referenceX !== null && point.referenceY !== null
+            : point.calibrationX !== null && point.calibrationY !== null &&
+                Boolean(document.getElementById("calibrationPlan")));
+        button.disabled = !exists;
+        button.setAttribute("aria-pressed", String(Boolean(activeCalibrationPointMove &&
+            activeCalibrationPointMove.group === group &&
+            activeCalibrationPointMove.label === label)));
+    });
+}
+
+function renderCalibrationPoints() {
+    const layer = document.getElementById("calibrationPoints");
+    if (!layer) {
+        return;
+    }
+
+    layer.replaceChildren();
+    layer.style.display = calibrationPointsVisible ? "block" : "none";
+
+    ["reference", "webp"].forEach(function(group) {
+        ["A", "B", "C", "D"].forEach(function(label) {
+            const position = getCalibrationPointMapPosition(group, label);
+            if (!position) {
+                return;
+            }
+
+            const marker = document.createElement("button");
+            marker.type = "button";
+            marker.className = "calibrationPointMarker " + group;
+            marker.dataset.calibrationGroup = group;
+            marker.dataset.calibrationLabel = label;
+            const pointName = group === "webp" ? label + "'" : label;
+            const pointLabel = document.createElement("span");
+            pointLabel.className = "calibrationPointLabel";
+            pointLabel.textContent = pointName;
+            marker.appendChild(pointLabel);
+            marker.style.left = position.x + "px";
+            marker.style.top = position.y + "px";
+            const isActiveMove = activeCalibrationPointMove &&
+                activeCalibrationPointMove.group === group &&
+                activeCalibrationPointMove.label === label;
+            marker.style.pointerEvents = isActiveMove ? "auto" : "none";
+            marker.classList.toggle("active", Boolean(isActiveMove));
+            marker.setAttribute("aria-label", "Déplacer le point " + pointName);
+            marker.title = "Glisser pour déplacer le point " + pointName;
+
+            marker.addEventListener("mousedown", function(event) {
+                if (event.button !== 0 || !activeCalibrationPointMove ||
+                    activeCalibrationPointMove.group !== group ||
+                    activeCalibrationPointMove.label !== label) {
+                    return;
+                }
+
+                event.preventDefault();
+                event.stopPropagation();
+                activeCalibrationPointDrag = { group: group, label: label };
+            });
+            marker.addEventListener("click", function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+            });
+            layer.appendChild(marker);
+        });
+    });
+
+    updateCalibrationPointStatus();
+    updateCalibrationScaleResult();
+}
+
+function selectCalibrationPoint(group, label) {
+    if (group !== "reference" && group !== "webp") {
+        return;
+    }
+    if (group === "webp" && !document.getElementById("calibrationPlan")) {
+        return;
+    }
+    if (!calibrationPoints[label]) {
+        return;
+    }
+
+    setCalibrationPlanMoveMode(false);
+    calibrationPointsVisible = true;
+    selectedCalibrationPoint = { group: group, label: label };
+    activeCalibrationPointMove = null;
+    activeCalibrationPointDrag = null;
+    calibrationPlacementSequenceActive = true;
+    calibrationPlacementCompleted = false;
+    document.body.classList.add("calibration-placement-active");
+    const aim = document.getElementById("calibrationAim");
+    aim.className = group;
+    aim.style.display = "none";
+    updateCalibrationPointStatus();
+}
+
+function storeCalibrationPointFromScreen(group, label, clientX, clientY) {
+    const rect = container.getBoundingClientRect();
+    const mapX = (clientX - rect.left - offsetX) / scale;
+    const mapY = (clientY - rect.top - offsetY) / scale;
+    const point = calibrationPoints[label];
+    document.getElementById("calibrationScaleValidationMessage").textContent = "";
+
+    if (group === "reference") {
+        point.referenceX = mapX;
+        point.referenceY = mapY;
+    } else {
+        point.calibrationX = (mapX - calibrationOffsetX) / calibrationScale;
+        point.calibrationY = (mapY - calibrationOffsetY) / calibrationScale;
+    }
+}
+
+function setCalibrationPointFromScreen(group, label, clientX, clientY) {
+    storeCalibrationPointFromScreen(group, label, clientX, clientY);
+    const sequence = [
+        { group: "reference", label: "A" }, { group: "webp", label: "A" },
+        { group: "reference", label: "B" }, { group: "webp", label: "B" },
+        { group: "reference", label: "C" }, { group: "webp", label: "C" },
+        { group: "reference", label: "D" }, { group: "webp", label: "D" }
+    ];
+    const currentIndex = sequence.findIndex(function(item) {
+        return item.group === group && item.label === label;
+    });
+    const next = calibrationPlacementSequenceActive && currentIndex >= 0
+        ? sequence[currentIndex + 1]
+        : null;
+
+    activeCalibrationPointMove = null;
+    activeCalibrationPointDrag = null;
+    if (next) {
+        selectedCalibrationPoint = next;
+        document.body.classList.add("calibration-placement-active");
+        const aim = document.getElementById("calibrationAim");
+        aim.className = next.group;
+        aim.style.left = clientX + "px";
+        aim.style.top = clientY + "px";
+        aim.style.display = "block";
+    } else {
+        selectedCalibrationPoint = null;
+        calibrationPlacementSequenceActive = false;
+        calibrationPlacementCompleted = group === "webp" && label === "D";
+        document.body.classList.remove("calibration-placement-active");
+        document.getElementById("calibrationAim").style.display = "none";
+    }
+    renderCalibrationPoints();
+}
+
+function armCalibrationPointMove(group, label) {
+    const point = calibrationPoints[label];
+    if (!point || (group !== "reference" && group !== "webp")) return;
+    const placed = group === "reference"
+        ? point.referenceX !== null && point.referenceY !== null
+        : point.calibrationX !== null && point.calibrationY !== null;
+    if (!placed || (group === "webp" && !document.getElementById("calibrationPlan"))) return;
+
+    setCalibrationPlanMoveMode(false);
+    calibrationPointsVisible = true;
+    selectedCalibrationPoint = null;
+    calibrationPlacementSequenceActive = false;
+    calibrationPlacementCompleted = false;
+    activeCalibrationPointMove = { group: group, label: label };
+    document.body.classList.remove("calibration-placement-active");
+    document.getElementById("calibrationAim").style.display = "none";
+    renderCalibrationPoints();
+}
+
+function clearCalibrationPoints() {
+    ["A", "B", "C", "D"].forEach(function(label) {
+        calibrationPoints[label].referenceX = null;
+        calibrationPoints[label].referenceY = null;
+        calibrationPoints[label].calibrationX = null;
+        calibrationPoints[label].calibrationY = null;
+    });
+    selectedCalibrationPoint = null;
+    activeCalibrationPointDrag = null;
+    activeCalibrationPointMove = null;
+    calibrationPlacementSequenceActive = false;
+    calibrationPlacementCompleted = false;
+    document.getElementById("calibrationScaleValidationMessage").textContent = "";
+    document.body.classList.remove("calibration-placement-active");
+    document.getElementById("calibrationAim").style.display = "none";
+    renderCalibrationPoints();
+}
+
+function calibrationEventIsOnMap(event) {
+    return event.target instanceof Element &&
+        Boolean(event.target.closest("#map-container"));
+}
+
+let calibrationPointerDownX = null;
+let calibrationPointerDownY = null;
+document.addEventListener("pointerdown", function(event) {
+    calibrationPointerDownX = event.clientX;
+    calibrationPointerDownY = event.clientY;
+}, true);
+
+document.addEventListener("click", function(event) {
+    if (!event.target.closest("#map-container") || !editMode || !selectedCalibrationPoint ||
+        event.target.closest("#calibrationPoints")) {
+        return;
+    }
+
+    if (calibrationPointerDownX !== null &&
+        Math.hypot(event.clientX - calibrationPointerDownX,
+                   event.clientY - calibrationPointerDownY) > 6) {
+        return; // c'était un glissement (panoramique), pas un clic de placement
+    }
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    setCalibrationPointFromScreen(
+        selectedCalibrationPoint.group,
+        selectedCalibrationPoint.label,
+        event.clientX,
+        event.clientY
+    );
+}, true);
+
+function updateCalibrationPointDuringMove(event) {
+    if (!activeCalibrationPointDrag) return;
+    storeCalibrationPointFromScreen(
+        activeCalibrationPointDrag.group,
+        activeCalibrationPointDrag.label,
+        event.clientX,
+        event.clientY
+    );
+    renderCalibrationPoints();
+}
+
+function finishCalibrationPointMove() {
+    if (!activeCalibrationPointDrag) return;
+    activeCalibrationPointDrag = null;
+    activeCalibrationPointMove = null;
+    renderCalibrationPoints();
+}
+
+function calibrationEventIsInsidePanel(event) {
+    return event.target instanceof Element && Boolean(event.target.closest("#mapCalibrationPanel"));
+}
+
+function isActiveCalibrationDragTarget(event) {
+    if (!(event.target instanceof Element)) return false;
+    if (calibrationPlanMoveMode && event.target.closest("#calibrationPlan")) return true;
+    return Boolean(activeCalibrationPointMove && event.target.closest(
+        '.calibrationPointMarker[data-calibration-group="' + activeCalibrationPointMove.group + '"][data-calibration-label="' + activeCalibrationPointMove.label + '"]'
+    ));
+}
+
+function updateCalibrationAim(event) {
+    const aim = document.getElementById("calibrationAim");
+    const isOverMap = event.target instanceof Element && Boolean(event.target.closest("#map-container"));
+    if (!selectedCalibrationPoint || !isOverMap) {
+        aim.style.display = "none";
+        return;
+    }
+    aim.className = selectedCalibrationPoint.group;
+    aim.style.left = event.clientX + "px";
+    aim.style.top = event.clientY + "px";
+    aim.style.display = "block";
+}
+
+// The calibration panel is non-modal visually, so capture events to freeze the
+// application behind it while keeping its controls and explicit calibration
+// interactions available.
+["mousedown", "mouseup", "mousemove", "click", "auxclick", "dblclick", "wheel", "pointerdown",
+ "pointerup", "pointermove", "pointercancel", "touchstart", "touchmove", "touchend",
+ "touchcancel", "contextmenu", "keydown", "keyup", "input", "change", "submit",
+ "dragstart", "dragover", "drop", "selectstart", "focusin"]
+    .forEach(function(type) {
+        document.addEventListener(type, function(event) {
+            if (!mapCalibrationIsOpen) return;
+
+            const insidePanel = calibrationEventIsInsidePanel(event) ||
+                calibrationEventIsOnAllowedUi(event);
+            const onMap = calibrationEventIsOnMap(event);
+            const mapPanInProgress = dragging === true;
+            const isMouseMove = event.type === "mousemove" || event.type === "pointermove";
+            const isMouseUp = event.type === "mouseup" || event.type === "pointerup" ||
+                event.type === "pointercancel" || event.type === "touchend" || event.type === "touchcancel";
+
+            if (isMouseMove) {
+                if (calibrationPlanDragging) {
+                    calibrationOffsetX = calibrationPlanDragOffsetX +
+                        (event.clientX - calibrationPlanDragStartX) / scale;
+                    calibrationOffsetY = calibrationPlanDragOffsetY +
+                        (event.clientY - calibrationPlanDragStartY) / scale;
+                    updateCalibrationPlanTransform();
+                }
+                updateCalibrationPointDuringMove(event);
+                updateCalibrationAim(event);
+                if (calibrationPlanDragging || activeCalibrationPointDrag ||
+                    (!insidePanel && !onMap && !mapPanInProgress)) {
+                    event.stopImmediatePropagation();
+                }
+                return;
+            }
+
+            if (isMouseUp) {
+                const wasPlanDragging = calibrationPlanDragging;
+                const wasPointDragging = Boolean(activeCalibrationPointDrag);
+                calibrationPlanDragging = false;
+                if (wasPlanDragging) {
+                    const image = document.getElementById("calibrationPlan");
+                    if (image && calibrationPlanMoveMode) image.style.cursor = "grab";
+                }
+                finishCalibrationPointMove();
+                if (wasPlanDragging || wasPointDragging ||
+                    (!insidePanel && !onMap && !mapPanInProgress)) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                }
+                return;
+            }
+
+            if (insidePanel) return;
+
+            if ((event.type === "mousedown" || event.type === "pointerdown") &&
+                isActiveCalibrationDragTarget(event)) {
+                return;
+            }
+
+            // La carte reste pleinement interactive (zoom, panoramique, fond).
+            // Les marqueurs sont déjà neutralisés en CSS (pointer-events: none).
+            if (onMap) return;
+
+            if (event.type === "touchmove" || event.type === "wheel" ||
+                event.type === "click" || event.type === "dblclick" ||
+                event.type === "contextmenu" || event.type === "keydown" ||
+                event.type === "keyup" || event.type === "submit" ||
+                event.type === "dragstart" || event.type === "dragover" ||
+                event.type === "drop" || event.type === "selectstart" ||
+                event.type === "auxclick") {
+                event.preventDefault();
+            }
+            event.stopImmediatePropagation();
+        }, { capture: true, passive: false });
+    });
+
+function updateCalibrationPlanTransform() {
+    const image = document.getElementById("calibrationPlan");
+    if (!image) {
+        return;
+    }
+
+    image.style.transformOrigin = "0 0";
+    image.style.transform =
+        `translate(${calibrationOffsetX}px, ${calibrationOffsetY}px) scale(${calibrationScale})`;
+    renderCalibrationPoints();
+}
+
+function setCalibrationPlanMoveMode(enabled) {
+    calibrationPlanMoveMode = Boolean(
+        enabled && document.getElementById("calibrationPlan")
+    );
+
+    const image = document.getElementById("calibrationPlan");
+    const button = document.getElementById("moveCalibrationPlanButton");
+    if (image) {
+        image.style.pointerEvents = calibrationPlanMoveMode ? "auto" : "none";
+        image.classList.toggle("movable", calibrationPlanMoveMode);
+        image.style.cursor = calibrationPlanMoveMode ? "grab" : "default";
+    }
+    if (button) {
+        button.textContent = calibrationPlanMoveMode
+            ? "✋ Arrêter le déplacement"
+            : "✋ Déplacer le plan";
+        button.setAttribute("aria-pressed", String(calibrationPlanMoveMode));
+    }
+
+    if (!calibrationPlanMoveMode) {
+        calibrationPlanDragging = false;
+    }
+}
+
+function updateCalibrationScale() {
+    const scaleControl = document.getElementById("calibrationScale");
+    calibrationScale = Number(scaleControl.value) / 100;
+    document.getElementById("calibrationScaleValidationMessage").textContent = "";
+    document.getElementById("calibrationScaleLabel").textContent =
+        "Taille du plan : " + scaleControl.value + " %";
+    updateCalibrationPlanTransform();
+    updateCalibrationScaleActionButtons();
+}
+
+function updateCalibrationScaleResult() {
+    const pairs = [
+        ["A", "B"], ["A", "C"], ["A", "D"],
+        ["B", "C"], ["B", "D"], ["C", "D"]
+    ];
+    const list = document.getElementById("calibrationScaleMeasurements");
+    const validMeasurements = [];
+    list.replaceChildren();
+
+    pairs.forEach(function(pair) {
+        const first = calibrationPoints[pair[0]];
+        const second = calibrationPoints[pair[1]];
+        const item = document.createElement("li");
+        const pointsReady = [first.referenceX, first.referenceY,
+            second.referenceX, second.referenceY,
+            first.calibrationX, first.calibrationY,
+            second.calibrationX, second.calibrationY]
+            .every(Number.isFinite);
+
+        if (!pointsReady) {
+            item.textContent = pair.join("-") + " : — (points à placer)";
+        } else {
+            const referenceDistance = Math.hypot(
+                first.referenceX - second.referenceX,
+                first.referenceY - second.referenceY
+            );
+            const webpDistance = Math.hypot(
+                first.calibrationX - second.calibrationX,
+                first.calibrationY - second.calibrationY
+            );
+
+            if (!Number.isFinite(referenceDistance) ||
+                !Number.isFinite(webpDistance) ||
+                referenceDistance <= 0 || webpDistance <= 0) {
+                item.textContent = pair.join("-") + " : — (distance nulle)";
+            } else {
+                const measurement = referenceDistance / webpDistance;
+                if (Number.isFinite(measurement) && measurement > 0) {
+                    validMeasurements.push(measurement);
+                    item.textContent = pair.join("-") + " : " +
+                        measurement.toFixed(4).replace(".", ",");
+                } else {
+                    item.textContent = pair.join("-") + " : — (mesure invalide)";
+                }
+            }
+        }
+        list.appendChild(item);
+    });
+
+    const resultStatus = document.getElementById("calibrationScaleResultStatus");
+    const canCalculate = validMeasurements.length === pairs.length;
+    calculatedCalibrationScale = null;
+
+    if (!canCalculate) {
+        resultStatus.textContent = "Placez les quatre paires de points distinctes pour calculer l'échelle.";
+        document.getElementById("calibrationScaleResultValue").textContent =
+            "Échelle calculée : —";
+        document.getElementById("calibrationScaleResultPercent").textContent =
+            "Échelle en pourcentage : —";
+        document.getElementById("calibrationScaleResultSpread").textContent =
+            "Écart entre les mesures : —";
+        updateCalibrationScaleActionButtons();
+        return;
+    }
+
+    const orderedMeasurements = validMeasurements.slice().sort(function(a, b) {
+        return a - b;
+    });
+    const middleMeasurements = orderedMeasurements.slice(1, -1);
+    calculatedCalibrationScale = middleMeasurements.reduce(function(total, value) {
+        return total + value;
+    }, 0) / middleMeasurements.length;
+    const median = (orderedMeasurements[2] + orderedMeasurements[3]) / 2;
+    const spreadPercent = median > 0
+        ? (orderedMeasurements[5] - orderedMeasurements[0]) / median * 100
+        : 0;
+
+    resultStatus.textContent =
+        "Moyenne tronquée des 4 mesures centrales. Écart = étendue / médiane.";
+    document.getElementById("calibrationScaleResultValue").textContent =
+        "Échelle calculée : " + calculatedCalibrationScale.toFixed(4).replace(".", ",");
+    document.getElementById("calibrationScaleResultPercent").textContent =
+        "Échelle en pourcentage : " +
+        (calculatedCalibrationScale * 100).toFixed(2).replace(".", ",") + " %";
+    document.getElementById("calibrationScaleResultSpread").textContent =
+        "Écart entre les mesures : " + spreadPercent.toFixed(2).replace(".", ",") + " %";
+    updateCalibrationScaleActionButtons();
+}
+
+function updateCalibrationScaleActionButtons() {
+    document.getElementById("validateCalibrationScaleButton").disabled =
+        !Number.isFinite(calculatedCalibrationScale) ||
+        calculatedCalibrationScale <= 0 ||
+        !document.getElementById("calibrationPlan");
+}
+
+function validateCalibrationScale() {
+    if (!Number.isFinite(calculatedCalibrationScale) ||
+        calculatedCalibrationScale <= 0 ||
+        !document.getElementById("calibrationPlan")) {
+        return;
+    }
+
+    // Recalage final : échelle uniforme calculée + position X/Y qui superpose A′B′C′D′ sur ABCD.
+    const recalculatedOffset = computeCalibrationOffsetForScale(calculatedCalibrationScale);
+    if (!recalculatedOffset) {
+        return;
+    }
+
+    calibrationScale = calculatedCalibrationScale;
+    calibrationOffsetX = recalculatedOffset.x;
+    calibrationOffsetY = recalculatedOffset.y;
+
+    const scaleControl = document.getElementById("calibrationScale");
+    const percentage = calibrationScale * 100;
+    if (percentage < Number(scaleControl.min)) {
+        scaleControl.min = String(Math.floor(percentage));
+    }
+    if (percentage > Number(scaleControl.max)) {
+        scaleControl.max = String(Math.ceil(percentage));
+    }
+    scaleControl.step = "any";
+    scaleControl.value = String(percentage);
+    document.getElementById("calibrationScaleLabel").textContent =
+        "Taille du plan : " + percentage.toFixed(2).replace(".", ",") + " %";
+    updateCalibrationPlanTransform();
+
+    document.getElementById("calibrationScaleValidationMessage").textContent =
+        "✅ Échelle validée : " + calibrationScale.toFixed(4) + "×";
+
+    // Calibration terminée : les 8 points disparaissent (leurs coordonnées restent en mémoire).
+    selectedCalibrationPoint = null;
+    activeCalibrationPointMove = null;
+    activeCalibrationPointDrag = null;
+    calibrationPlacementSequenceActive = false;
+    document.body.classList.remove("calibration-placement-active");
+    document.getElementById("calibrationAim").style.display = "none";
+    calibrationPointsVisible = false;
+    renderCalibrationPoints();
+    updateCalibrationScaleActionButtons();
+}
+
+function clearCalibrationScalePreviewState() {
+    const scaleControl = document.getElementById("calibrationScale");
+    scaleControl.min = "25";
+    scaleControl.max = "200";
+    scaleControl.step = "1";
+    document.getElementById("calibrationScaleValidationMessage").textContent = "";
+    updateCalibrationScaleActionButtons();
+}
+
+function loadCalibrationPlan() {
+    const input = document.getElementById("calibrationPlanFile");
+    const file = input && input.files ? input.files[0] : null;
+    if (!file) {
+        return;
+    }
+
+    if (
+        !file.name.toLowerCase().endsWith(".webp") ||
+        (file.type && file.type !== "image/webp")
+    ) {
+        calibrationPlanLoadVersion++;
+        if (pendingCalibrationPlanObjectUrl) {
+            URL.revokeObjectURL(pendingCalibrationPlanObjectUrl);
+            pendingCalibrationPlanObjectUrl = null;
+        }
+        input.value = "";
+        return;
+    }
+
+    if (pendingCalibrationPlanObjectUrl) {
+        URL.revokeObjectURL(pendingCalibrationPlanObjectUrl);
+    }
+
+    const loadVersion = ++calibrationPlanLoadVersion;
+    const objectUrl = URL.createObjectURL(file);
+    pendingCalibrationPlanObjectUrl = objectUrl;
+    const image = document.createElement("img");
+    image.id = "calibrationPlan";
+    image.alt = "";
+    image.setAttribute("aria-hidden", "true");
+    image.draggable = false;
+    image.style.opacity =
+        Number(document.getElementById("calibrationOpacity").value) / 100;
+
+    image.onload = function() {
+        if (loadVersion !== calibrationPlanLoadVersion) {
+            URL.revokeObjectURL(objectUrl);
+            return;
+        }
+
+        image.style.opacity =
+            Number(document.getElementById("calibrationOpacity").value) / 100;
+        const currentImage = document.getElementById("calibrationPlan");
+        if (currentImage) {
+            currentImage.remove();
+        }
+
+        map.insertBefore(image, markers);
+        calibrationOffsetX = 0;
+        calibrationOffsetY = 0;
+        calibrationScale = 1;
+        clearCalibrationScalePreviewState();
+        document.getElementById("calibrationScale").value = "100";
+        document.getElementById("calibrationScaleLabel").textContent =
+            "Taille du plan : 100 %";
+        updateCalibrationPlanTransform();
+        setCalibrationPlanMoveMode(false);
+        image.addEventListener("mousedown", function(event) {
+            if (!calibrationPlanMoveMode || event.button !== 0) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            calibrationPlanDragging = true;
+            calibrationPlanDragStartX = event.clientX;
+            calibrationPlanDragStartY = event.clientY;
+            calibrationPlanDragOffsetX = calibrationOffsetX;
+            calibrationPlanDragOffsetY = calibrationOffsetY;
+            image.style.cursor = "grabbing";
+        });
+        if (calibrationPlanObjectUrl) {
+            URL.revokeObjectURL(calibrationPlanObjectUrl);
+        }
+        calibrationPlanObjectUrl = objectUrl;
+        pendingCalibrationPlanObjectUrl = null;
+        document.getElementById("calibrationScale").disabled = false;
+        document.querySelectorAll('[data-calibration-group="webp"]')
+            .forEach(function(button) {
+                button.disabled = false;
+            });
+        document.getElementById("toggleCalibrationPlanButton").disabled = false;
+        document.getElementById("removeCalibrationPlanButton").disabled = false;
+    };
+
+    image.onerror = function() {
+        URL.revokeObjectURL(objectUrl);
+        if (loadVersion === calibrationPlanLoadVersion) {
+            pendingCalibrationPlanObjectUrl = null;
+            input.value = "";
+        }
+    };
+
+    image.src = objectUrl;
+}
+
+function removeCalibrationPlan() {
+    calibrationPlanLoadVersion++;
+    setCalibrationPlanMoveMode(false);
+    const image = document.getElementById("calibrationPlan");
+    if (image) {
+        image.remove();
+    }
+
+    if (pendingCalibrationPlanObjectUrl) {
+        URL.revokeObjectURL(pendingCalibrationPlanObjectUrl);
+        pendingCalibrationPlanObjectUrl = null;
+    }
+    if (calibrationPlanObjectUrl) {
+        URL.revokeObjectURL(calibrationPlanObjectUrl);
+        calibrationPlanObjectUrl = null;
+    }
+
+    document.getElementById("calibrationPlanFile").value = "";
+    document.getElementById("calibrationOpacity").value = "50";
+    document.getElementById("calibrationOpacityLabel").textContent =
+        "Transparence : 50 %";
+    document.getElementById("calibrationScale").value = "100";
+    document.getElementById("calibrationScale").disabled = true;
+    document.getElementById("calibrationScaleLabel").textContent =
+        "Taille du plan : 100 %";
+    calibrationOffsetX = 0;
+    calibrationOffsetY = 0;
+    calibrationScale = 1;
+    clearCalibrationScalePreviewState();
+    document.querySelectorAll('[data-calibration-group="webp"]')
+        .forEach(function(button) {
+            button.disabled = true;
+        });
+    document.getElementById("toggleCalibrationPlanButton").disabled = true;
+    document.getElementById("removeCalibrationPlanButton").disabled = true;
+    updateCalibrationPointStatus();
+    updateCalibrationScaleResult();
+}
+
+function toggleCalibrationPlan() {
+    const image = document.getElementById("calibrationPlan");
+    if (!image) {
+        return;
+    }
+
+    image.style.display =
+        image.style.display === "none" ? "block" : "none";
+    if (image.style.display === "none") {
+        setCalibrationPlanMoveMode(false);
+    }
+}
+
+function updateCalibrationOpacity() {
+    const opacityControl = document.getElementById("calibrationOpacity");
+    const value = Number(opacityControl.value);
+    document.getElementById("calibrationOpacityLabel").textContent =
+        "Transparence : " + value + " %";
+
+    const image = document.getElementById("calibrationPlan");
+    if (image) {
+        image.style.opacity = value / 100;
+    }
+}
+
+window.addEventListener("mousemove", function(event) {
+    if (!calibrationPlanDragging) {
+        return;
+    }
+
+    // map is scaled by the main camera; convert screen movement back to map units.
+    calibrationOffsetX = calibrationPlanDragOffsetX +
+        (event.clientX - calibrationPlanDragStartX) / scale;
+    calibrationOffsetY = calibrationPlanDragOffsetY +
+        (event.clientY - calibrationPlanDragStartY) / scale;
+    updateCalibrationPlanTransform();
+});
+
+window.addEventListener("mouseup", function() {
+    if (!calibrationPlanDragging) {
+        return;
+    }
+
+    calibrationPlanDragging = false;
+    const image = document.getElementById("calibrationPlan");
+    if (image && calibrationPlanMoveMode) {
+        image.style.cursor = "grab";
+    }
+});
+
+
 async function updateLoginStatus() {
 
     const { data } =
@@ -762,11 +2366,41 @@ async function updateLoginStatus() {
     const loggedIn =
         !!data.user;
 
+    canManagePlantNameProposals = false;
+    if (loggedIn) {
+        const adminCheck = await supabaseClient.rpc("est_admin_nomenclature");
+        canManagePlantNameProposals = !adminCheck.error && adminCheck.data === true;
+    }
+    document.getElementById("proposePlantNameModificationButton").style.display = loggedIn ? "none" : "flex";
+    if (loggedIn) cancelPlantNameProposalMode();
+
+const roleChanged = editMode !== loggedIn;
 editMode = loggedIn;
+if (roleChanged) {
+    await loadPendingDeletionProposals();
+}
+if (loggedIn && proposingPlantDeletion) {
+    cancelPlantDeletionSelection();
+}
+
+if (!loggedIn && pendingPlantDuplicate) {
+    discardPendingPlantDuplicate();
+}
+
+const duplicatePlantButton =
+    document.getElementById("duplicatePlantButton");
+if (duplicatePlantButton) {
+    duplicatePlantButton.style.display =
+        loggedIn && !pendingPlantDuplicate
+            ? "inline-block"
+            : "none";
+}
 
 if (loggedIn) {
     addingTerrainPlant = false;
+    setPlantAddCursorMode(false);
     container.style.cursor = "grab";
+    hidePCTerrainCrosshair();
 
     document.getElementById(
         "terrainForm"
@@ -774,7 +2408,7 @@ if (loggedIn) {
 
     const point =
         document.querySelector(
-            ".terrain-marker-new"
+            ".terrain-marker-draft"
         );
 
     if (point) {
@@ -787,8 +2421,16 @@ if (loggedIn) {
 
     document.querySelectorAll(".marker").forEach(function(marker) {
 
-    marker.style.background =
-        editMode ? "yellow" : "white";
+    applyPlantDecisionMarkerStyle(marker);
+
+    marker.style.border = editMode
+        ? "2px solid black"
+        : "1px solid black";
+
+    if (marker.textContent === "★") {
+        marker.style.fontSize =
+            editMode ? "16px" : "14px";
+    }
 
     marker.style.cursor =
         editMode ? "pointer" : "pointer";
@@ -809,29 +2451,39 @@ if (loggedIn) {
     ).style.display =
         loggedIn ? "inline-block" : "none";
 
+    const mapCalibrationButton =
+        document.getElementById("mapCalibrationButton");
+    if (mapCalibrationButton) {
+        mapCalibrationButton.style.display =
+            editMode ? "inline-block" : "none";
+    }
+
+    if (!editMode) {
+        closeMapCalibration();
+    }
+
 
 document.getElementById(
     "adminStatus"
 ).textContent = "";
-    if (loggedIn) {
-
-        loadTerrainProposals();
-
-    } else {
+    if (!loggedIn) {
 
         document.querySelectorAll(
-            ".terrain-marker-new"
-        ).forEach(
-            function(marker) {
-                marker.remove();
-            }
-        );
+            ".terrain-marker-new[data-proposal-id]"
+        ).forEach(function(marker) {
+            marker.remove();
+        });
 
-        document.getElementById(
-            "terrainAdminForm"
-        ).style.display = "none";
+        const terrainAdminForm =
+            document.getElementById("terrainAdminForm");
+
+        if (terrainAdminForm) {
+            terrainAdminForm.style.display = "none";
+        }
 
     }
+
+    loadTerrainProposals();
 
 }
 
@@ -843,21 +2495,783 @@ document.getElementById(
 
 let editMode = false;
 let addingTerrainPlant = false;
-function confirmAddTerrainPlant() {
+let pendingPlantDuplicate = null;
+let proposingPlantDeletion = false;
+let mobilePlantDeletionTargeting = false;
+let mobilePlantNameProposalTargeting = false;
+let pendingDeletionByPlant = new Map();
+let refusedDeletionByPlant = new Set();
+let plantNameProposalsByPlant = new Map();
+let desktopToolbarAction = null;
+let activePcPlacePointHandler = null;
+let proposingPlantNameModification = false;
+let plantSelectedForNameProposal = null;
+let canManagePlantNameProposals = false;
 
-    document.getElementById(
-        "addTerrainWarning"
-    ).style.display = "flex";
-
+function getPlantDecisionState(plantId) {
+    const key = String(plantId);
+    const nameProposals = plantNameProposalsByPlant.get(key) || [];
+    const hasPending = pendingDeletionByPlant.has(key) || nameProposals.some(function(proposal) {
+        return proposal.statut === "en_attente" || proposal.statut === "conflit";
+    });
+    if (hasPending) return "pending";
+    const hasRefused = refusedDeletionByPlant.has(key) || nameProposals.some(function(proposal) {
+        return proposal.statut === "refusee";
+    });
+    return hasRefused ? "refused" : "normal";
 }
+
+function applyPlantDecisionMarkerStyle(marker) {
+    const state = editMode
+        ? getPlantDecisionState(marker.dataset.id)
+        : "normal";
+    marker.dataset.proposalReviewState = state;
+    marker.style.background = state === "pending"
+        ? "#e53935"
+        : "rgba(76, 175, 80, 0.55)";
+}
+
+function cancelPlantNameProposalMode() {
+    const wasMobileTargeting = mobilePlantNameProposalTargeting;
+    proposingPlantNameModification = false;
+    mobilePlantNameProposalTargeting = false;
+    if (desktopToolbarAction === "edit") {
+        desktopToolbarAction = null;
+        container.classList.remove("desktop-edit-cursor");
+    }
+    plantSelectedForNameProposal = null;
+    const action = document.getElementById("proposePlantNameModificationButton");
+    if (action) action.setAttribute("aria-pressed", "false");
+    document.getElementById("plantNameProposalDialog").style.display = "none";
+    document.getElementById("plantNameProposalMessage").textContent = "";
+    const info = document.getElementById("plantInfo");
+    if (info) {
+        const wasEditingInBubble = info.classList.contains("visitor-name-proposal");
+        info.classList.remove("name-proposal-editing");
+        info.classList.remove("visitor-name-proposal");
+        if (wasEditingInBubble) info.style.display = "none";
+    }
+    const inline = document.getElementById("plantNameProposalInline");
+    if (inline) inline.style.display = "none";
+    const inlineMessage = document.getElementById("plantNameProposalInlineMessage");
+    if (inlineMessage) inlineMessage.textContent = "";
+    const editForm = document.getElementById("adminPlantEditForm");
+    if (editForm) editForm.style.display = "none";
+    const deleteButton = document.getElementById("deletePlantButton");
+    if (deleteButton) deleteButton.style.display = "block";
+    const visitorCancel = document.getElementById("cancelVisitorNameProposalButton");
+    if (visitorCancel) visitorCancel.style.display = "none";
+    const visitorError = document.getElementById("visitorPlantNameProposalMessage");
+    if (visitorError) {
+        visitorError.textContent = "";
+        visitorError.style.display = "none";
+    }
+    if (wasMobileTargeting) {
+        document.getElementById("terrainAddCrosshair").style.display = "none";
+        document.getElementById("mobileDeletionSelectionPanel").style.display = "none";
+        document.getElementById("mobileDeletionSelectionTitle").textContent = "🗑️ Proposer la suppression";
+        document.getElementById("mobileDeletionSelectionStatus").textContent =
+            "Placez le viseur sur la plante que vous souhaitez proposer à la suppression.";
+        document.getElementById("selectMobileDeletionPlantButton").textContent = "✓ Sélectionner cette plante";
+        document.getElementById("cancelMobileDeletionSelectionButton").textContent = "✕ Annuler";
+    }
+}
+
+function beginPlantNameProposal(plant) {
+    plantSelectedForNameProposal = plant;
+    document.getElementById("plantNameProposalCurrent").textContent =
+        "Plante " + plant.id + " — Français : " + (plant["Nom français"] || "") +
+        " ; Latin : " + (plant["Nom latin"] || "");
+    document.getElementById("plantNameProposalFrench").value = plant["Nom français"] || "";
+    document.getElementById("plantNameProposalLatin").value = plant["Nom latin"] || "";
+    document.getElementById("plantNameProposalMessage").textContent = "";
+    document.getElementById("plantInfo").style.display = "none";
+    document.getElementById("plantNameProposalDialog").style.display = "block";
+    document.getElementById("plantNameProposalFrench").focus();
+}
+
+document.getElementById("proposePlantNameModificationButton").addEventListener("click", function() {
+    if (editMode) return;
+    if (!prepareMobileToolbarAction("proposal")) return;
+    if (isDesktopToolbarContext()) {
+        if (!prepareDesktopToolbarAction("edit")) return;
+        setProposalMenuOpen(true);
+    } else {
+        setProposalMenuOpen(false);
+        if (proposingPlantNameModification) {
+            cancelPlantNameProposalMode();
+            return;
+        }
+        cancelPlantDeletionSelection();
+    }
+    proposingPlantNameModification = true;
+    this.setAttribute("aria-pressed", "true");
+    const touchSelection = (window.matchMedia &&
+        window.matchMedia("(pointer: coarse)").matches) || window.innerWidth <= 600;
+    if (!isDesktopToolbarContext() && touchSelection) {
+        mobilePlantNameProposalTargeting = true;
+        document.getElementById("terrainAddCrosshair").style.display = "block";
+        document.getElementById("mobileDeletionSelectionTitle").textContent = "✏️ Proposer une modification";
+        document.getElementById("mobileDeletionSelectionStatus").textContent = "";
+        document.getElementById("selectMobileDeletionPlantButton").textContent = "✓ Sélectionner cette plante";
+        document.getElementById("cancelMobileDeletionSelectionButton").textContent = "✕ Annuler";
+        applyMobileDeletionPanelAppearance();
+        document.getElementById("mobileDeletionSelectionPanel").style.display = "block";
+    }
+});
+
+document.getElementById("cancelPlantNameProposal").addEventListener("click", cancelPlantNameProposalMode);
+document.getElementById("submitPlantNameProposal").addEventListener("click", async function() {
+    const plant = plantSelectedForNameProposal;
+    const message = document.getElementById("plantNameProposalMessage");
+    if (!plant) return;
+    const french = document.getElementById("plantNameProposalFrench").value.trim();
+    const latin = document.getElementById("plantNameProposalLatin").value.trim();
+    if (!french || !latin) {
+        message.textContent = "Les deux champs doivent contenir une valeur.";
+        return;
+    }
+    this.disabled = true;
+    try {
+        await submitPlantNameChangeProposal(plant, french, latin);
+        cancelPlantNameProposalMode();
+        showProposalSentConfirmation();
+    } catch (error) {
+        message.textContent = error.message || "La proposition n’a pas pu être envoyée.";
+    } finally {
+        this.disabled = false;
+    }
+});
+
+async function submitPlantNameChangeProposal(plant, french, latin) {
+    if (!plant) throw new Error("Aucune plante sélectionnée.");
+    if (!french.trim() || !latin.trim()) throw new Error("Les deux champs doivent contenir une valeur.");
+    if (french.trim() === String(plant["Nom français"] || "").trim() &&
+        latin.trim() === String(plant["Nom latin"] || "").trim()) {
+        throw new Error("Modifiez au moins un des deux noms avant l’envoi.");
+    }
+    const { error } = await supabaseClient.rpc("soumettre_proposition_modification", {
+        p_numero_id: String(plant.id),
+        p_nom_francais_propose: french.trim(),
+        p_nom_latin_propose: latin.trim()
+    });
+    if (error) throw error;
+}
+
+let proposalSentMessageTimeout = null;
+
+function showProposalSentConfirmation() {
+    const message = document.getElementById("proposalSentMessage");
+    if (!message) return;
+
+    if (proposalSentMessageTimeout !== null) {
+        clearTimeout(proposalSentMessageTimeout);
+    }
+
+    message.style.display = "block";
+    proposalSentMessageTimeout = setTimeout(function() {
+        message.style.display = "none";
+        proposalSentMessageTimeout = null;
+    }, 2500);
+}
+
+function beginInlinePlantNameProposal(plant, marker) {
+    plantSelectedForNameProposal = plant;
+    showPlantInfo(plant, marker);
+    const info = document.getElementById("plantInfo");
+    document.getElementById("speciesNavigation").style.display = "none";
+    document.getElementById("adminPlantButtons").style.display = "none";
+    document.getElementById("editPlantLatinInput").value = plant["Nom latin"] || "";
+    document.getElementById("editPlantFrenchInput").value = plant["Nom français"] || "";
+    document.getElementById("adminPlantEditForm").style.display = "block";
+    document.getElementById("deletePlantButton").style.display = "none";
+    document.getElementById("cancelVisitorNameProposalButton").style.display = "inline-block";
+    document.getElementById("visitorPlantNameProposalMessage").textContent = "";
+    document.getElementById("visitorPlantNameProposalMessage").style.display = "none";
+    info.classList.add("visitor-name-proposal");
+
+    const markerRect = marker.getBoundingClientRect();
+    const left = Math.max(12, Math.min(
+        markerRect.left + markerRect.width / 2 - info.offsetWidth / 2,
+        window.innerWidth - info.offsetWidth - 12
+    ));
+    let top = markerRect.bottom + 10;
+    if (top + info.offsetHeight > window.innerHeight - 12) {
+        top = markerRect.top - info.offsetHeight - 10;
+    }
+    info.style.left = Math.max(12, left) + "px";
+    info.style.top = Math.max(12, top) + "px";
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const visitorCancel = document.getElementById("cancelVisitorNameProposalButton");
+    if (visitorCancel) visitorCancel.addEventListener("click", cancelPlantNameProposalMode);
+});
+
+function renderPlantNameProposalsForPlant(plant) {
+    const container = document.getElementById("plantNameProposalAdminActions");
+    container.replaceChildren();
+    if (!editMode || !canManagePlantNameProposals) {
+        container.style.display = "none";
+        return false;
+    }
+
+    const proposals = plantNameProposalsByPlant.get(String(plant.id)) || [];
+    if (!proposals.length) {
+        container.style.display = "none";
+        return false;
+    }
+
+    container.style.display = "block";
+    const heading = document.createElement("strong");
+    heading.textContent = "Propositions de correction :";
+    container.appendChild(heading);
+
+    proposals.forEach(function(proposal) {
+        const changedFrench = proposal.nom_francais_propose != null;
+        const changedLatin = proposal.nom_latin_propose != null;
+        const conflict = proposal.statut === "conflit" ||
+            (changedFrench && plant["Nom français"] !== proposal.nom_francais_origine) ||
+            (changedLatin && plant["Nom latin"] !== proposal.nom_latin_origine);
+        const card = document.createElement("article");
+        card.className = "name-proposal-card";
+
+        const details = document.createElement("p");
+        details.className = "name-proposal-details";
+        if (changedLatin) {
+            const proposedLatin = document.getElementById("plantLatin").cloneNode(false);
+            proposedLatin.removeAttribute("id");
+            proposedLatin.textContent = proposal.nom_latin_propose;
+            details.appendChild(proposedLatin);
+        }
+        if (changedFrench) {
+            const proposedFrench = document.getElementById("plantFrench").cloneNode(false);
+            proposedFrench.removeAttribute("id");
+            proposedFrench.textContent = proposal.nom_francais_propose;
+            details.appendChild(proposedFrench);
+        }
+        card.appendChild(details);
+
+        if (conflict && proposal.statut !== "refusee") {
+            const warning = document.createElement("p");
+            warning.className = "name-proposal-details";
+            warning.textContent = "Les noms officiels ont changé depuis cette proposition. L’acceptation est bloquée.";
+            card.appendChild(warning);
+        }
+
+        if (proposal.statut !== "refusee") {
+            const actions = document.createElement("div");
+            actions.className = "name-proposal-actions";
+            const accept = document.createElement("button");
+            accept.type = "button";
+            accept.textContent = "✅ Accepter";
+            accept.disabled = conflict;
+            accept.addEventListener("click", function() {
+                resolvePlantNameProposal(proposal.id, "accepter");
+            });
+            const reject = document.createElement("button");
+            reject.type = "button";
+            reject.textContent = "❌ Refuser";
+            reject.addEventListener("click", function() {
+                resolvePlantNameProposal(proposal.id, "refuser");
+            });
+            actions.append(accept, reject);
+            card.appendChild(actions);
+        }
+
+        container.appendChild(card);
+    });
+
+    return proposals.some(function(proposal) {
+        return proposal.statut === "en_attente" || proposal.statut === "conflit";
+    });
+}
+
+async function resolvePlantNameProposal(id, decision) {
+    if (!canManagePlantNameProposals) return;
+    const selectedPlantId = window.selectedPlantForEdit && window.selectedPlantForEdit.id;
+    const { data, error } = await supabaseClient.rpc("traiter_proposition_modification", {
+        p_proposition_id: id, p_decision: decision
+    });
+    if (error) {
+        alert("Traitement impossible : " + error.message);
+        return;
+    }
+    if (data === "conflit") alert("Les noms officiels ont changé depuis la proposition. Aucune modification n’a été appliquée.");
+    await loadNumbers();
+    const updatedPlant = allPlants.find(function(plant) {
+        return String(plant.id) === String(selectedPlantId);
+    });
+    const selectedMarker = updatedPlant && Array.from(markers.querySelectorAll(".marker")).find(function(marker) {
+        return String(marker.dataset.id) === String(selectedPlantId);
+    });
+    if (updatedPlant && selectedMarker) showPlantInfo(updatedPlant, selectedMarker);
+}
+
+function setPlantDeletionCursor(active) {
+    const desktopPointer =
+        window.innerWidth > 600 &&
+        (!window.matchMedia ||
+            window.matchMedia("(pointer: fine)").matches);
+
+    const showTrashCursor = active && desktopPointer;
+    if (showTrashCursor) setMapActionCursor("delete");
+    container.classList.toggle(
+        "plant-deletion-cursor",
+        showTrashCursor
+    );
+    container.style.cursor = active
+        ? "crosshair"
+        : "grab";
+}
+
+function setPlantAddCursorMode(active) {
+    const desktopPointer =
+        window.innerWidth > 600 &&
+        (!window.matchMedia ||
+            window.matchMedia("(pointer: fine)").matches);
+
+    if (active && desktopPointer) setMapActionCursor("add");
+    container.classList.toggle(
+        "plant-add-cursor-active",
+        active && desktopPointer
+    );
+}
+
+function setMapActionCursor(action) {
+    if (!isDesktopToolbarContext()) return;
+
+    const source = action === "edit"
+        ? document.querySelector(".desktop-proposal-pencil")
+        : document.getElementById(
+            action === "add" ? "addPlantMenuAction" : "deletePlantMenuAction"
+        );
+    if (!source) return;
+
+    const glyph = source.textContent.trim();
+    if (!glyph) return;
+
+    const style = getComputedStyle(source);
+    const canvas = document.createElement("canvas");
+    canvas.width = 32;
+    canvas.height = 32;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+
+    context.font = [
+        style.fontStyle,
+        style.fontWeight,
+        style.fontSize,
+        style.fontFamily
+    ].join(" ");
+    context.fillStyle = style.color;
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillText(glyph, 16, 16);
+
+    const hotspot = action === "edit" ? [6, 24] : [16, 16];
+    const cursor = 'url("' + canvas.toDataURL("image/png") + '") ' +
+        hotspot[0] + " " + hotspot[1] + ", crosshair";
+    container.style.setProperty("--map-action-cursor", cursor);
+}
+
+function cancelPlantDeletionSelection() {
+    const wasMobileTargeting = mobilePlantDeletionTargeting;
+    proposingPlantDeletion = false;
+    mobilePlantDeletionTargeting = false;
+    setPlantDeletionCursor(false);
+    if (isDesktopToolbarContext() && desktopToolbarAction === "delete") {
+        desktopToolbarAction = null;
+    }
+    document.getElementById("mobileDeletionSelectionPanel").style.display = "none";
+    if (wasMobileTargeting) {
+        document.getElementById("terrainAddCrosshair").style.display = "none";
+    }
+}
+
+function applyMobileDeletionPanelAppearance() {
+    const addForm = document.getElementById("terrainForm");
+    const panel = document.getElementById("mobileDeletionSelectionPanel");
+    const measurement = addForm.cloneNode(true);
+    measurement.id = "terrainFormAppearanceMeasurement";
+    measurement.querySelectorAll("[id]").forEach(function(element) {
+        element.removeAttribute("id");
+    });
+    measurement.style.display = "block";
+    measurement.style.visibility = "hidden";
+    measurement.style.left = "-10000px";
+    measurement.style.top = "0";
+    measurement.style.bottom = "auto";
+    measurement.style.transform = "none";
+    document.body.appendChild(measurement);
+
+    const shellStyle = getComputedStyle(measurement);
+    const panelStyleProperties = [
+        "position", "background", "border", "border-radius", "padding",
+        "width", "box-sizing", "box-shadow", "z-index", "font-family",
+        "font-size", "font-weight", "line-height", "color", "text-align"
+    ];
+    panelStyleProperties.forEach(function(property) {
+        panel.style.setProperty(property, shellStyle.getPropertyValue(property));
+    });
+
+    panel.style.height = "auto";
+
+    panel.style.left = "50%";
+    panel.style.top = "auto";
+    panel.style.bottom = "60px";
+    panel.style.transform = "translateX(-50%)";
+
+    const addHeading = measurement.firstElementChild;
+    const deletionHeading = document.getElementById("mobileDeletionSelectionTitle");
+    deletionHeading.style.cssText = addHeading.style.cssText;
+    ["font-family", "font-size", "font-weight", "line-height", "color", "text-align"]
+        .forEach(function(property) {
+            deletionHeading.style.setProperty(
+                property,
+                getComputedStyle(addHeading).getPropertyValue(property)
+            );
+        });
+
+    const addText = measurement.querySelector("input");
+    const deletionText = document.getElementById("mobileDeletionSelectionStatus");
+    ["font-family", "font-size", "font-weight", "line-height", "color"]
+        .forEach(function(property) {
+            deletionText.style.setProperty(
+                property,
+                getComputedStyle(addText).getPropertyValue(property)
+            );
+        });
+    deletionText.style.textAlign = "center";
+    deletionText.style.margin = "0 0 8px";
+
+    const addActions = measurement.lastElementChild;
+    const deletionActions =
+        document.getElementById("mobileDeletionSelectionActions");
+    deletionActions.style.cssText = addActions.style.cssText;
+    deletionActions.style.flexDirection = "column";
+    deletionActions.style.alignItems = "center";
+    deletionActions.style.gap = "8px";
+    const addButtons = measurement.querySelectorAll("button");
+    document.querySelectorAll(
+        "#mobileDeletionSelectionActions button"
+    ).forEach(function(button, index) {
+        button.style.cssText = addButtons[index].style.cssText;
+    });
+
+    measurement.remove();
+}
+
+function selectPlantUnderMobileDeletionCrosshair() {
+    if (mobilePlantNameProposalTargeting) {
+        if (!proposingPlantNameModification || editMode) {
+            return;
+        }
+
+        const crosshairRect =
+            document.getElementById("terrainAddCrosshair").getBoundingClientRect();
+        const screenX = crosshairRect.left + crosshairRect.width / 2;
+        const screenY = crosshairRect.top + crosshairRect.height / 2;
+        const marker = document.elementsFromPoint(screenX, screenY)
+            .map(function(element) {
+                return element.closest(".marker");
+            })
+            .find(Boolean);
+        const plant = marker
+            ? allPlants.find(function(item) {
+                return String(item.id) === marker.dataset.id;
+            })
+            : null;
+
+        if (!plant) {
+            document.getElementById("mobileDeletionSelectionStatus").textContent = "";
+            return;
+        }
+
+        mobilePlantNameProposalTargeting = false;
+        document.getElementById("mobileDeletionSelectionPanel").style.display = "none";
+        document.getElementById("terrainAddCrosshair").style.display = "none";
+        document.getElementById("mobileDeletionSelectionTitle").textContent = "🗑️ Proposer la suppression";
+        document.getElementById("mobileDeletionSelectionStatus").textContent =
+            "Placez le viseur sur la plante que vous souhaitez proposer à la suppression.";
+        document.getElementById("selectMobileDeletionPlantButton").textContent = "✓ Sélectionner cette plante";
+        document.getElementById("cancelMobileDeletionSelectionButton").textContent = "✕ Annuler";
+        beginInlinePlantNameProposal(plant, marker);
+        return;
+    }
+
+    if (!mobilePlantDeletionTargeting || editMode) {
+        return;
+    }
+
+    const crosshairRect =
+        document.getElementById("terrainAddCrosshair").getBoundingClientRect();
+    const screenX = crosshairRect.left + crosshairRect.width / 2;
+    const screenY = crosshairRect.top + crosshairRect.height / 2;
+    const marker = document.elementsFromPoint(screenX, screenY)
+        .map(function(element) {
+            return element.closest(".marker");
+        })
+        .find(Boolean);
+    const plant = marker
+        ? allPlants.find(function(item) {
+            return String(item.id) === marker.dataset.id;
+        })
+        : null;
+
+    if (!plant) {
+        document.getElementById("mobileDeletionSelectionStatus").textContent = "";
+        return;
+    }
+
+    cancelPlantDeletionSelection();
+    openDeletionConfirmation(plant);
+}
+
+const proposalMenuToggle =
+    document.getElementById("addTerrainButton");
+const proposalMenu =
+    document.getElementById("proposalMenu");
+
+function setProposalMenuOpen(isOpen) {
+    proposalMenu.style.display =
+        isOpen ? "block" : "none";
+    proposalMenuToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+}
+
+function isDesktopToolbarContext() {
+    return window.innerWidth > 600 &&
+        (!window.matchMedia || window.matchMedia("(pointer: fine)").matches);
+}
+
+function isMobileToolbarContext() {
+    return window.innerWidth <= 600 || Boolean(
+        window.matchMedia && window.matchMedia("(pointer: coarse)").matches
+    );
+}
+
+function getActiveMobileToolbarAction() {
+    if (addingTerrainPlant) return "add";
+    if (mobilePlantDeletionTargeting) return "delete";
+    if (proposingPlantNameModification) return "proposal";
+    return null;
+}
+
+function cancelMobileToolbarAction() {
+    if (addingTerrainPlant) {
+        addingTerrainPlant = false;
+        if (activePcPlacePointHandler) {
+            container.removeEventListener("click", activePcPlacePointHandler);
+            activePcPlacePointHandler = null;
+        }
+        setPlantAddCursorMode(false);
+        hidePCTerrainCrosshair();
+        container.style.cursor = "grab";
+        document.getElementById("terrainForm").style.display = "none";
+        const draft = document.querySelector(".terrain-marker-draft");
+        if (draft) draft.remove();
+    }
+
+    if (proposingPlantNameModification) cancelPlantNameProposalMode();
+    if (proposingPlantDeletion || mobilePlantDeletionTargeting) {
+        cancelPlantDeletionSelection();
+    }
+
+    document.getElementById("terrainAddCrosshair").style.display = "none";
+    document.getElementById("mobileDeletionSelectionPanel").style.display = "none";
+}
+
+function prepareMobileToolbarAction(action) {
+    if (!isMobileToolbarContext()) return true;
+
+    const activeAction = getActiveMobileToolbarAction();
+    if (activeAction === action) {
+        if (action === "proposal") {
+            cancelMobileToolbarAction();
+            setProposalMenuOpen(false);
+            return false;
+        }
+        return true;
+    }
+
+    if (activeAction) cancelMobileToolbarAction();
+    return true;
+}
+
+function hasActiveDesktopToolbarAction() {
+    return desktopToolbarAction !== null || addingTerrainPlant ||
+        proposingPlantNameModification || proposingPlantDeletion ||
+        mobilePlantDeletionTargeting || Boolean(plantForDeletionProposal);
+}
+
+function cancelDesktopToolbarAction() {
+    const terrainForm = document.getElementById("terrainForm");
+    const cancelAdd = desktopToolbarAction === "add" || addingTerrainPlant;
+
+    if (cancelAdd) {
+        addingTerrainPlant = false;
+        if (activePcPlacePointHandler) {
+            container.removeEventListener("click", activePcPlacePointHandler);
+            activePcPlacePointHandler = null;
+        }
+        setPlantAddCursorMode(false);
+        hidePCTerrainCrosshair();
+        container.style.cursor = "grab";
+        if (terrainForm) terrainForm.style.display = "none";
+        const draft = document.querySelector(".terrain-marker-draft");
+        if (draft) draft.remove();
+    }
+
+    if (proposingPlantNameModification) cancelPlantNameProposalMode();
+    if (proposingPlantDeletion || mobilePlantDeletionTargeting) {
+        cancelPlantDeletionSelection();
+    }
+    if (plantForDeletionProposal) closeDeletionConfirmation();
+
+    container.classList.remove("desktop-edit-cursor");
+    setPlantAddCursorMode(false);
+    setPlantDeletionCursor(false);
+    desktopToolbarAction = null;
+}
+
+function prepareDesktopToolbarAction(action) {
+    if (!isDesktopToolbarContext()) return true;
+    if (desktopToolbarAction === action) {
+        cancelDesktopToolbarAction();
+        setProposalMenuOpen(true);
+        return false;
+    }
+
+    cancelDesktopToolbarAction();
+    desktopToolbarAction = action;
+    if (action === "add") setPlantAddCursorMode(true);
+    if (action === "edit") {
+        setMapActionCursor("edit");
+        container.classList.add("desktop-edit-cursor");
+    }
+    return true;
+}
+
+proposalMenuToggle.addEventListener(
+    "click",
+    function() {
+        if (isDesktopToolbarContext() && hasActiveDesktopToolbarAction()) {
+            cancelDesktopToolbarAction();
+            setProposalMenuOpen(true);
+            return;
+        }
+        const isOpen =
+            proposalMenu.style.display === "block";
+        setProposalMenuOpen(!isOpen);
+    }
+);
+
+document.getElementById("addPlantMenuAction").addEventListener(
+    "click",
+    function() {
+        if (!prepareMobileToolbarAction("add")) return;
+        if (isDesktopToolbarContext()) {
+            if (!prepareDesktopToolbarAction("add")) return;
+        } else {
+            setProposalMenuOpen(false);
+        }
+        cancelPlantNameProposalMode();
+        if (proposingPlantDeletion) {
+            cancelPlantDeletionSelection();
+        }
+        startAddingTerrainPlant();
+    }
+);
+
+document.getElementById("deletePlantMenuAction").addEventListener(
+    "click",
+    function() {
+        if (editMode) {
+            return;
+        }
+        if (!prepareMobileToolbarAction("delete")) return;
+        if (isDesktopToolbarContext()) {
+            if (!prepareDesktopToolbarAction("delete")) return;
+        } else {
+            setProposalMenuOpen(false);
+        }
+        cancelPlantNameProposalMode();
+        addingTerrainPlant = false;
+        setPlantAddCursorMode(false);
+        hidePCTerrainCrosshair();
+        document.getElementById("terrainAddCrosshair").style.display = "none";
+        document.getElementById("terrainForm").style.display = "none";
+        const terrainDraft = document.querySelector(".terrain-marker-draft");
+        if (terrainDraft) {
+            terrainDraft.remove();
+        }
+        proposingPlantDeletion = true;
+        const touchSelection =
+            (window.matchMedia &&
+                window.matchMedia("(pointer: coarse)").matches) ||
+            window.innerWidth <= 600;
+        if (touchSelection) {
+            mobilePlantDeletionTargeting = true;
+            document.getElementById("terrainAddCrosshair").style.display = "block";
+            document.getElementById("mobileDeletionSelectionStatus").textContent = "";
+            applyMobileDeletionPanelAppearance();
+            document.getElementById("mobileDeletionSelectionPanel").style.display = "block";
+        }
+        setPlantDeletionCursor(true);
+    }
+);
+
+document.addEventListener(
+    "pointerdown",
+    function(event) {
+        if (!event.target.closest("#proposalMenuContainer")) {
+            if (isDesktopToolbarContext() && hasActiveDesktopToolbarAction()) return;
+            setProposalMenuOpen(false);
+        }
+    }
+);
+
+document.addEventListener("keydown", function(event) {
+    if (!isDesktopToolbarContext() || !hasActiveDesktopToolbarAction()) return;
+    if (event.code !== "Space" && event.key !== " " && event.key !== "Spacebar") return;
+    const target = event.target;
+    if (target && target.closest && target.closest("input, textarea, select, [contenteditable='true'], [role='textbox']")) {
+        return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    cancelDesktopToolbarAction();
+    setProposalMenuOpen(true);
+});
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+        if (event.key === "Escape") {
+            if (proposingPlantNameModification) {
+                cancelPlantNameProposalMode();
+            }
+            setProposalMenuOpen(false);
+        }
+    }
+);
 
 document.addEventListener("keydown", function(event) {
 
     if (event.key === "Escape" && addingTerrainPlant) {
 
         addingTerrainPlant = false;
+        if (activePcPlacePointHandler) {
+            container.removeEventListener("click", activePcPlacePointHandler);
+            activePcPlacePointHandler = null;
+        }
+        setPlantAddCursorMode(false);
 
         container.style.cursor = "grab";
+        hidePCTerrainCrosshair();
 
         const form =
             document.getElementById("terrainForm");
@@ -866,20 +3280,42 @@ document.addEventListener("keydown", function(event) {
 
         const point =
             document.querySelector(
-                ".terrain-marker-new"
+                ".terrain-marker-draft"
             );
 
         if (point) {
             point.remove();
         }
 
+        if (desktopToolbarAction === "add") desktopToolbarAction = null;
+
         console.log("Mode ajout annulé avec Échap");
     }
 
 });
 
+let pcTerrainCrosshairMoveHandler = null;
+
+function hidePCTerrainCrosshair() {
+    const crosshair =
+        document.getElementById("terrainAddCrosshair");
+
+    if (pcTerrainCrosshairMoveHandler) {
+        container.removeEventListener(
+            "pointermove",
+            pcTerrainCrosshairMoveHandler
+        );
+        pcTerrainCrosshairMoveHandler = null;
+    }
+
+    if (window.innerWidth > 600 && crosshair) {
+        crosshair.style.display = "none";
+    }
+}
+
 function startAddingTerrainPlant() {
     addingTerrainPlant = true;
+    setPlantAddCursorMode(true);
     console.log("Mode ajout activé");
 
     // GSM : afficher immédiatement le viseur
@@ -909,8 +3345,11 @@ function startAddingTerrainPlant() {
         return;
     }
 
-    // PC : comportement actuel inchangé
-    container.style.cursor = "crosshair";
+    const crosshair =
+        document.getElementById("terrainAddCrosshair");
+
+    crosshair.style.display = "none";
+    container.style.cursor = "none";
 
 function placePoint(event) {
 
@@ -933,6 +3372,10 @@ function placePoint(event) {
         point.className =
             "terrain-marker-new";
 
+        point.classList.add(
+            "terrain-marker-draft"
+        );
+
         point.style.left =
             x + "px";
 
@@ -940,6 +3383,9 @@ function placePoint(event) {
             y + "px";
 
 markers.appendChild(point);
+        crosshair.style.left = event.clientX + "px";
+        crosshair.style.top = event.clientY + "px";
+        hidePCTerrainCrosshair();
 
 let pointDragging = false;
 let pointStartX = 0;
@@ -994,11 +3440,15 @@ point.addEventListener("pointerup", function(event) {
 });
 
 container.style.cursor = "grab";
+        setPlantAddCursorMode(false);
 
         container.removeEventListener(
             "click",
             placePoint
         );
+        if (activePcPlacePointHandler === placePoint) {
+            activePcPlacePointHandler = null;
+        }
 
         console.log(
             "Point créé :",
@@ -1036,6 +3486,7 @@ setTimeout(function() {
         "click",
         placePoint
     );
+    activePcPlacePointHandler = placePoint;
 
 }
 
@@ -1071,6 +3522,30 @@ const plan =
 const markers =
     document.getElementById("markers");
 
+const calibrationPointsLayer =
+    document.getElementById("calibrationPoints");
+
+function updateCalibrationPointScreenScale() {
+    const match = map.style.transform.match(
+        /scale\(\s*([+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?)\s*\)/i
+    );
+    const viewScale = match ? Number(match[1]) : 1;
+    const inverseScale = viewScale > 0 ? 1 / viewScale : 1;
+    calibrationPointsLayer.style.setProperty(
+        "--calibration-point-screen-factor",
+        String(inverseScale)
+    );
+}
+
+const calibrationMapTransformObserver = new MutationObserver(
+    updateCalibrationPointScreenScale
+);
+calibrationMapTransformObserver.observe(map, {
+    attributes: true,
+    attributeFilter: ["style"]
+});
+updateCalibrationPointScreenScale();
+
 
 /* =====================================================
    AFFICHAGE
@@ -1091,6 +3566,20 @@ function hidePlantInfo() {
 function updateMap() {
 
     hidePlantInfo();
+
+    const calibrationPointLayer =
+        document.getElementById("calibrationPoints");
+    if (calibrationPointLayer) {
+        calibrationPointLayer.style.setProperty(
+            "--calibration-point-counter-scale",
+            Math.min(1, 1.5 / scale)
+        );
+    }
+
+    markers.style.setProperty(
+        "--marker-counter-scale",
+        Math.min(1, 1.5 / scale)
+    );
 
     map.style.transform =
         `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
@@ -1311,8 +3800,11 @@ window.addEventListener(
 
 let touchMode = null;
 
-    let mobileMoveMarker = null;
+let mobileMoveMarker = null;
 let mobileMoveData = null;
+let mobileMoveOriginalAppearance = null;
+let desktopMoveMarker = null;
+let desktopMoveOriginalAppearance = null;
 
 let touchStartX = 0;
 let touchStartY = 0;
@@ -1351,6 +3843,14 @@ container.addEventListener(
             return;
         }
 
+        if (
+            pendingPlantDuplicate &&
+            pendingPlantDuplicate.marker === mobileMoveMarker &&
+            pendingPlantDuplicate.isSubmitting
+        ) {
+            return;
+        }
+
         if (event.touches.length !== 1) {
             return;
         }
@@ -1358,11 +3858,38 @@ container.addEventListener(
         event.preventDefault();
         event.stopImmediatePropagation();
 
+        if (
+            pendingPlantDuplicate &&
+            pendingPlantDuplicate.marker === mobileMoveMarker
+        ) {
+            document.getElementById("plantInfo").style.display = "none";
+        }
+
         const touch =
             event.touches[0];
 
         const markerRect =
             mobileMoveMarker.getBoundingClientRect();
+
+        const isTemporaryDuplicateMove =
+            pendingPlantDuplicate &&
+            pendingPlantDuplicate.marker === mobileMoveMarker;
+
+        const originalAppearance =
+            isTemporaryDuplicateMove
+                ? null
+                : mobileMoveOriginalAppearance || {
+                    background: mobileMoveMarker.style.background,
+                    border: mobileMoveMarker.style.border,
+                    boxShadow: mobileMoveMarker.style.boxShadow
+                };
+
+        if (!isTemporaryDuplicateMove) {
+            mobileMoveMarker.style.background = "rgba(125, 75, 190, 0.72)";
+            mobileMoveMarker.style.border = "2px dashed #4b2478";
+            mobileMoveMarker.style.boxShadow =
+                "0 0 0 3px rgba(125, 75, 190, 0.25)";
+        }
 
         /*
             On mémorise exactement l'endroit
@@ -1387,6 +3914,18 @@ container.addEventListener(
 
         const offsetY =
             offsetScreenY / scale;
+
+        const fingerOffsetX =
+            isTemporaryDuplicateMove
+                ? touch.clientX -
+                    (markerRect.left + markerRect.width / 2)
+                : null;
+
+        const fingerOffsetY =
+            isTemporaryDuplicateMove
+                ? touch.clientY -
+                    (markerRect.top + markerRect.height / 2)
+                : null;
 
         const startLeft =
             parseFloat(
@@ -1416,7 +3955,16 @@ container.addEventListener(
                 offsetX,
 
             offsetY:
-                offsetY
+                offsetY,
+
+            fingerOffsetX:
+                fingerOffsetX,
+
+            fingerOffsetY:
+                fingerOffsetY,
+
+            originalAppearance:
+                originalAppearance
         };
 
         console.log(
@@ -1433,6 +3981,14 @@ container.addEventListener(
     "touchstart",
     function(event) {
 
+        if (
+            pendingPlantDuplicate &&
+            pendingPlantDuplicate.marker === mobileMoveMarker
+        ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
+        }
 
         /* UN DOIGT */
 
@@ -1499,6 +4055,28 @@ container.addEventListener(
         const touch =
             event.touches[0];
 
+        if (
+            pendingPlantDuplicate &&
+            pendingPlantDuplicate.marker === mobileMoveMarker
+        ) {
+            const rect =
+                container.getBoundingClientRect();
+
+            const markerCenterX =
+                touch.clientX - mobileMoveData.fingerOffsetX;
+
+            const markerCenterY =
+                touch.clientY - mobileMoveData.fingerOffsetY;
+
+            mobileMoveMarker.style.left =
+                (markerCenterX - rect.left - offsetX) / scale + "px";
+
+            mobileMoveMarker.style.top =
+                (markerCenterY - rect.top - offsetY) / scale + "px";
+
+            return;
+        }
+
         const dx =
             (
                 touch.clientX -
@@ -1543,6 +4121,15 @@ container.addEventListener(
             event.touches.length === 1 &&
             touchMode === "pan"
         ) {
+
+            if (
+                pendingPlantDuplicate &&
+                pendingPlantDuplicate.marker === mobileMoveMarker
+            ) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                return;
+            }
 
             const touch =
                 event.touches[0];
@@ -1766,6 +4353,22 @@ container.addEventListener(
                 marker.style.top
             );
 
+        if (
+            pendingPlantDuplicate &&
+            pendingPlantDuplicate.marker === marker
+        ) {
+            pendingPlantDuplicate.plant.x = newX;
+            pendingPlantDuplicate.plant.y = newY;
+
+            mobileMoveMarker = null;
+            mobileMoveData = null;
+            marker.dataset.mobileMove = "false";
+            marker.style.zIndex = "501";
+
+            validatePendingPlantDuplicate();
+            return;
+        }
+
         console.log(
             "Sauvegarde position GSM :",
             marker.dataset.id,
@@ -1775,11 +4378,26 @@ container.addEventListener(
 
         /* Désactiver le mode déplacement */
 
+        if (mobileMoveData.originalAppearance) {
+            marker.style.background =
+                mobileMoveData.originalAppearance.background;
+            marker.style.border =
+                mobileMoveData.originalAppearance.border;
+            marker.style.boxShadow =
+                mobileMoveData.originalAppearance.boxShadow;
+        }
+        mobileMoveOriginalAppearance = null;
+
         mobileMoveMarker = null;
         mobileMoveData = null;
 
         marker.dataset.mobileMove =
             "false";
+
+        marker.dataset.ignoreNextClick = "true";
+        setTimeout(function() {
+            marker.dataset.ignoreNextClick = "false";
+        }, 500);
 
         marker.style.zIndex = "";
 
@@ -1835,6 +4453,24 @@ container.addEventListener(
 
                 const result =
                     await response.json();
+
+                const movedPlant =
+                    allPlants.find(function(plant) {
+                        return String(plant.id) === marker.dataset.id;
+                    });
+
+                if (movedPlant) {
+                    movedPlant.x = newX;
+                    movedPlant.y = newY;
+                }
+
+                if (
+                    window.selectedPlantForEdit &&
+                    String(window.selectedPlantForEdit.id) === marker.dataset.id
+                ) {
+                    window.selectedPlantForEdit.x = newX;
+                    window.selectedPlantForEdit.y = newY;
+                }
 
                 console.log(
                     "Position GSM sauvegardée :",
@@ -2264,6 +4900,8 @@ async function loadNumbers() {
 
         allPlants = data;
 
+        await loadPendingDeletionProposals();
+
         prepareTerrainPlantList();
 
 
@@ -2286,6 +4924,256 @@ async function loadNumbers() {
     }
 }
 
+async function loadPendingDeletionProposals() {
+    const adminView = canManagePlantNameProposals;
+    const deletionRequest = adminView
+        ? supabaseClient.from("propositions_suppression")
+            .select("id,numero_id,statut")
+            .in("statut", ["en_attente", "refusee"])
+        : supabaseClient.from("propositions_suppression_visiteur")
+            .select("numero_id");
+    const nameRequest = adminView
+        ? supabaseClient.from("propositions_modifications")
+            .select("id,numero_id,nom_francais_origine,nom_latin_origine,nom_francais_propose,nom_latin_propose,statut,cree_le,note_admin")
+            .in("statut", ["en_attente", "conflit", "refusee"])
+            .order("cree_le", { ascending: true })
+        : Promise.resolve({ data: [], error: null });
+
+    const [deletions, nameProposals] = await Promise.all([deletionRequest, nameRequest]);
+    if (deletions.error) {
+        console.error("Impossible de charger les demandes de suppression :", deletions.error);
+        return;
+    }
+    if (nameProposals.error) {
+        console.error("Impossible de charger les propositions de correction :", nameProposals.error);
+    }
+
+    pendingDeletionByPlant = new Map();
+    refusedDeletionByPlant = new Set();
+    (deletions.data || []).forEach(function(request) {
+        const key = String(request.numero_id);
+        if (request.statut === "refusee") {
+            refusedDeletionByPlant.add(key);
+        } else if (!pendingDeletionByPlant.has(key)) {
+            pendingDeletionByPlant.set(key, request);
+        }
+    });
+
+    plantNameProposalsByPlant = new Map();
+    (nameProposals.data || []).forEach(function(proposal) {
+        const key = String(proposal.numero_id);
+        if (!plantNameProposalsByPlant.has(key)) plantNameProposalsByPlant.set(key, []);
+        plantNameProposalsByPlant.get(key).push(proposal);
+    });
+}
+
+let plantForDeletionProposal = null;
+
+function openDeletionConfirmation(plant) {
+    plantForDeletionProposal = plant;
+    if (isDesktopToolbarContext()) {
+        // La cible est choisie : on garde l'action annulable, mais le curseur
+        // de ciblage redevient normal pendant la confirmation.
+        setPlantDeletionCursor(false);
+        desktopToolbarAction = "delete";
+    }
+    document.getElementById("deletePlantFrenchName").textContent =
+        plant["Nom français"] || "Nom français inconnu";
+    document.getElementById("deletePlantLatinName").textContent =
+        plant["Nom latin"] && plant["Nom latin"] !== "/"
+            ? plant["Nom latin"]
+            : "";
+    document.getElementById("deletePlantConfirmation").style.display = "flex";
+}
+
+function closeDeletionConfirmation() {
+    document.getElementById("deletePlantConfirmation").style.display = "none";
+    plantForDeletionProposal = null;
+    if (isDesktopToolbarContext() && desktopToolbarAction === "delete") {
+        desktopToolbarAction = null;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("cancelDeletePlantProposal").addEventListener(
+        "click",
+        closeDeletionConfirmation
+    );
+
+    document.getElementById("selectMobileDeletionPlantButton").addEventListener(
+        "click",
+        selectPlantUnderMobileDeletionCrosshair
+    );
+    document.getElementById("cancelMobileDeletionSelectionButton").addEventListener(
+        "click",
+        function() {
+            if (mobilePlantNameProposalTargeting) {
+                cancelPlantNameProposalMode();
+            } else {
+                cancelPlantDeletionSelection();
+            }
+        }
+    );
+
+    document.getElementById("confirmDeletePlantProposal").addEventListener(
+        "click",
+        async function() {
+            const plant = plantForDeletionProposal;
+            if (!plant || editMode) {
+                closeDeletionConfirmation();
+                return;
+            }
+
+            const { error } = await supabaseClient
+                .from("propositions_suppression")
+                .insert({ numero_id: plant.id });
+
+            if (error) {
+                if (error.code === "23505") {
+                    alert("Une demande de suppression est déjà en cours pour cette plante.");
+                } else {
+                    console.error("Erreur lors de l'envoi de la demande de suppression :", error);
+                    alert("Impossible d'envoyer la demande de suppression : " + error.message);
+                }
+                closeDeletionConfirmation();
+                return;
+            }
+
+            closeDeletionConfirmation();
+            showProposalSentConfirmation();
+            await loadNumbers();
+        }
+    );
+});
+
+async function handlePlantDeletionDecision(accept) {
+    if (!editMode) {
+        return;
+    }
+    const actions = document.getElementById("deletionAdminActions");
+    const numeroId = actions.dataset.numeroId;
+    if (!numeroId) {
+        return;
+    }
+    if (
+        accept &&
+        !(await showAppConfirmation(
+            "Valider la suppression de cette plante ? Cette action supprimera la plante de la carte."
+        ))
+    ) {
+        return;
+    }
+
+    const { error } = await supabaseClient.rpc("traiter_proposition_suppression", {
+        p_numero_id: String(numeroId),
+        p_acceptee: accept
+    });
+
+    if (error) {
+        console.error("Erreur lors du traitement de la demande de suppression :", error);
+        alert("Impossible de traiter la demande : " + error.message);
+        return;
+    }
+
+    document.getElementById("plantInfo").style.display = "none";
+    await loadNumbers();
+}
+
+let appConfirmationResolver = null;
+
+function showAppConfirmation(message) {
+    const dialog = document.getElementById("appConfirmModal");
+    const messageElement = document.getElementById("appConfirmMessage");
+
+    if (!dialog || !messageElement) {
+        return Promise.resolve(false);
+    }
+
+    if (appConfirmationResolver) {
+        appConfirmationResolver(false);
+    }
+
+    messageElement.replaceChildren();
+    String(message).split("\n").forEach(function(line, index) {
+        if (index > 0) {
+            messageElement.appendChild(document.createElement("br"));
+        }
+
+        const lineContent = document.createTextNode(line);
+        if (index === 0) {
+            const question = document.createElement("strong");
+            question.appendChild(lineContent);
+            messageElement.appendChild(question);
+        } else {
+            messageElement.appendChild(lineContent);
+        }
+    });
+
+    dialog.style.display = "flex";
+    document.getElementById("appConfirmAcceptButton").focus();
+
+    return new Promise(function(resolve) {
+        appConfirmationResolver = resolve;
+    });
+}
+
+function closeAppConfirmation(confirmed) {
+    const dialog = document.getElementById("appConfirmModal");
+    if (dialog) {
+        dialog.style.display = "none";
+    }
+
+    const resolve = appConfirmationResolver;
+    appConfirmationResolver = null;
+    if (resolve) {
+        resolve(confirmed);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("appConfirmAcceptButton").addEventListener(
+        "click",
+        function() { closeAppConfirmation(true); }
+    );
+    document.getElementById("appConfirmCancelButton").addEventListener(
+        "click",
+        function() { closeAppConfirmation(false); }
+    );
+    document.addEventListener("keydown", function(event) {
+        const dialog = document.getElementById("appConfirmModal");
+        if (!dialog || dialog.style.display !== "flex") {
+            return;
+        }
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closeAppConfirmation(false);
+        } else if (event.key === "Enter") {
+            event.preventDefault();
+            closeAppConfirmation(true);
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("acceptPlantDeletionButton").addEventListener(
+        "click",
+        function() { handlePlantDeletionDecision(true); }
+    );
+    document.getElementById("rejectPlantDeletionButton").addEventListener(
+        "click",
+        function() { handlePlantDeletionDecision(false); }
+    );
+});
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape" && proposingPlantDeletion) {
+        cancelPlantDeletionSelection();
+    }
+    if (event.key === "Escape" && plantForDeletionProposal) {
+        closeDeletionConfirmation();
+    }
+});
+
 
 /* =====================================================
    CHARGER LES PROPOSITIONS TERRAIN
@@ -2293,15 +5181,21 @@ async function loadNumbers() {
 
 async function loadTerrainProposals() {
 
-    if (!editMode) {
-        return;
-    }
+    let result;
 
-    const { data, error } =
-        await supabaseClient
+    if (editMode) {
+        result = await supabaseClient
             .from("propositions_terrain")
             .select("*")
             .eq("statut", "en_attente");
+    } else {
+        result = await supabaseClient
+            .from("propositions_terrain_visiteur")
+            .select("id,x,y,statut")
+            .eq("statut", "en_attente");
+    }
+
+    const { data, error } = result;
 
     if (error) {
 
@@ -2407,6 +5301,12 @@ function displayTerrainProposals(data) {
 
     });
 
+    /* Mode visiteur : aucune proposition existante n'est affichée sur la carte.
+       (Les propositions restent enregistrées et visibles uniquement en mode admin.) */
+    if (!editMode) {
+        return;
+    }
+
 
     /* =====================================================
        RECRÉER LES MARQUEURS À PARTIR DE SUPABASE
@@ -2436,10 +5336,9 @@ function displayTerrainProposals(data) {
         marker.style.top =
             item.y + "px";
 
-                marker.title =
-            item.nom_francais +
-            " — " +
-            item.nom_latin;
+        marker.title = editMode
+            ? item.nom_francais + " — " + item.nom_latin
+            : "Proposition en attente de validation";
 
 marker.style.cursor =
     "pointer";
@@ -2447,10 +5346,29 @@ marker.style.cursor =
 marker.dataset.moveEnabled =
     "false";
 
+let lastTouchPointerDownAt = 0;
+
+marker.addEventListener(
+    "pointerdown",
+    function(event) {
+        if (event.pointerType === "touch") {
+            lastTouchPointerDownAt = Date.now();
+        }
+    },
+    true
+);
+
+if (editMode) {
 
 marker.addEventListener(
     "dblclick",
     function(event) {
+
+        // Le dblclick synthétisé après un double-tap ne doit pas activer
+        // le déplacement tactile d'une proposition en attente.
+        if (Date.now() - lastTouchPointerDownAt < 800) {
+            return;
+        }
 
         event.preventDefault();
         event.stopPropagation();
@@ -2625,6 +5543,7 @@ marker.style.cursor =
     }
 );
       
+}
 
 marker.addEventListener(
     "click",
@@ -2641,6 +5560,39 @@ marker.addEventListener(
                 "false";
 
             return;
+        }
+
+        if (!editMode) {
+
+            const info =
+                document.getElementById("plantInfo");
+            const latin =
+                document.getElementById("plantLatin");
+            const french =
+                document.getElementById("plantFrench");
+
+            latin.style.display = "none";
+            french.textContent = "🌱 Proposition en attente de validation";
+            document.getElementById("deletionPendingInfo").style.display = "none";
+            const deletionActions = document.getElementById("deletionAdminActions");
+            deletionActions.style.display = "none";
+            deletionActions.dataset.numeroId = "";
+            document.getElementById("speciesNavigation").style.display = "none";
+            document.getElementById("adminPlantButtons").style.display = "none";
+            document.getElementById("adminPlantEditForm").style.display = "none";
+            document.getElementById("adminPrincipalPlant").style.display = "none";
+
+            info.classList.add("proposal-pending-centered");
+            info.style.display = "flex";
+            info.style.position = "fixed";
+
+            const rect = marker.getBoundingClientRect();
+            info.style.left =
+                (rect.left + rect.width / 2 - info.offsetWidth / 2) + "px";
+            info.style.top = (rect.bottom + 10) + "px";
+
+            return;
+
         }
 
 
@@ -2794,6 +5746,16 @@ form.style.transform =
 
 function showPlantInfo(plant, marker) {
 
+    if (mobilePlantDeletionTargeting) {
+        return;
+    }
+
+    if (proposingPlantDeletion && !editMode) {
+        cancelPlantDeletionSelection();
+        openDeletionConfirmation(plant);
+        return;
+    }
+
 const sameSpecies =
     allPlants.filter(function(otherPlant) {
 
@@ -2860,9 +5822,27 @@ const sameSpecies =
     document.getElementById("plantFrench").textContent =
         plant["Nom français"];
 
+    const deletionRequest = pendingDeletionByPlant.get(String(plant.id));
+    document.getElementById("deletionPendingInfo").style.display =
+        editMode && deletionRequest ? "block" : "none";
+    document.getElementById("deletionAdminActions").style.display =
+        editMode && deletionRequest ? "block" : "none";
+    document.getElementById("deletionAdminActions").dataset.numeroId = "";
+    if (deletionRequest) {
+        document.getElementById("deletionAdminActions").dataset.numeroId = plant.id;
+    }
+    const decisionStateInfo = document.getElementById("plantDecisionStatusInfo");
+    const decisionState = getPlantDecisionState(plant.id);
+    decisionStateInfo.style.display = editMode && decisionState === "refused" ? "block" : "none";
+    decisionStateInfo.textContent = editMode && decisionState === "refused"
+        ? "Une proposition précédente a été refusée ; la plante est conservée."
+        : "";
+    const hasPendingNameProposal = renderPlantNameProposalsForPlant(plant);
+
     const info =
         document.getElementById("plantInfo");
 
+    info.classList.remove("proposal-pending-centered");
     info.style.display = "block";
 
     const rect =
@@ -2879,12 +5859,37 @@ info.style.top =
 document.getElementById(
     "adminPlantButtons"
 ).style.display =
-    editMode ? "block" : "none";
+    editMode && !hasPendingNameProposal ? "block" : "none";
+
+document.getElementById(
+    "movePlantButton"
+).style.display =
+    editMode && !hasPendingNameProposal ? "inline-block" : "none";
+
+document.getElementById(
+    "duplicatePlantButton"
+).style.display =
+    editMode && !hasPendingNameProposal && !pendingPlantDuplicate ? "inline-block" : "none";
+
+document.getElementById(
+    "duplicatePendingControls"
+).style.display =
+    editMode && !hasPendingNameProposal && pendingPlantDuplicate ? "block" : "none";
+
+document.getElementById(
+    "editPlantButton"
+).style.display =
+    pendingPlantDuplicate ? "none" : "inline-block";
 
     document.getElementById(
     "adminPrincipalPlant"
 ).style.display =
-    editMode ? "block" : "none";
+    editMode && !hasPendingNameProposal && !pendingPlantDuplicate ? "block" : "none";
+
+document.getElementById(
+    "movePlantButton"
+).textContent =
+    pendingPlantDuplicate ? "📍 Déplacer la copie" : "📍 Déplacer";
 document.getElementById(
     "principalPlantCheckbox"
 ).checked =
@@ -2964,13 +5969,17 @@ document.getElementById(
 };
 
 }
-function displayNumbers(data) {
+function displayNumbers(data, clearExisting) {
 
-    markers.querySelectorAll(".marker").forEach(
+    if (clearExisting !== false) {
+        markers.querySelectorAll(
+            '.marker:not([data-pending-duplicate="true"])'
+        ).forEach(
         function(marker) {
             marker.remove();
         }
-    );
+        );
+    }
 
     data.forEach(function(item) {
         
@@ -2992,13 +6001,16 @@ function displayNumbers(data) {
 marker.style.cursor =
     editMode ? "move" : "pointer";
 
-marker.style.background =
-    editMode ? "yellow" : "white";
+applyPlantDecisionMarkerStyle(marker);
+
+marker.style.border =
+    editMode ? "2px solid black" : "1px solid black";
 
 if (item.a_connaitre === true) {
 
     marker.textContent = "★";
-    marker.style.fontSize = "16px";
+    marker.style.fontSize =
+        editMode ? "16px" : "14px";
     marker.style.fontWeight = "bold";
     marker.style.lineHeight = "20px";
 
@@ -3016,6 +6028,15 @@ marker.addEventListener(
 
         if (marker.dataset.ignoreNextClick === "true") {
             marker.dataset.ignoreNextClick = "false";
+            return;
+        }
+
+        if (mobilePlantNameProposalTargeting) {
+            return;
+        }
+
+        if (proposingPlantNameModification && !editMode) {
+            beginInlinePlantNameProposal(item, marker);
             return;
         }
 
@@ -3080,21 +6101,8 @@ marker.addEventListener(
             return;
         }
 
-        /* ADMIN → double-clic = autoriser le déplacement */
-
-        marker.dataset.moveEnabled = "true";
-
-        marker.style.cursor = "move";
-
-        const popup = document.getElementById("plantInfo");
-if (popup) {
-    popup.style.display = "none";
-}
-
-        console.log(
-            "Déplacement activé pour le point :",
-            marker.dataset.id
-        );
+        // En mode admin, le déplacement est activé par le bouton de la fiche.
+        return;
 
     }
 );
@@ -3154,7 +6162,23 @@ function move(e) {
 marker.dataset.moveEnabled = "false";
                     marker.dataset.ignoreNextClick = "true";
 
-marker.style.cursor = "pointer";
+                    marker.style.cursor = "pointer";
+                    marker.style.zIndex = "";
+
+                    if (desktopMoveOriginalAppearance) {
+                        marker.style.background =
+                            desktopMoveOriginalAppearance.background;
+                        marker.style.border =
+                            desktopMoveOriginalAppearance.border;
+                        marker.style.boxShadow =
+                            desktopMoveOriginalAppearance.boxShadow;
+                    }
+                    desktopMoveMarker = null;
+                    desktopMoveOriginalAppearance = null;
+
+                    setTimeout(function() {
+                        marker.dataset.ignoreNextClick = "false";
+                    }, 500);
 
 const newX =
     parseFloat(marker.style.left);
@@ -3214,6 +6238,24 @@ const newX =
                             const result =
                                 await response.json();
 
+                            const movedPlant =
+                                allPlants.find(function(plant) {
+                                    return String(plant.id) === marker.dataset.id;
+                                });
+
+                            if (movedPlant) {
+                                movedPlant.x = newX;
+                                movedPlant.y = newY;
+                            }
+
+                            if (
+                                window.selectedPlantForEdit &&
+                                String(window.selectedPlantForEdit.id) === marker.dataset.id
+                            ) {
+                                window.selectedPlantForEdit.x = newX;
+                                window.selectedPlantForEdit.y = newY;
+                            }
+
                             console.log(
                                 "Réponse Supabase après sauvegarde :",
                                 result
@@ -3252,6 +6294,296 @@ const newX =
 
     });
 
+    if (pendingPlantDuplicate) {
+        markers.appendChild(pendingPlantDuplicate.marker);
+    }
+
+}
+
+function updatePendingDuplicateStatus(message) {
+    const status =
+        document.getElementById("duplicateStatus");
+
+    if (status) {
+        status.textContent = message;
+    }
+}
+
+function discardPendingPlantDuplicate() {
+    if (!pendingPlantDuplicate) {
+        return;
+    }
+
+    const marker = pendingPlantDuplicate.marker;
+
+    if (mobileMoveMarker === marker) {
+        mobileMoveMarker = null;
+        mobileMoveData = null;
+    }
+
+    marker.remove();
+    pendingPlantDuplicate = null;
+
+    const controls =
+        document.getElementById("duplicatePendingControls");
+    const duplicateButton =
+        document.getElementById("duplicatePlantButton");
+    const editButton =
+        document.getElementById("editPlantButton");
+    const principalControls =
+        document.getElementById("adminPrincipalPlant");
+    const moveButton =
+        document.getElementById("movePlantButton");
+    const validateButton =
+        document.getElementById("validateDuplicateButton");
+    const cancelButton =
+        document.getElementById("cancelDuplicateButton");
+
+    if (controls) {
+        controls.style.display = "none";
+    }
+    if (duplicateButton) {
+        duplicateButton.style.display =
+            editMode ? "inline-block" : "none";
+    }
+    if (editButton) {
+        editButton.style.display =
+            editMode ? "inline-block" : "none";
+    }
+    if (principalControls) {
+        principalControls.style.display =
+            editMode ? "block" : "none";
+    }
+    if (moveButton) {
+        moveButton.textContent = "📍 Déplacer";
+    }
+    if (validateButton) {
+        validateButton.disabled = false;
+    }
+    if (cancelButton) {
+        cancelButton.disabled = false;
+    }
+
+    updatePendingDuplicateStatus("");
+}
+
+function beginPlantDuplication(plant) {
+    if (!editMode || pendingPlantDuplicate) {
+        return;
+    }
+
+    const x = Number(plant.x);
+    const y = Number(plant.y);
+
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        updatePendingDuplicateStatus(
+            "Cette plante n'a pas de coordonnées valides et ne peut pas être dupliquée ici."
+        );
+        return;
+    }
+
+    const temporaryPlant = {
+        x: x,
+        y: y,
+        "Nom français": plant["Nom français"],
+        "Nom latin": plant["Nom latin"],
+        a_connaitre: plant.a_connaitre,
+        exemplaire_principal: plant.exemplaire_principal
+    };
+
+    const marker =
+        document.createElement("div");
+
+    marker.className = "marker pending-duplicate-marker";
+    marker.dataset.pendingDuplicate = "true";
+    marker.style.left = x + "px";
+    marker.style.top = y + "px";
+    marker.style.zIndex = "501";
+    marker.style.cursor = "move";
+    marker.style.touchAction = "none";
+    marker.style.background = "rgba(125, 75, 190, 0.72)";
+    marker.style.border = "2px dashed #4b2478";
+    marker.style.boxShadow = "0 0 0 3px rgba(125, 75, 190, 0.25)";
+    marker.textContent =
+        temporaryPlant.a_connaitre === true ? "★" : "";
+
+    if (temporaryPlant.a_connaitre === true) {
+        marker.style.fontSize = editMode ? "16px" : "14px";
+        marker.style.fontWeight = "bold";
+        marker.style.lineHeight = "20px";
+    }
+
+    pendingPlantDuplicate = {
+        plant: temporaryPlant,
+        marker: marker,
+        isSubmitting: false
+    };
+
+    marker.addEventListener(
+        "pointerdown",
+        function(event) {
+            if (
+                !editMode ||
+                event.pointerType === "touch" ||
+                !pendingPlantDuplicate ||
+                pendingPlantDuplicate.marker !== marker
+            ) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            marker.setPointerCapture(event.pointerId);
+            document.getElementById("plantInfo").style.display = "none";
+
+            const startX = event.clientX;
+            const startY = event.clientY;
+            const startLeft = parseFloat(marker.style.left);
+            const startTop = parseFloat(marker.style.top);
+
+            function move(moveEvent) {
+                marker.style.left =
+                    startLeft + (moveEvent.clientX - startX) / scale + "px";
+                marker.style.top =
+                    startTop + (moveEvent.clientY - startY) / scale + "px";
+            }
+
+            function stop(stopEvent) {
+                if (marker.hasPointerCapture(event.pointerId)) {
+                    marker.releasePointerCapture(event.pointerId);
+                }
+                marker.removeEventListener("pointermove", move);
+                marker.removeEventListener("pointerup", stop);
+                marker.removeEventListener("pointercancel", stop);
+
+                if (
+                    pendingPlantDuplicate &&
+                    pendingPlantDuplicate.marker === marker
+                ) {
+                    pendingPlantDuplicate.plant.x =
+                        parseFloat(marker.style.left);
+                    pendingPlantDuplicate.plant.y =
+                        parseFloat(marker.style.top);
+
+                    if (stopEvent.type === "pointerup") {
+                        validatePendingPlantDuplicate();
+                    } else {
+                        updatePendingDuplicateStatus("");
+                        showPlantInfo(
+                            pendingPlantDuplicate.plant,
+                            marker
+                        );
+                    }
+                }
+            }
+
+            marker.addEventListener("pointermove", move);
+            marker.addEventListener("pointerup", stop);
+            marker.addEventListener("pointercancel", stop);
+        }
+    );
+
+    markers.appendChild(marker);
+
+    document.getElementById("plantInfo").style.display = "none";
+
+    document.getElementById(
+        "duplicatePlantButton"
+    ).style.display = "none";
+    document.getElementById(
+        "duplicatePendingControls"
+    ).style.display = "block";
+    document.getElementById(
+        "editPlantButton"
+    ).style.display = "none";
+    document.getElementById(
+        "adminPrincipalPlant"
+    ).style.display = "none";
+    document.getElementById(
+        "movePlantButton"
+    ).textContent = "📍 Déplacer la copie";
+
+    // Le gestionnaire tactile existant déplacera ce marqueur temporaire.
+    mobileMoveMarker = marker;
+    marker.dataset.mobileMove = "true";
+
+    updatePendingDuplicateStatus("");
+}
+
+async function validatePendingPlantDuplicate() {
+    if (
+        !editMode ||
+        !pendingPlantDuplicate ||
+        pendingPlantDuplicate.isSubmitting
+    ) {
+        return;
+    }
+
+    const pending = pendingPlantDuplicate;
+    const x = parseFloat(pending.marker.style.left);
+    const y = parseFloat(pending.marker.style.top);
+
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        updatePendingDuplicateStatus(
+            "La position de la copie est invalide. Déplacez-la puis réessayez."
+        );
+        return;
+    }
+
+    const payload = {
+        x: x,
+        y: y,
+        "Nom français": pending.plant["Nom français"],
+        "Nom latin": pending.plant["Nom latin"],
+        a_connaitre: pending.plant.a_connaitre,
+        exemplaire_principal: pending.plant.exemplaire_principal
+    };
+
+    pending.isSubmitting = true;
+    if (mobileMoveMarker === pending.marker) {
+        mobileMoveMarker = null;
+        mobileMoveData = null;
+        pending.marker.dataset.mobileMove = "false";
+    }
+    document.getElementById("validateDuplicateButton").disabled = true;
+    document.getElementById("cancelDuplicateButton").disabled = true;
+    updatePendingDuplicateStatus("Enregistrement de la copie…");
+
+    let data = null;
+    let error = null;
+
+    try {
+        const result = await supabaseClient
+            .from("numeros")
+            .insert(payload)
+            .select()
+            .single();
+
+        data = result.data;
+        error = result.error;
+    } catch (requestError) {
+        error = requestError;
+    }
+
+    if (error || !data) {
+        console.error("Erreur lors de la duplication de la plante :", error);
+        pending.isSubmitting = false;
+        document.getElementById("validateDuplicateButton").disabled = false;
+        document.getElementById("cancelDuplicateButton").disabled = false;
+        showPlantInfo(pending.plant, pending.marker);
+        updatePendingDuplicateStatus(
+            "Échec de l'enregistrement : " +
+            (error ? error.message : "aucune ligne retournée") +
+            ". Vous pouvez réessayer ou annuler."
+        );
+        return;
+    }
+
+    // Le marqueur temporaire est remplacé par la ligne réellement retournée.
+    discardPendingPlantDuplicate();
+    allPlants.push(data);
+    displayNumbers([data], false);
+    document.getElementById("plantInfo").style.display = "none";
 }
 
 
@@ -3674,6 +7006,23 @@ position: fixed;
     text-align: center;
 "></div>
 
+<div id="deletionPendingInfo" style="
+    display: none;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #9b1c1c;
+    text-align: center;
+">🗑️ Demande de suppression en cours</div>
+
+<div id="plantDecisionStatusInfo" style="display:none; margin-top:8px; font-size:13px; text-align:center; color:#8a6d00;"></div>
+
+<div id="plantNameProposalAdminActions" style="display:none;"></div>
+
+<div id="deletionAdminActions" style="display:none; margin-top:10px; text-align:center;" data-numero-id="">
+    <button id="acceptPlantDeletionButton" type="button" style="font-size:14px; padding:6px 8px;">✓ Valider la suppression</button>
+    <button id="rejectPlantDeletionButton" type="button" style="font-size:14px; padding:6px 8px;">✕ Refuser</button>
+</div>
+
 <div id="speciesNavigation" style="
     display: none;
     margin-top: 10px;
@@ -3752,6 +7101,37 @@ position: fixed;
         📍 Déplacer
     </button>
 
+    <button
+        id="duplicatePlantButton"
+        type="button"
+        style="
+            font-size: 16px;
+            padding: 5px 10px;
+            margin-left: 6px;
+        "
+    >
+        Dupliquer
+    </button>
+
+    <div id="duplicatePendingControls" style="
+        display: none;
+        margin-top: 10px;
+    ">
+        <div id="duplicateStatus" role="status" aria-live="polite" style="
+            margin-bottom: 8px;
+            font-size: 13px;
+        "></div>
+        <button id="validateDuplicateButton" type="button" style="
+            font-size: 15px;
+            padding: 5px 10px;
+        ">✓ Valider</button>
+        <button id="cancelDuplicateButton" type="button" style="
+            font-size: 15px;
+            padding: 5px 10px;
+            margin-left: 6px;
+        ">✕ Annuler</button>
+    </div>
+
 </div>
 
     <div id="adminPrincipalPlant" style="
@@ -3825,6 +7205,16 @@ position: fixed;
         </button>
 
         <button
+            id="cancelVisitorNameProposalButton"
+            type="button"
+            style="display:none; font-size:15px; padding:5px 10px; margin-left:6px;"
+        >
+            <svg aria-hidden="true" viewBox="0 0 18 18" width="16" height="16" style="vertical-align:-3px; margin-right:2px;">
+                <path d="M4 4l10 10M14 4L4 14" fill="none" stroke="#c00" stroke-width="3" stroke-linecap="round"/>
+            </svg> Annuler
+        </button>
+
+        <button
     id="deletePlantButton"
     style="
         display: block;
@@ -3839,137 +7229,63 @@ position: fixed;
 
     </div>
 
+    <p id="visitorPlantNameProposalMessage" role="status" style="display:none; margin:6px 0 0; color:#c00; font-size:12px;"></p>
+
 </div>
 
 </div>
-    <div id="addTerrainWarning" style="
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.45);
-    z-index: 4000;
-    align-items: center;
-    justify-content: center;
-">
+    <div id="deletePlantConfirmation" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,.45); align-items:center; justify-content:center;">
+        <div style="width:min(420px, calc(100vw - 32px)); padding:22px; border-radius:12px; background:white; box-shadow:0 6px 25px rgba(0,0,0,.35); text-align:center;">
+            <div style="font-size:18px; font-weight:bold; margin-bottom:12px;">Proposer la suppression de cette plante ?</div>
+            <div id="deletePlantFrenchName" style="font-size:16px; font-weight:bold;"></div>
+            <div id="deletePlantLatinName" style="font-size:15px; font-style:italic; margin-top:4px;"></div>
+            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:20px;">
+                <button id="confirmDeletePlantProposal" type="button" style="padding:8px 10px; border:1px solid #777; border-radius:6px; background:#eee; font-size:15px;">✓ Proposer la suppression</button>
+                <button id="cancelDeletePlantProposal" type="button" style="padding:8px 10px; border:1px solid #aaa; border-radius:6px; background:white; font-size:15px;">✕ Annuler</button>
+            </div>
+        </div>
+    </div>
 
-    <div style="
+    <div id="appConfirmModal" role="dialog" aria-modal="true" aria-labelledby="appConfirmMessage" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,.45); align-items:center; justify-content:center;">
+        <div style="width:min(420px, calc(100vw - 32px)); padding:22px; border-radius:12px; background:white; box-shadow:0 6px 25px rgba(0,0,0,.35); text-align:center;">
+            <div id="appConfirmMessage" style="font-size:16px; font-weight:normal; margin-bottom:12px;"></div>
+            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:20px;">
+                <button id="appConfirmAcceptButton" type="button" style="padding:8px 10px; border:1px solid #777; border-radius:6px; background:#eee; font-size:14px; font-weight:normal;">Confirmer</button>
+                <button id="appConfirmCancelButton" type="button" style="padding:8px 10px; border:1px solid #aaa; border-radius:6px; background:white; font-size:14px; font-weight:normal;">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="proposalSentMessage" role="status" aria-live="polite" style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         background: white;
         border: 2px solid #333;
         border-radius: 12px;
-        padding: 22px;
-        width: min(500px, calc(100vw - 40px));
-        max-height: calc(100vh - 40px);
-        overflow-y: auto;
+        padding: 25px 35px;
+        min-width: 280px;
+        text-align: center;
         box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+        z-index: 11000;
     ">
-
-        <div style="
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 16px;
-        ">
-            ⚠️ Avant d’ajouter une plante
-        </div>
-
-        <div style="
-            font-size: 15px;
-            line-height: 1.5;
-        ">
-
-            Merci d’ajouter une plante uniquement si vous êtes
-            <strong>certain de son identification et de sa localisation.</strong>
-
-            <br><br>
-
-            Vérifiez le <strong>nom</strong> et placez le point
-            <strong>le plus précisément possible</strong>.
-            Si plusieurs plantes identiques sont proches,
-            <strong>n’en ajoutez qu’une seule.</strong>
-
-            <br><br>
-
-            Les propositions sont vérifiées par les professeurs et
-            <strong>ne seront visibles qu’après validation.</strong>
-
-            <br><br>
-
-            En cas de doute, <strong>ne l’ajoutez pas.</strong>
-
-        </div>
-
-        <div style="
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 22px;
-        ">
-
-            <button
-                id="cancelAddTerrainWarning"
-                style="
-                    font-size: 16px;
-                    padding: 8px 18px;
-                    border: 1px solid #aaa;
-                    border-radius: 6px;
-                    background: #eee;
-                "
-            >
-                Annuler
-            </button>
-
-            <button
-                id="continueAddTerrainWarning"
-                style="
-                    font-size: 16px;
-                    padding: 8px 18px;
-                    border: 1px solid #555;
-                    border-radius: 6px;
-                    background: #ddd;
-                "
-            >
-                Continuer
-            </button>
-
-        </div>
-
+        <div aria-hidden="true" style="font-size: 28px; line-height: 1; margin-bottom: 10px; color: #2e8b57; font-weight: bold;">✓</div>
+        <div style="font-size: 19px; font-weight: bold;">Proposition envoyée !</div>
     </div>
 
-</div>
-    <div id="proposalSentMessage" style="
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    border: 2px solid #333;
-    border-radius: 12px;
-    padding: 25px 35px;
-    min-width: 280px;
-    text-align: center;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.35);
-    z-index: 5000;
-">
-
-    <div style="
-        font-size: 22px;
-        margin-bottom: 10px;
-    ">
-        ✅
+    <div id="mobileDeletionSelectionPanel">
+        <div id="mobileDeletionSelectionTitle">🗑️ Proposer la suppression</div>
+        <div id="mobileDeletionSelectionStatus">
+            Placez le viseur sur la plante que vous souhaitez proposer à la suppression.
+        </div>
+        <div id="mobileDeletionSelectionActions">
+            <button id="selectMobileDeletionPlantButton" type="button">✓ Sélectionner cette plante</button>
+            <button id="cancelMobileDeletionSelectionButton" type="button">✕ Annuler</button>
+        </div>
     </div>
 
-    <div style="
-        font-size: 19px;
-        font-weight: bold;
-    ">
-        Proposition envoyée !
-    </div>
-
-</div>
     <div id="terrainAddCrosshair"></div>
     <div id="terrainForm" style="
     display: none;
@@ -4132,47 +7448,8 @@ position: fixed;
 
     </div>
 
-    <button
-        id="adminCloseButton"
-        style="
-            display: block;
-            margin: 12px auto 0;
-            font-size: 16px;
-        "
-    >
-        Fermer
-    </button>
-
 </div>
     <script>
-document.getElementById(
-    "cancelAddTerrainWarning"
-).addEventListener(
-    "click",
-    function() {
-
-        document.getElementById(
-            "addTerrainWarning"
-        ).style.display = "none";
-
-    }
-);
-
-
-document.getElementById(
-    "continueAddTerrainWarning"
-).addEventListener(
-    "click",
-    function() {
-
-        document.getElementById(
-            "addTerrainWarning"
-        ).style.display = "none";
-
-        startAddingTerrainPlant();
-
-    }
-);
         document.getElementById(
     "speciesPreviousButton"
 ).addEventListener(
@@ -4197,6 +7474,14 @@ document.getElementById(
 
     }
 );
+document.addEventListener("pointerdown", function(event) {
+    if (event.target.closest("#searchInput, #searchResults")) {
+        return;
+    }
+
+    document.getElementById("searchResults").innerHTML = "";
+});
+
 document.getElementById("searchInput").addEventListener("input", function() {
 
     const search =
@@ -4286,9 +7571,19 @@ if (selectedSpeciesIndex === -1) {
     selectedSpeciesIndex = 0;
 }
 
+const hasKnownSpecimen =
+    sameSpecies.some(function(specimen) {
+        return specimen.a_connaitre === true;
+    });
+
 result.innerHTML =
+    '<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">' +
     '<div style="font-weight: bold; font-style: italic;">' +
     plant["Nom latin"] +
+    '</div>' +
+    (hasKnownSpecimen
+        ? '<span aria-label="À connaître" style="font-size: 14px; font-weight: bold; color: #111;">★</span>'
+        : '') +
     '</div>' +
     '<div style="font-size: 13px; color: #777; margin-top: 2px;">' +
     plant["Nom français"] +
@@ -4452,8 +7747,10 @@ document.getElementById(
     function() {
 
         addingTerrainPlant = false;
+        setPlantAddCursorMode(false);
 
         container.style.cursor = "grab";
+        hidePCTerrainCrosshair();
 
         document.getElementById(
             "terrainForm"
@@ -4465,11 +7762,15 @@ document.getElementById(
 
         const point =
             document.querySelector(
-                ".terrain-marker-new"
+                ".terrain-marker-draft"
             );
 
         if (point) {
             point.remove();
+        }
+
+        if (isDesktopToolbarContext() && desktopToolbarAction === "add") {
+            desktopToolbarAction = null;
         }
 
     }
@@ -4552,7 +7853,7 @@ document.getElementById(
 
             const point =
                 document.querySelector(
-                    ".terrain-marker-new"
+                    ".terrain-marker-draft"
                 );
 
             if (!point) {
@@ -4613,9 +7914,11 @@ document.getElementById(
             "Proposition envoyée avec succès."
         );
 
+        showProposalSentConfirmation();
+
         const point =
             document.querySelector(
-                ".terrain-marker-new"
+                ".terrain-marker-draft"
             );
 
         if (point) {
@@ -4623,6 +7926,10 @@ document.getElementById(
         }
 
         addingTerrainPlant = false;
+        setPlantAddCursorMode(false);
+        if (isDesktopToolbarContext() && desktopToolbarAction === "add") {
+            desktopToolbarAction = null;
+        }
 
         container.style.cursor = "grab";
 
@@ -4634,37 +7941,109 @@ document.getElementById(
             "terrainForm"
         ).style.display = "none";
 
-        const sentMessage =
-            document.getElementById(
-                "proposalSentMessage"
-            );
-
-        sentMessage.style.display = "block";
-
-        setTimeout(function() {
-
-            sentMessage.style.display = "none";
-
-        }, 2500);
+        await loadTerrainProposals();
 
     }
 );
 
-
-
-        
-        document.getElementById(
-    "adminCloseButton"
+document.getElementById(
+    "duplicatePlantButton"
 ).addEventListener(
     "click",
-    function() {
+    function(event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-        document.getElementById(
-            "terrainAdminForm"
-        ).style.display = "none";
+        if (
+            !editMode ||
+            !window.selectedPlantForEdit ||
+            pendingPlantDuplicate
+        ) {
+            return;
+        }
 
+        beginPlantDuplication(window.selectedPlantForEdit);
     }
 );
+
+document.getElementById(
+    "validateDuplicateButton"
+).addEventListener(
+    "click",
+    function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        validatePendingPlantDuplicate();
+    }
+);
+
+document.getElementById(
+    "cancelDuplicateButton"
+).addEventListener(
+    "click",
+    function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (
+            editMode &&
+            pendingPlantDuplicate &&
+            !pendingPlantDuplicate.isSubmitting
+        ) {
+            discardPendingPlantDuplicate();
+        }
+    }
+);
+
+document.addEventListener(
+    "pointerdown",
+    function(event) {
+        const infoBubble =
+            document.getElementById("plantInfo");
+        const isTouchPointer =
+            event.pointerType === "touch";
+
+        if (desktopMoveMarker) {
+            if (desktopMoveMarker.contains(event.target)) {
+                return;
+            }
+
+            desktopMoveMarker.dataset.moveEnabled = "false";
+            desktopMoveMarker.style.cursor = "pointer";
+            desktopMoveMarker.style.zIndex = "";
+
+            if (desktopMoveOriginalAppearance) {
+                desktopMoveMarker.style.background =
+                    desktopMoveOriginalAppearance.background;
+                desktopMoveMarker.style.border =
+                    desktopMoveOriginalAppearance.border;
+                desktopMoveMarker.style.boxShadow =
+                    desktopMoveOriginalAppearance.boxShadow;
+            }
+
+            desktopMoveMarker = null;
+            desktopMoveOriginalAppearance = null;
+        }
+
+        if (
+            !pendingPlantDuplicate ||
+            pendingPlantDuplicate.isSubmitting ||
+            infoBubble.contains(event.target) ||
+            pendingPlantDuplicate.marker.contains(event.target) ||
+            (
+                isTouchPointer &&
+                getComputedStyle(infoBubble).display === "none"
+            )
+        ) {
+            return;
+        }
+
+        discardPendingPlantDuplicate();
+        infoBubble.style.display = "none";
+    },
+    true
+);
+
         document.getElementById(
     "editPlantButton"
 ).addEventListener(
@@ -4723,6 +8102,26 @@ document.getElementById(
         event.preventDefault();
         event.stopPropagation();
 
+        if (!editMode) {
+            return;
+        }
+
+        if (pendingPlantDuplicate) {
+            if (pendingPlantDuplicate.isSubmitting) {
+                return;
+            }
+
+            mobileMoveMarker = pendingPlantDuplicate.marker;
+            mobileMoveMarker.dataset.mobileMove = "true";
+            mobileMoveMarker.style.zIndex = "501";
+            document.getElementById("plantInfo").style.display = "none";
+
+            updatePendingDuplicateStatus(
+                "Touchez le marqueur violet et faites-le glisser, puis validez ou annulez."
+            );
+            return;
+        }
+
         if (!window.selectedPlantForEdit) {
             return;
         }
@@ -4741,6 +8140,30 @@ document.getElementById(
             return;
         }
 
+        const useTouchMove =
+            (window.matchMedia &&
+                window.matchMedia("(pointer: coarse)").matches) ||
+            window.innerWidth <= 600;
+
+        if (!useTouchMove) {
+            document.getElementById("plantInfo").style.display = "none";
+            desktopMoveMarker = marker;
+            desktopMoveOriginalAppearance = {
+                background: marker.style.background,
+                border: marker.style.border,
+                boxShadow: marker.style.boxShadow
+            };
+
+            marker.style.background = "rgba(125, 75, 190, 0.72)";
+            marker.style.border = "2px dashed #4b2478";
+            marker.style.boxShadow =
+                "0 0 0 3px rgba(125, 75, 190, 0.25)";
+            marker.style.cursor = "move";
+            marker.style.zIndex = "500";
+            marker.dataset.moveEnabled = "true";
+            return;
+        }
+
         /* Fermer la bulle */
 
         document.getElementById(
@@ -4750,6 +8173,16 @@ document.getElementById(
         /* Activer le déplacement GSM */
 
         mobileMoveMarker = marker;
+        mobileMoveOriginalAppearance = {
+            background: marker.style.background,
+            border: marker.style.border,
+            boxShadow: marker.style.boxShadow
+        };
+
+        marker.style.background = "rgba(125, 75, 190, 0.72)";
+        marker.style.border = "2px dashed #4b2478";
+        marker.style.boxShadow =
+            "0 0 0 3px rgba(125, 75, 190, 0.25)";
 
         marker.dataset.mobileMove =
             "true";
@@ -4773,6 +8206,28 @@ document.getElementById(
 ).addEventListener(
     "click",
     async function() {
+
+        if (proposingPlantNameModification && !editMode) {
+            const message = document.getElementById("visitorPlantNameProposalMessage");
+            const french = document.getElementById("editPlantFrenchInput").value.trim();
+            const latin = document.getElementById("editPlantLatinInput").value.trim();
+            this.disabled = true;
+            try {
+                await submitPlantNameChangeProposal(
+                    plantSelectedForNameProposal,
+                    french,
+                    latin
+                );
+                cancelPlantNameProposalMode();
+                showProposalSentConfirmation();
+            } catch (error) {
+                message.textContent = error.message || "La proposition n’a pas pu être envoyée.";
+                message.style.display = "block";
+            } finally {
+                this.disabled = false;
+            }
+            return;
+        }
 
         if (!window.selectedPlantForEdit) {
             alert(
@@ -4835,36 +8290,47 @@ const { data, error } =
         );
 
 
-        document.getElementById(
-            "adminPlantEditForm"
-        ).style.display = "none";
+        const updatedPlant = data && data[0];
+        if (!updatedPlant) {
+            alert("La modification a été enregistrée, mais la plante mise à jour n’a pas été retournée.");
+            return;
+        }
 
-window.selectedPlantForEdit =
-    data[0];
+        const plantIndex = allPlants.findIndex(function(plant) {
+            return String(plant.id) === String(plantId);
+        });
+        let currentPlant = updatedPlant;
+        if (plantIndex !== -1) {
+            // displayNumbers' marker handlers close over this object. Mutating
+            // it in place keeps those handlers and allPlants in sync.
+            Object.assign(allPlants[plantIndex], updatedPlant);
+            currentPlant = allPlants[plantIndex];
+        } else {
+            allPlants.push(currentPlant);
+        }
+        prepareTerrainPlantList();
 
-document.getElementById(
-    "plantLatin"
-).textContent =
-    data[0]["Nom latin"];
+        const selectedMarker = Array.from(
+            markers.querySelectorAll(".marker")
+        ).find(function(marker) {
+            return String(marker.dataset.id) === String(plantId);
+        });
 
-document.getElementById(
-    "plantFrench"
-).textContent =
-    data[0]["Nom français"];
-        document.getElementById(
-            "adminPlantButtons"
-        ).style.display = "block";
+        if (selectedMarker) {
+            // Réutilise le marqueur existant : cela rafraîchit la fiche,
+            // ses noms visibles/masqués et les actions admin sans perdre la sélection.
+            showPlantInfo(currentPlant, selectedMarker);
+        } else {
+            window.selectedPlantForEdit = currentPlant;
+            document.getElementById("plantLatin").textContent =
+                updatedPlant["Nom latin"];
+            document.getElementById("plantLatin").style.display =
+                updatedPlant["Nom latin"] === "/" ? "none" : "block";
+            document.getElementById("plantFrench").textContent =
+                updatedPlant["Nom français"];
+        }
 
-        allPlants =
-            allPlants.map(function(plant) {
-
-                if (plant.id === plantId) {
-                    return data[0];
-                }
-
-                return plant;
-
-            });
+        document.getElementById("adminPlantEditForm").style.display = "none";
 
     }
 );
@@ -4882,18 +8348,9 @@ document.getElementById(
             return;
         }
 
-        const firstConfirm =
-            confirm(
-                "Voulez-vous vraiment supprimer cette plante ?"
-            );
-
-        if (!firstConfirm) {
-            return;
-        }
-
         const secondConfirm =
-            confirm(
-                "⚠️ Suppression définitive : cette plante sera supprimée de la carte et de la base de données.\n\nContinuer ?"
+            await showAppConfirmation(
+                "⚠️ Suppression définitive : cette plante sera supprimée de la carte et de la base de données."
             );
 
         if (!secondConfirm) {
@@ -5125,7 +8582,7 @@ exemplaire_principal: false
         }
 
         const confirmation =
-            confirm(
+            await showAppConfirmation(
                 "Voulez-vous vraiment refuser cette proposition ?"
             );
 
